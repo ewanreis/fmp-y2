@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: InfatryOutline
+  m_Name: EnemyOutline
   m_Shader: {fileID: -6465566751694194690, guid: 94067048c2a31b840a99426787967b68, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -67,10 +67,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _OutlineThickness: -1.23
+    - _OutlineThickness: -0.48
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColour: {r: 0.34901956, g: 0.80801105, b: 0.83137256, a: 1}
+    - _OutlineColour: {r: 0.57254905, g: 0.2784314, b: 0.29803923, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
