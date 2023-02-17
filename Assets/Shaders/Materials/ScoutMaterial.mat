@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: InkBody
-  m_Shader: {fileID: -6465566751694194690, guid: 311c7ec8a94f1864ba6d447d8e4ac3c3, type: 3}
+  m_Name: ScoutMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 61dd4c4821490424a860ce5b0e309f58, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -58,14 +58,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Speed: 1.77
+    - _OutlineThickness: 0.004
+    - _Speed: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _Offset: {r: 0.1, g: 0, b: 0, a: 0}
+    - _Offset: {r: 0.2, g: 0.2, b: 0, a: 0}
+    - _OutlineColour: {r: 0.3372549, g: 0.6313726, b: 0.3764706, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &3100279974533967974
+--- !u!114 &2388949769958378897
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
