@@ -74,3 +74,6 @@ TagManager:
   - name: Projectiles
     uniqueID: 2392844201
     locked: 0
+  - name: Blocking
+    uniqueID: 2638660531
+    locked: 0

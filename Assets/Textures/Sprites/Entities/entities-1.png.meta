@@ -44,7 +44,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 15
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -278,10 +278,10 @@ TextureImporter:
       name: entities-1_8
       rect:
         serializedVersion: 2
-        x: 1449
-        y: 1493
-        width: 292
-        height: 456
+        x: 1429
+        y: 1476
+        width: 346
+        height: 505
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -341,10 +341,10 @@ TextureImporter:
       name: entities-1_11
       rect:
         serializedVersion: 2
-        x: 497
-        y: 1567
-        width: 132
-        height: 214
+        x: 482
+        y: 1546
+        width: 168
+        height: 245
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -362,10 +362,10 @@ TextureImporter:
       name: entities-1_12
       rect:
         serializedVersion: 2
-        x: 747
-        y: 1540
-        width: 78
-        height: 255
+        x: 727
+        y: 1528
+        width: 114
+        height: 275
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -383,10 +383,10 @@ TextureImporter:
       name: entities-1_13
       rect:
         serializedVersion: 2
-        x: 1091
-        y: 1531
-        width: 160
-        height: 276
+        x: 1070
+        y: 1513
+        width: 202
+        height: 326
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -443,90 +443,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: entities-1_16
-      rect:
-        serializedVersion: 2
-        x: 746
-        y: 1742
-        width: 10
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1a82f74483ff65344bd0b3364d3dff14
-      internalID: 200567861
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: entities-1_17
-      rect:
-        serializedVersion: 2
-        x: 744
-        y: 1736
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 27b14cf78561a614e80331c8cd78305f
-      internalID: 275876680
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: entities-1_18
-      rect:
-        serializedVersion: 2
-        x: 742
-        y: 1557
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cdbe057475a60f24daddf2db98fc8dab
-      internalID: 1190240099
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: entities-1_19
-      rect:
-        serializedVersion: 2
-        x: 739
-        y: 1548
-        width: 6
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c2f0d020a3d8c1479d77c9cb557b469
-      internalID: 1234197289
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: entities-1_20
       rect:
         serializedVersion: 2
@@ -551,10 +467,10 @@ TextureImporter:
       name: entities-1_21
       rect:
         serializedVersion: 2
-        x: 963
-        y: 619
-        width: 578
-        height: 838
+        x: 914
+        y: 595
+        width: 667
+        height: 895
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
