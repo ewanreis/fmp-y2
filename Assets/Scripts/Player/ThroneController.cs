@@ -5,27 +5,32 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ThroneController : MonoBehaviour
 {
-    public float _speed = 1f;
-    private Rigidbody2D _rb;
+    public float speed = 1f;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        InputManager.OnMoveHeld += HandleMoveInput;
     }
 
-
-    void FixedUpdate()
+    private void OnDestroy()
     {
-       if(Mathf.Abs(_rb.velocity.x) < _speed)
+        InputManager.OnMoveHeld -= HandleMoveInput;
+    }
+
+    private void HandleMoveInput(Vector2 moveInput)
+    {
+        if (Mathf.Abs(rb.velocity.x) < speed)
         {
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (moveInput.x > 0)
             {
-                _rb.AddForce(Vector2.right * 50f);
+                rb.AddForce(Vector2.right * 50f);
             }
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (moveInput.x < 0)
             {
-                _rb.AddForce(- Vector2.right * 50f);
+                rb.AddForce(-Vector2.right * 50f);
             }
         }
     }

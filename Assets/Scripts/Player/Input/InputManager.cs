@@ -1,69 +1,97 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    #region Input Variables
-    private Vector2 moveInput;
-    private bool primaryInput;
-    private bool secondaryInput;
-    #endregion
-
-    #region Control Schemes
-    [SerializeField] private ControlScheme controlScheme;
-
-    private enum ControlScheme
-    {
-        DefaultKeyboard,
-        InvertedKeyboard,
-        DefaultController,
-        InvertedController
-    }
-    #endregion
-
     private static PlayerInput playerInput;
+
+    private bool isMovePressed = false;
+    private Vector2 lastMoveInput = Vector2.zero;
+
+    // events for different input types
+    public static event Action<Vector2> OnMoveInput;
+    public static event Action OnPrimaryPressed;
+    public static event Action OnSecondaryPressed;
+    public static event Action OnPausePressed;
+    public static event Action<Vector2> OnMoveHeld;
 
     private void Awake()
     {
         playerInput = new PlayerInput();
-        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void FixedUpdate()
+    {
+        // check if move input is held down and invoke event
+        if (isMovePressed)
+            OnMoveHeld?.Invoke(lastMoveInput);
     }
 
     private void OnEnable()
     {
+        // enable events & player input object
         playerInput.Enable();
+        playerInput.Overworld.Walk.performed += OnMovePerformed;
+        playerInput.Overworld.Walk.canceled += OnMoveCanceled;
+        playerInput.Overworld.UsePrimary.performed += OnPrimaryPerformed;
+        playerInput.Overworld.UseSecondary.performed += OnSecondaryPerformed;
+        playerInput.Overworld.Pause.performed += OnPausePerformed;
     }
 
     private void OnDisable()
     {
+        // unregister events and disable player input object
         playerInput.Disable();
+        playerInput.Overworld.Walk.performed -= OnMovePerformed;
+        playerInput.Overworld.Walk.canceled -= OnMoveCanceled;
+        playerInput.Overworld.UsePrimary.performed -= OnPrimaryPerformed;
+        playerInput.Overworld.UseSecondary.performed -= OnSecondaryPerformed;
+        playerInput.Overworld.Pause.performed -= OnPausePerformed;
     }
 
-    private void Update()
+    private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        moveInput = GetMoveInput();
-        primaryInput = GetPrimaryInput();
-        secondaryInput = GetSecondaryInput();
+        // read movement input and invoke event when it is changed
+        Vector2 moveInput = context.ReadValue<Vector2>();
+        OnMoveInput?.Invoke(moveInput);
+        isMovePressed = true;
+        lastMoveInput = moveInput;
     }
 
-    public static Vector2 GetMoveInput()
+    private void OnMoveCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        return playerInput.Ground.Walk.ReadValue<Vector2>();
+        // set move pressed flag to false when movement input is released
+        isMovePressed = false;
+        lastMoveInput = Vector2.zero;
     }
 
-    public static bool GetPrimaryInput()
+    private void OnPrimaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        return playerInput.Ground.UsePrimary.ReadValue<float>() == 1 ? true : false;
+        // check if primary input button pressed then invoke event if true
+        bool primaryInput = context.ReadValue<float>() == 1 ? true : false;
+        if (primaryInput)
+            OnPrimaryPressed?.Invoke();
     }
 
-    public static bool GetSecondaryInput()
+    private void OnSecondaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        return playerInput.Ground.UseSecondary.ReadValue<float>() == 1 ? true : false;
+        // check if secondary input button pressed then invoke event if true
+        bool secondaryInput = context.ReadValue<float>() == 1 ? true : false;
+        if(secondaryInput)
+            OnSecondaryPressed?.Invoke();
+    }
+
+    private void OnPausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // check if pause input button pressed then invoke event if true
+        bool pressed = context.ReadValue<float>() == 1 ? true : false;
+        if (pressed)
+            OnPausePressed?.Invoke();
     }
 
     public static Vector2 GetMousePosition()
     {
-        return playerInput.Ground.CursorPosition.ReadValue<Vector2>();
+        // return cursor position
+        return playerInput.Overworld.CursorPosition.ReadValue<Vector2>();
     }
 }

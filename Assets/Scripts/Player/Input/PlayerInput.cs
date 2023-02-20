@@ -24,7 +24,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""Ground"",
+            ""name"": ""Overworld"",
             ""id"": ""2be4251f-850d-4683-8c58-1059aa528270"",
             ""actions"": [
                 {
@@ -62,6 +62,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba70a202-cd15-4d41-8f44-25e4d976c3f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""CursorPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a9c0c8f-9c34-4b61-942e-bb98d5c341fa"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -175,12 +195,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Ground
-        m_Ground = asset.FindActionMap("Ground", throwIfNotFound: true);
-        m_Ground_Walk = m_Ground.FindAction("Walk", throwIfNotFound: true);
-        m_Ground_UsePrimary = m_Ground.FindAction("UsePrimary", throwIfNotFound: true);
-        m_Ground_UseSecondary = m_Ground.FindAction("UseSecondary", throwIfNotFound: true);
-        m_Ground_CursorPosition = m_Ground.FindAction("CursorPosition", throwIfNotFound: true);
+        // Overworld
+        m_Overworld = asset.FindActionMap("Overworld", throwIfNotFound: true);
+        m_Overworld_Walk = m_Overworld.FindAction("Walk", throwIfNotFound: true);
+        m_Overworld_UsePrimary = m_Overworld.FindAction("UsePrimary", throwIfNotFound: true);
+        m_Overworld_UseSecondary = m_Overworld.FindAction("UseSecondary", throwIfNotFound: true);
+        m_Overworld_CursorPosition = m_Overworld.FindAction("CursorPosition", throwIfNotFound: true);
+        m_Overworld_Pause = m_Overworld.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -237,44 +258,49 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Ground
-    private readonly InputActionMap m_Ground;
-    private IGroundActions m_GroundActionsCallbackInterface;
-    private readonly InputAction m_Ground_Walk;
-    private readonly InputAction m_Ground_UsePrimary;
-    private readonly InputAction m_Ground_UseSecondary;
-    private readonly InputAction m_Ground_CursorPosition;
-    public struct GroundActions
+    // Overworld
+    private readonly InputActionMap m_Overworld;
+    private IOverworldActions m_OverworldActionsCallbackInterface;
+    private readonly InputAction m_Overworld_Walk;
+    private readonly InputAction m_Overworld_UsePrimary;
+    private readonly InputAction m_Overworld_UseSecondary;
+    private readonly InputAction m_Overworld_CursorPosition;
+    private readonly InputAction m_Overworld_Pause;
+    public struct OverworldActions
     {
         private @PlayerInput m_Wrapper;
-        public GroundActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Walk => m_Wrapper.m_Ground_Walk;
-        public InputAction @UsePrimary => m_Wrapper.m_Ground_UsePrimary;
-        public InputAction @UseSecondary => m_Wrapper.m_Ground_UseSecondary;
-        public InputAction @CursorPosition => m_Wrapper.m_Ground_CursorPosition;
-        public InputActionMap Get() { return m_Wrapper.m_Ground; }
+        public OverworldActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Walk => m_Wrapper.m_Overworld_Walk;
+        public InputAction @UsePrimary => m_Wrapper.m_Overworld_UsePrimary;
+        public InputAction @UseSecondary => m_Wrapper.m_Overworld_UseSecondary;
+        public InputAction @CursorPosition => m_Wrapper.m_Overworld_CursorPosition;
+        public InputAction @Pause => m_Wrapper.m_Overworld_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Overworld; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GroundActions set) { return set.Get(); }
-        public void SetCallbacks(IGroundActions instance)
+        public static implicit operator InputActionMap(OverworldActions set) { return set.Get(); }
+        public void SetCallbacks(IOverworldActions instance)
         {
-            if (m_Wrapper.m_GroundActionsCallbackInterface != null)
+            if (m_Wrapper.m_OverworldActionsCallbackInterface != null)
             {
-                @Walk.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnWalk;
-                @Walk.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnWalk;
-                @Walk.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnWalk;
-                @UsePrimary.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnUsePrimary;
-                @UsePrimary.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnUsePrimary;
-                @UsePrimary.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnUsePrimary;
-                @UseSecondary.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnUseSecondary;
-                @UseSecondary.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnUseSecondary;
-                @UseSecondary.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnUseSecondary;
-                @CursorPosition.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnCursorPosition;
-                @CursorPosition.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnCursorPosition;
-                @CursorPosition.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnCursorPosition;
+                @Walk.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnWalk;
+                @Walk.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnWalk;
+                @Walk.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnWalk;
+                @UsePrimary.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnUsePrimary;
+                @UsePrimary.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnUsePrimary;
+                @UsePrimary.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnUsePrimary;
+                @UseSecondary.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnUseSecondary;
+                @UseSecondary.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnUseSecondary;
+                @UseSecondary.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnUseSecondary;
+                @CursorPosition.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnCursorPosition;
+                @CursorPosition.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnCursorPosition;
+                @CursorPosition.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnCursorPosition;
+                @Pause.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnPause;
             }
-            m_Wrapper.m_GroundActionsCallbackInterface = instance;
+            m_Wrapper.m_OverworldActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Walk.started += instance.OnWalk;
@@ -289,10 +315,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @CursorPosition.started += instance.OnCursorPosition;
                 @CursorPosition.performed += instance.OnCursorPosition;
                 @CursorPosition.canceled += instance.OnCursorPosition;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
-    public GroundActions @Ground => new GroundActions(this);
+    public OverworldActions @Overworld => new OverworldActions(this);
     private int m_MouseKeyboardSchemeIndex = -1;
     public InputControlScheme MouseKeyboardScheme
     {
@@ -302,11 +331,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_MouseKeyboardSchemeIndex];
         }
     }
-    public interface IGroundActions
+    public interface IOverworldActions
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnUsePrimary(InputAction.CallbackContext context);
         void OnUseSecondary(InputAction.CallbackContext context);
         void OnCursorPosition(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
