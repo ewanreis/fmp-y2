@@ -7,35 +7,51 @@ public static class SaveData
 {
     public static AudioData audio;
     public static StatisticData statistics;
+    public static AchiementsData achievements;
 
-    private static string audioKey = "audio";
-    private static string statisticsKey = "statistics";
+    private const string audioKey = "audio";
+    private const string statisticsKey = "statistics";
+    private const string achievementsKey = "achievements";
 
-    // This converts the stored structs into JSON files, which can then be saved to player prefs.
-    // The JSON file can be turned back into a struct, if one is found from player prefs.
+    // * this converts the stored structs into JSON files, which can then be saved to player prefs
+    // * the JSON file can be turned back into a struct, if one is found from player prefs
 
     public static void Setup()
     {
-        // Ensure volume array is correct size.
+        // ensure volume array is correct size
         Array.Resize(ref audio.volumes, System.Enum.GetNames(typeof(AudioChannel)).Length);
 
-        // Load saved data from PlayerPrefs.
+        // load saved data
         LoadAudioData();
         LoadStatisticsData();
+        LoadAchievementsData();
+        Save();
     }
 
     public static void Save()
     {
-        // Save audio data.
+        // save audio data
         string audioJson = JsonUtility.ToJson(audio);
         PlayerPrefs.SetString(audioKey, audioJson);
 
-        // Save statistics data.
+        // save statistics data
         string statisticsJson = JsonUtility.ToJson(statistics);
         PlayerPrefs.SetString(statisticsKey, statisticsJson);
 
-        // Save changes to PlayerPrefs.
+        // save achievements data
+        string achievementsJson = JsonUtility.ToJson(achievements);
+        PlayerPrefs.SetString(achievementsKey, achievementsJson);
+
+        Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}");
+
+        // save changes to player prefs
         PlayerPrefs.Save();
+    }
+
+    public static void SaveAchievements(Dictionary<string, bool> achievementData)
+    {
+        achievements.achievementList = achievementData;
+        Save();
     }
 
     public static void SaveVolume(AudioChannel channel, int volume)
@@ -50,7 +66,7 @@ public static class SaveData
             audio = JsonUtility.FromJson<AudioData>(PlayerPrefs.GetString(audioKey));
 
         else
-            audio = new AudioData(); // Initialize default audio data.
+            audio = new AudioData(); // initialize default audio data
     }
 
     private static void LoadStatisticsData()
@@ -59,7 +75,16 @@ public static class SaveData
             statistics = JsonUtility.FromJson<StatisticData>(PlayerPrefs.GetString(statisticsKey));
 
         else
-            statistics = new StatisticData(); // Initialize default statistics data.
+            statistics = new StatisticData(); // initialize default statistics data
+    }
+
+    private static void LoadAchievementsData()
+    {
+        if (PlayerPrefs.HasKey(achievementsKey))
+            achievements = JsonUtility.FromJson<AchiementsData>(PlayerPrefs.GetString(achievementsKey));
+
+        else
+            achievements = new AchiementsData(); // initialize default statistics data
     }
 }
 
@@ -72,4 +97,9 @@ public struct StatisticData
 {
     public int totalEnemiesKilled;
     public int highestYearReached;
+}
+
+public struct AchiementsData
+{
+    public Dictionary<string, bool> achievementList;
 }

@@ -71,6 +71,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Bestiary"",
+                    ""type"": ""Button"",
+                    ""id"": ""43520ea3-bbb3-495f-ac8b-891445367ae1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ef46c29-1958-4613-b56f-aae92ff45b47"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bestiary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -202,6 +222,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Overworld_UseSecondary = m_Overworld.FindAction("UseSecondary", throwIfNotFound: true);
         m_Overworld_CursorPosition = m_Overworld.FindAction("CursorPosition", throwIfNotFound: true);
         m_Overworld_Pause = m_Overworld.FindAction("Pause", throwIfNotFound: true);
+        m_Overworld_Bestiary = m_Overworld.FindAction("Bestiary", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -266,6 +287,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Overworld_UseSecondary;
     private readonly InputAction m_Overworld_CursorPosition;
     private readonly InputAction m_Overworld_Pause;
+    private readonly InputAction m_Overworld_Bestiary;
     public struct OverworldActions
     {
         private @PlayerInput m_Wrapper;
@@ -275,6 +297,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @UseSecondary => m_Wrapper.m_Overworld_UseSecondary;
         public InputAction @CursorPosition => m_Wrapper.m_Overworld_CursorPosition;
         public InputAction @Pause => m_Wrapper.m_Overworld_Pause;
+        public InputAction @Bestiary => m_Wrapper.m_Overworld_Bestiary;
         public InputActionMap Get() { return m_Wrapper.m_Overworld; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -299,6 +322,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnPause;
+                @Bestiary.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnBestiary;
+                @Bestiary.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnBestiary;
+                @Bestiary.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnBestiary;
             }
             m_Wrapper.m_OverworldActionsCallbackInterface = instance;
             if (instance != null)
@@ -318,6 +344,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Bestiary.started += instance.OnBestiary;
+                @Bestiary.performed += instance.OnBestiary;
+                @Bestiary.canceled += instance.OnBestiary;
             }
         }
     }
@@ -338,5 +367,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnUseSecondary(InputAction.CallbackContext context);
         void OnCursorPosition(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnBestiary(InputAction.CallbackContext context);
     }
 }

@@ -5,22 +5,35 @@ using System.Collections;
 public class PlayerAudio : MonoBehaviour
 {
     [SerializeField] private AudioSource[] audioSources = new AudioSource[6];
+
     [SerializeField] private AudioClip[] footstepSounds;
+    [SerializeField] private AudioClip[] musicTracks;
     [SerializeField] private float footstepDelay;
     [SerializeField] private AudioMixer audioMixer;
 
     private bool isPlayingFootstep;
+    private bool isPlayingMusic;
+
+    private int currentTrackNumber = 0;
 
     private void Start()
     {
         // make ui sound play when game paused
         audioSources[(int)AudioChannel.UI].ignoreListenerPause = true;
+        MultilegProcedural.OnThroneStep += PlayFootstepSound;
+        PlaySong();
     }
 
     public void PlayFootstepSound()
     {
         if (!isPlayingFootstep)
             StartCoroutine(FootstepCoroutine());
+    }
+
+    public void PlaySong()
+    {
+        if(!isPlayingMusic)
+            StartCoroutine(MusicTrackCoroutine());
     }
 
     private IEnumerator FootstepCoroutine()
@@ -35,10 +48,29 @@ public class PlayerAudio : MonoBehaviour
         isPlayingFootstep = false;
     }
 
+    private IEnumerator MusicTrackCoroutine()
+    {
+        // flag to prevent multiple songs playing at once
+        isPlayingMusic = true;
+
+        // play the current track
+        audioSources[(int)AudioChannel.Music].PlayOneShot(musicTracks[currentTrackNumber]);
+        Debug.Log($"Song playing: {musicTracks[currentTrackNumber].ToString()}\nSong Length: {musicTracks[currentTrackNumber].length}");
+
+        // wait until track is done playing
+        yield return new WaitForSeconds(musicTracks[currentTrackNumber].length);
+
+        // go to next song
+        currentTrackNumber++;
+        isPlayingMusic = false;
+        PlaySong();
+    }
+
     public void SetVolume(string groupName, float volume)
     {
         // set audio mixer volume converting to decibels
         audioMixer.SetFloat(groupName, Mathf.Log10(volume) * 20);
+        //SaveData.SaveVolume()
     }
 
     public static void PauseAllSounds(bool pause)
@@ -46,9 +78,6 @@ public class PlayerAudio : MonoBehaviour
         // pause or resume all sounds in the game (except ui)
         AudioListener.pause = pause;
     }
-
-    // enum of audio channels
-    
 
     // editor-only function to label audio sources in inspector
     #if UNITY_EDITOR

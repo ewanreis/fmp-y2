@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     public static event Action OnPrimaryPressed;
     public static event Action OnSecondaryPressed;
     public static event Action OnPausePressed;
+    public static event Action OnBestiaryPressed;
     public static event Action<Vector2> OnMoveHeld;
 
     private void Awake()
@@ -36,6 +37,7 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.UsePrimary.performed += OnPrimaryPerformed;
         playerInput.Overworld.UseSecondary.performed += OnSecondaryPerformed;
         playerInput.Overworld.Pause.performed += OnPausePerformed;
+        playerInput.Overworld.Bestiary.performed += OnBestiaryPerformed;
     }
 
     private void OnDisable()
@@ -87,6 +89,14 @@ public class InputManager : MonoBehaviour
         bool pressed = context.ReadValue<float>() == 1 ? true : false;
         if (pressed)
             OnPausePressed?.Invoke();
+    }
+
+    private void OnBestiaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // check if bestiary input button pressed then invoke event if true
+        bool pressed = context.ReadValue<float>() == 1 ? true : false;
+        if (pressed)
+            OnBestiaryPressed?.Invoke();
     }
 
     public static Vector2 GetMousePosition()

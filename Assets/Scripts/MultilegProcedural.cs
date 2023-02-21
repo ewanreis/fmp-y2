@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class MultilegProcedural : MonoBehaviour
 {
     public Transform[] legTargets;
@@ -9,6 +9,8 @@ public class MultilegProcedural : MonoBehaviour
     public int smoothness = 8;
     public float stepHeight = 0.15f;
     public bool bodyOrientation = true;
+
+        public static event Action OnThroneStep;
 
     public float raycastRange = 1.5f;
     private Vector2[] defaultLegPositions;
@@ -61,6 +63,7 @@ public class MultilegProcedural : MonoBehaviour
 
     IEnumerator PerformStep(int index, Vector3 targetPoint)
     {
+        OnThroneStep.Invoke();
         Vector3 startPos = lastLegPositions[index];
         for(int i = 1; i <= smoothness; ++i)
         {

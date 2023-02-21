@@ -1,0 +1,67 @@
+using UnityEngine;
+
+public class Creature
+{
+    private int _id;
+    private string _name;
+    private int _slainCount;
+    private bool _isUnlocked;
+    private Sprite _sprite;
+
+    private int _killsToUnlock;
+    private int _creatureEncounters;
+    private int _creatureKills;
+
+    public Creature(int id, string name, Sprite sprite, int slainCount = 0, bool isUnlocked = false)
+    {
+        _id = id;
+        _name = name;
+        _sprite = sprite;
+        _slainCount = slainCount;
+        _isUnlocked = isUnlocked;
+    }
+    
+    public int Id
+    {
+        get { return _id; }
+    }
+    
+    public string Name
+    {
+        get { return _name; }
+    }
+    
+    public int SlainCount
+    {
+        get { return _slainCount; }
+        set { _slainCount = value; }
+    }
+    
+    public bool IsUnlocked
+    {
+        get { return _isUnlocked; }
+        set { _isUnlocked = value; }
+    }
+
+    public Sprite Sprite
+    {
+        get { return _sprite; }
+    }
+
+    public int KillsToUnlock
+    {
+        get { return _killsToUnlock;}
+    }
+
+    public int CreatureEncounters
+    {
+        get { return _creatureEncounters;}
+        set { _creatureEncounters = value; }
+    }
+
+    public int CreatureKills
+    {
+        get { return _creatureKills;}
+        set { _creatureKills = value; }
+    }
+}
