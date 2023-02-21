@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerAudio : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private AudioClip[] musicTracks;
     [SerializeField] private float footstepDelay;
     [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private Slider[] sliders;
 
     private bool isPlayingFootstep;
     private bool isPlayingMusic;
@@ -20,7 +22,10 @@ public class PlayerAudio : MonoBehaviour
     {
         // make ui sound play when game paused
         audioSources[(int)AudioChannel.UI].ignoreListenerPause = true;
+
         MultilegProcedural.OnThroneStep += PlayFootstepSound;
+        Invoke("GetSavedVolume", 0.01f);
+        Invoke("SetSlidersToSavedVolume", 0.5f);
         PlaySong();
     }
 
@@ -66,18 +71,74 @@ public class PlayerAudio : MonoBehaviour
         PlaySong();
     }
 
-    public void SetVolume(string groupName, float volume)
+    // ensures the slider handle position is equal to the volume
+    private void SetSlidersToSavedVolume()
     {
+        for(int i = 0; i < sliders.Length; i++)
+        {
+            sliders[i].value = GetVolume((AudioChannel)i);
+        }
+    }
+
+    #region Volume Methods
+    public void SetVolume(AudioChannel audioChannel, float volume)
+    {
+        string groupName = audioChannel.ToString();
+
+        // clamp volume to slider min & max
+        volume = Mathf.Clamp(volume, -0.01f, 1);
+
         // set audio mixer volume converting to decibels
         audioMixer.SetFloat(groupName, Mathf.Log10(volume) * 20);
-        //SaveData.SaveVolume()
+
+        // save the current volume
+        SaveData.SaveVolume(audioChannel, volume);
+
+        // update the sliders (for use when using button to increment)
+        sliders[(int)audioChannel].value = GetVolume(audioChannel);
     }
+
+    public void IncrementVolume(AudioChannel audioChannel, float increment)
+    {
+        float currentVolume = GetVolume(audioChannel);
+        float newVolume = currentVolume + increment;
+        SetVolume(audioChannel, newVolume);
+    }
+
+
+    public void GetSavedVolume()
+    {
+        float[] channelVolumes = SaveData.GetSavedAudioVolumes();
+
+        foreach (AudioChannel channel in (AudioChannel[]) System.Enum.GetValues(typeof(AudioChannel)))
+            SetVolume(channel, channelVolumes[(int)channel]);
+    }
+
+    public float GetVolume(AudioChannel audioChannel) => SaveData.GetSavedAudioVolumes()[(int)audioChannel];
+
+    public void SetVolumeMaster(float volume) => SetVolume(AudioChannel.Master, volume);
+    public void SetVolumeMusic(float volume) => SetVolume(AudioChannel.Music, volume);
+    public void SetVolumeAmbiance(float volume) => SetVolume(AudioChannel.Ambiance, volume);
+    public void SetVolumeEnvironment(float volume) => SetVolume(AudioChannel.Environment, volume);
+    public void SetVolumeFootsteps(float volume) => SetVolume(AudioChannel.Footsteps, volume);
+    public void SetVolumeEnemySFX(float volume) => SetVolume(AudioChannel.EnemySFX, volume);
+    public void SetVolumeUI(float volume) => SetVolume(AudioChannel.UI, volume);
+
+    public void IncrementVolumeMaster(float increment) => IncrementVolume(AudioChannel.Master, increment);
+    public void IncrementVolumeMusic(float increment) => IncrementVolume(AudioChannel.Music, increment);
+    public void IncrementVolumeAmbiance(float increment) => IncrementVolume(AudioChannel.Ambiance, increment);
+    public void IncrementVolumeEnvironment(float increment) => IncrementVolume(AudioChannel.Environment, increment);
+    public void IncrementVolumeFootsteps(float increment) => IncrementVolume(AudioChannel.Footsteps, increment);
+    public void IncrementVolumeEnemySFX(float increment) => IncrementVolume(AudioChannel.EnemySFX, increment);
+    public void IncrementVolumeUI(float increment) => IncrementVolume(AudioChannel.UI, increment);
+    #endregion
 
     public static void PauseAllSounds(bool pause)
     {
         // pause or resume all sounds in the game (except ui)
         AudioListener.pause = pause;
     }
+
 
     // editor-only function to label audio sources in inspector
     #if UNITY_EDITOR
@@ -101,6 +162,7 @@ public class PlayerAudio : MonoBehaviour
 
 public enum AudioChannel
 {
+    Master,
     Music,
     Ambiance,
     Environment,

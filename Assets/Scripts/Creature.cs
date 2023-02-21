@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class Creature
+[CreateAssetMenu(fileName = "Creature", menuName = "")]
+public class Creature : ScriptableObject
 {
-    private int _id;
-    private string _name;
-    private int _slainCount;
-    private bool _isUnlocked;
-    private Sprite _sprite;
+    public int _id;
+    public string _name;
+    public int _slainCount;
+    public bool _isUnlocked;
+    public Sprite _sprite;
 
-    private int _killsToUnlock;
-    private int _creatureEncounters;
-    private int _creatureKills;
+    public int _killsToUnlock;
+    public int _creatureEncounters;
+    public int _creatureKills;
 
     public Creature(int id, string name, Sprite sprite, int slainCount = 0, bool isUnlocked = false)
     {

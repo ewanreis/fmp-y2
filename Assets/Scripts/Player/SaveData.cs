@@ -19,7 +19,7 @@ public static class SaveData
     public static void Setup()
     {
         // ensure volume array is correct size
-        Array.Resize(ref audio.volumes, System.Enum.GetNames(typeof(AudioChannel)).Length);
+        audio.volumes = new float[System.Enum.GetNames(typeof(AudioChannel)).Length];
 
         // load saved data
         LoadAudioData();
@@ -42,7 +42,7 @@ public static class SaveData
         string achievementsJson = JsonUtility.ToJson(achievements);
         PlayerPrefs.SetString(achievementsKey, achievementsJson);
 
-        Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}");
+        //Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}");
 
         // save changes to player prefs
         PlayerPrefs.Save();
@@ -54,7 +54,7 @@ public static class SaveData
         Save();
     }
 
-    public static void SaveVolume(AudioChannel channel, int volume)
+    public static void SaveVolume(AudioChannel channel, float volume)
     {
         audio.volumes[(int)channel] = volume;
         Save();
@@ -66,7 +66,13 @@ public static class SaveData
             audio = JsonUtility.FromJson<AudioData>(PlayerPrefs.GetString(audioKey));
 
         else
+        {
             audio = new AudioData(); // initialize default audio data
+            audio.volumes = new float[System.Enum.GetNames(typeof(AudioChannel)).Length];
+
+            for(int i = 0; i < audio.volumes.Length; i++)
+                audio.volumes[i] = 1f;
+        }
     }
 
     private static void LoadStatisticsData()
@@ -86,11 +92,13 @@ public static class SaveData
         else
             achievements = new AchiementsData(); // initialize default statistics data
     }
+
+    public static float[] GetSavedAudioVolumes() => audio.volumes;
 }
 
 public struct AudioData
 {
-    public int[] volumes;
+    public float[] volumes;
 }
 
 public struct StatisticData

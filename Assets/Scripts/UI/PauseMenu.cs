@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class PauseMenu : MonoBehaviour
 {
     // keep track of whether the game is paused
-    private bool paused = false;
+    public static bool paused = false;
 
     // events for each button
     public UnityEvent onResumeClicked;

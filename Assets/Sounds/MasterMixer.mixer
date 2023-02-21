@@ -100,7 +100,21 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: d805273a36f91e2448644e840efc6318
+    name: Ambiance
+  - guid: 0c6c4be6fc8eb1b48854c8dd6a5b2c4a
+    name: EnemySFX
+  - guid: 8eabb4cf315fc3a46b70905657d8df5f
+    name: Environment
+  - guid: be1766af4332a674aa6050895d16bc26
+    name: Footsteps
+  - guid: 21275649ffaebd8499f35f3f70c14764
+    name: Master
+  - guid: a71d6b5d4a2a3254ab9522c19f062655
+    name: Music
+  - guid: 21b5f8413d379da49a90c8552fdc5d6f
+    name: UI
   m_AudioMixerGroupViews:
   - guids:
     - bc1951ec0e44a63409172c1aacd57958
@@ -162,7 +176,8 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 5a7f06ac957ab5c418a24465d2637231
   m_FloatValues:
-    a71d6b5d4a2a3254ab9522c19f062655: -26.7
+    21275649ffaebd8499f35f3f70c14764: -20
+    a71d6b5d4a2a3254ab9522c19f062655: 0
   m_TransitionOverrides: {}
 --- !u!243 &1365398755364439626
 AudioMixerGroupController:
