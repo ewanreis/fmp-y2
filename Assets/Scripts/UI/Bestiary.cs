@@ -8,6 +8,7 @@ public class Bestiary : MonoBehaviour
 {
     [SerializeField] private List<Creature> _creatures;
     [SerializeField] private GameObject bestiaryUI;
+    [SerializeField] private TMP_Text description;
 
     public event Action<Creature> OnCreatureEncountered;
     public event Action<Creature> OnCreatureKilled;
@@ -37,13 +38,28 @@ public class Bestiary : MonoBehaviour
         displayedCreatures.Clear();
 
 
-        for(int i = 0; i < _creatures.Count; i++)
+        for (int i = 0; i < _creatures.Count; i++)
         {
+            int index = i; // prevent passing the reference i into the parameter of select
+
             displayedCreatures.Add(Instantiate(displayPrefab, displayParent));
+
             TMP_Text displayText = displayedCreatures[i].GetComponentInChildren<TMP_Text>();
             Image creatureImage = displayedCreatures[i].GetComponent<Image>();
+            Button button = displayedCreatures[i].GetComponent<Button>();
+
+            button.onClick.AddListener(() => ListButtonSelect(index));
+
             displayText.text = _creatures[i].Name;
+            description.text = 
+                $"Creature Name: {_creatures[i].Name}\nTimes Slain: {_creatures[i].CreatureKills}\nTimes Encountered: {_creatures[i].CreatureEncounters}";
         }
+    }
+
+    public void ListButtonSelect(int index)
+    {
+        description.text = 
+            $"Creature Name: {_creatures[index].Name}\nTimes Slain: {_creatures[index].CreatureKills}\nTimes Encountered: {_creatures[index].CreatureEncounters}";
     }
 
     public void ToggleBestiary()

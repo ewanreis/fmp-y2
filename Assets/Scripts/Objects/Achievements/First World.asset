@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: First World
   m_EditorClassIdentifier: 
   _id: 0
-  _name: First World
+  _name: New World
   _description: Play the game for the first time.
   _isUnlocked: 0
