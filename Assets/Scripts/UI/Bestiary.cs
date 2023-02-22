@@ -11,6 +11,7 @@ public class Bestiary : MonoBehaviour
 
     public event Action<Creature> OnCreatureEncountered;
     public event Action<Creature> OnCreatureKilled;
+    public static event Action OnBestiaryOpen;
 
     private bool isBestiaryOpen;
 
@@ -22,6 +23,7 @@ public class Bestiary : MonoBehaviour
     private void Start()
     {
         InputManager.OnBestiaryPressed += ToggleBestiary;
+        AchievementsMenu.OnAchievementsMenuOpen += CloseBestiary;
         UpdateBestiaryDisplay();
     }
 
@@ -62,6 +64,7 @@ public class Bestiary : MonoBehaviour
     {
         isBestiaryOpen = true;
         bestiaryUI.SetActive(true);
+        OnBestiaryOpen.Invoke();
         Debug.Log("Open Bestiary");
     }
 

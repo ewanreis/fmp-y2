@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     public static event Action OnSecondaryPressed;
     public static event Action OnPausePressed;
     public static event Action OnBestiaryPressed;
+    public static event Action OnAchievementsPressed;
     public static event Action<Vector2> OnMoveHeld;
 
     private void Awake()
@@ -38,6 +39,7 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.UseSecondary.performed += OnSecondaryPerformed;
         playerInput.Overworld.Pause.performed += OnPausePerformed;
         playerInput.Overworld.Bestiary.performed += OnBestiaryPerformed;
+        playerInput.Overworld.Achievements.performed += OnAchievementsPerformed;
     }
 
     private void OnDisable()
@@ -49,6 +51,8 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.UsePrimary.performed -= OnPrimaryPerformed;
         playerInput.Overworld.UseSecondary.performed -= OnSecondaryPerformed;
         playerInput.Overworld.Pause.performed -= OnPausePerformed;
+        playerInput.Overworld.Bestiary.performed -= OnBestiaryPerformed;
+        playerInput.Overworld.Achievements.performed -= OnAchievementsPerformed;
     }
 
     private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -81,6 +85,14 @@ public class InputManager : MonoBehaviour
         bool secondaryInput = context.ReadValue<float>() == 1 ? true : false;
         if(secondaryInput)
             OnSecondaryPressed?.Invoke();
+    }
+
+    private void OnAchievementsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // check if achievements menu input button pressed then invoke event if true
+        bool pressed = context.ReadValue<float>() == 1 ? true : false;
+        if(pressed)
+            OnAchievementsPressed?.Invoke();
     }
 
     private void OnPausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)

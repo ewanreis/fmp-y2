@@ -80,6 +80,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Achievements"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ba37d87-4799-4748-b924-99b0a573999a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Bestiary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b7b0241-2b8a-46bd-aea0-85630ef9c535"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Achievements"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -223,6 +243,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Overworld_CursorPosition = m_Overworld.FindAction("CursorPosition", throwIfNotFound: true);
         m_Overworld_Pause = m_Overworld.FindAction("Pause", throwIfNotFound: true);
         m_Overworld_Bestiary = m_Overworld.FindAction("Bestiary", throwIfNotFound: true);
+        m_Overworld_Achievements = m_Overworld.FindAction("Achievements", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +309,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Overworld_CursorPosition;
     private readonly InputAction m_Overworld_Pause;
     private readonly InputAction m_Overworld_Bestiary;
+    private readonly InputAction m_Overworld_Achievements;
     public struct OverworldActions
     {
         private @PlayerInput m_Wrapper;
@@ -298,6 +320,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @CursorPosition => m_Wrapper.m_Overworld_CursorPosition;
         public InputAction @Pause => m_Wrapper.m_Overworld_Pause;
         public InputAction @Bestiary => m_Wrapper.m_Overworld_Bestiary;
+        public InputAction @Achievements => m_Wrapper.m_Overworld_Achievements;
         public InputActionMap Get() { return m_Wrapper.m_Overworld; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -325,6 +348,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Bestiary.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnBestiary;
                 @Bestiary.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnBestiary;
                 @Bestiary.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnBestiary;
+                @Achievements.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnAchievements;
+                @Achievements.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnAchievements;
+                @Achievements.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnAchievements;
             }
             m_Wrapper.m_OverworldActionsCallbackInterface = instance;
             if (instance != null)
@@ -347,6 +373,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Bestiary.started += instance.OnBestiary;
                 @Bestiary.performed += instance.OnBestiary;
                 @Bestiary.canceled += instance.OnBestiary;
+                @Achievements.started += instance.OnAchievements;
+                @Achievements.performed += instance.OnAchievements;
+                @Achievements.canceled += instance.OnAchievements;
             }
         }
     }
@@ -368,5 +397,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnCursorPosition(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnBestiary(InputAction.CallbackContext context);
+        void OnAchievements(InputAction.CallbackContext context);
     }
 }

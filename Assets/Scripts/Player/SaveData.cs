@@ -7,7 +7,7 @@ public static class SaveData
 {
     public static AudioData audio;
     public static StatisticData statistics;
-    public static AchiementsData achievements;
+    public static AchievementsData achievements;
 
     private const string audioKey = "audio";
     private const string statisticsKey = "statistics";
@@ -48,7 +48,7 @@ public static class SaveData
         PlayerPrefs.Save();
     }
 
-    public static void SaveAchievements(Dictionary<string, bool> achievementData)
+    public static void SaveAchievements(Dictionary<Achievement, bool> achievementData)
     {
         achievements.achievementList = achievementData;
         Save();
@@ -87,13 +87,14 @@ public static class SaveData
     private static void LoadAchievementsData()
     {
         if (PlayerPrefs.HasKey(achievementsKey))
-            achievements = JsonUtility.FromJson<AchiementsData>(PlayerPrefs.GetString(achievementsKey));
+            achievements = JsonUtility.FromJson<AchievementsData>(PlayerPrefs.GetString(achievementsKey));
 
         else
-            achievements = new AchiementsData(); // initialize default statistics data
+            achievements = new AchievementsData(); // initialize default statistics data
     }
 
     public static float[] GetSavedAudioVolumes() => audio.volumes;
+    public static Dictionary<Achievement, bool> GetAchievements() => achievements.achievementList;
 }
 
 public struct AudioData
@@ -105,9 +106,10 @@ public struct StatisticData
 {
     public int totalEnemiesKilled;
     public int highestYearReached;
+    public Dictionary<Creature, bool> creatures;
 }
 
-public struct AchiementsData
+public struct AchievementsData
 {
-    public Dictionary<string, bool> achievementList;
+    public Dictionary<Achievement, bool> achievementList;
 }
