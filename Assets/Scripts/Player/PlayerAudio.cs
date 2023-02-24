@@ -114,6 +114,11 @@ public class PlayerAudio : MonoBehaviour
             SetVolume(channel, channelVolumes[(int)channel]);
     }
 
+    public void PlaySound(AudioChannel channel, AudioClip sound)
+    {
+        audioSources[(int)channel].PlayOneShot(sound);
+    }
+
     public float GetVolume(AudioChannel audioChannel) => SaveData.GetSavedAudioVolumes()[(int)audioChannel];
 
     public void SetVolumeMaster(float volume) => SetVolume(AudioChannel.Master, volume);
@@ -123,6 +128,7 @@ public class PlayerAudio : MonoBehaviour
     public void SetVolumeFootsteps(float volume) => SetVolume(AudioChannel.Footsteps, volume);
     public void SetVolumeEnemySFX(float volume) => SetVolume(AudioChannel.EnemySFX, volume);
     public void SetVolumeUI(float volume) => SetVolume(AudioChannel.UI, volume);
+    public void SetVolumeDialogue(float volume) => SetVolume(AudioChannel.Dialogue, volume);
 
     public void IncrementVolumeMaster(float increment) => IncrementVolume(AudioChannel.Master, increment);
     public void IncrementVolumeMusic(float increment) => IncrementVolume(AudioChannel.Music, increment);
@@ -131,6 +137,7 @@ public class PlayerAudio : MonoBehaviour
     public void IncrementVolumeFootsteps(float increment) => IncrementVolume(AudioChannel.Footsteps, increment);
     public void IncrementVolumeEnemySFX(float increment) => IncrementVolume(AudioChannel.EnemySFX, increment);
     public void IncrementVolumeUI(float increment) => IncrementVolume(AudioChannel.UI, increment);
+    public void IncrementVolumeDialogue(float increment) => IncrementVolume(AudioChannel.Dialogue, increment);
     #endregion
 
     public static void PauseAllSounds(bool pause)
@@ -168,5 +175,6 @@ public enum AudioChannel
     Environment,
     Footsteps,
     EnemySFX,
-    UI
+    UI,
+    Dialogue
 }
