@@ -56,6 +56,15 @@ TagManager:
   - name: Foreground Far
     uniqueID: 4263157497
     locked: 0
+  - name: Building Far
+    uniqueID: 884497231
+    locked: 0
+  - name: Building Medium
+    uniqueID: 1219414749
+    locked: 0
+  - name: Building Close
+    uniqueID: 1472688929
+    locked: 0
   - name: Foreground Medium
     uniqueID: 1762237847
     locked: 0

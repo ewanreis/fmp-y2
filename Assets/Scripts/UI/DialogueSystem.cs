@@ -13,23 +13,27 @@ public class DialogueSystem : MonoBehaviour
 
     [SerializeField] private PlayerAudio playerAudio;
 
+    private bool isShowingDialogue;
+
     private string currentDialogue;
 
 
     void Start()
     {
         playerAudio = GetComponent<PlayerAudio>();
-        InputManager.OnPrimaryPressed += StartDialogue;
+        InputManager.OnSecondaryPressed += StartDialogue;
     }
 
     public void StartDialogue()
     {
-        currentDialogue = "Test Dialogue Speech";
-        StartCoroutine(TypeSentence());
+        currentDialogue = "Test Dialogue Speech.\nSecond line of dialogue.\nThird Line.";
+        if(!isShowingDialogue)
+            StartCoroutine(TypeSentence());
     }
 
     IEnumerator TypeSentence()
     {
+        isShowingDialogue = true;
         dialogueTextBox.text = "";
         foreach (char letter in currentDialogue.ToCharArray())
         {
@@ -39,6 +43,7 @@ public class DialogueSystem : MonoBehaviour
         }
         yield return new WaitForSeconds(sentenceDelay);
         EndDialogue();
+        isShowingDialogue = false;
     }
 
     void EndDialogue()
