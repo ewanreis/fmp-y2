@@ -89,6 +89,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkipSong"",
+                    ""type"": ""Button"",
+                    ""id"": ""09321b21-2ad1-434c-a694-b6787ee8706b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Achievements"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7869478b-6cf6-4666-8424-f1a361c08e4c"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipSong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -244,6 +264,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Overworld_Pause = m_Overworld.FindAction("Pause", throwIfNotFound: true);
         m_Overworld_Bestiary = m_Overworld.FindAction("Bestiary", throwIfNotFound: true);
         m_Overworld_Achievements = m_Overworld.FindAction("Achievements", throwIfNotFound: true);
+        m_Overworld_SkipSong = m_Overworld.FindAction("SkipSong", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -310,6 +331,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Overworld_Pause;
     private readonly InputAction m_Overworld_Bestiary;
     private readonly InputAction m_Overworld_Achievements;
+    private readonly InputAction m_Overworld_SkipSong;
     public struct OverworldActions
     {
         private @PlayerInput m_Wrapper;
@@ -321,6 +343,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_Overworld_Pause;
         public InputAction @Bestiary => m_Wrapper.m_Overworld_Bestiary;
         public InputAction @Achievements => m_Wrapper.m_Overworld_Achievements;
+        public InputAction @SkipSong => m_Wrapper.m_Overworld_SkipSong;
         public InputActionMap Get() { return m_Wrapper.m_Overworld; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -351,6 +374,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Achievements.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnAchievements;
                 @Achievements.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnAchievements;
                 @Achievements.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnAchievements;
+                @SkipSong.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnSkipSong;
+                @SkipSong.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnSkipSong;
+                @SkipSong.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnSkipSong;
             }
             m_Wrapper.m_OverworldActionsCallbackInterface = instance;
             if (instance != null)
@@ -376,6 +402,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Achievements.started += instance.OnAchievements;
                 @Achievements.performed += instance.OnAchievements;
                 @Achievements.canceled += instance.OnAchievements;
+                @SkipSong.started += instance.OnSkipSong;
+                @SkipSong.performed += instance.OnSkipSong;
+                @SkipSong.canceled += instance.OnSkipSong;
             }
         }
     }
@@ -398,5 +427,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnBestiary(InputAction.CallbackContext context);
         void OnAchievements(InputAction.CallbackContext context);
+        void OnSkipSong(InputAction.CallbackContext context);
     }
 }

@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Player
   - 
   - 
   - 
@@ -77,11 +77,11 @@ TagManager:
   - name: Boss
     uniqueID: 3161881585
     locked: 0
-  - name: Player
-    uniqueID: 3752989301
-    locked: 0
   - name: Projectiles
     uniqueID: 2392844201
+    locked: 0
+  - name: Player
+    uniqueID: 3752989301
     locked: 0
   - name: Blocking
     uniqueID: 2638660531

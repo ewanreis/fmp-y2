@@ -27,6 +27,7 @@ public class PlayerAudio : MonoBehaviour
         Invoke("GetSavedVolume", 0.01f);
         Invoke("SetSlidersToSavedVolume", 0.5f);
         PlaySong();
+        InputManager.OnSkipSongPressed += SkipSong;
     }
 
     public void PlayFootstepSound()
@@ -39,6 +40,22 @@ public class PlayerAudio : MonoBehaviour
     {
         if(!isPlayingMusic)
             StartCoroutine(MusicTrackCoroutine());
+    }
+
+    public void SkipSong()
+    {
+        StopCoroutine(MusicTrackCoroutine());
+        isPlayingMusic = false;
+        IncreaseMusicIndex();
+        audioSources[(int)AudioChannel.Music].Stop();
+        PlaySong();
+    }
+
+    private void IncreaseMusicIndex()
+    {
+        currentTrackNumber++;
+        if(currentTrackNumber >= musicTracks.Length)
+            currentTrackNumber = 0;
     }
 
     private IEnumerator FootstepCoroutine()
@@ -66,7 +83,7 @@ public class PlayerAudio : MonoBehaviour
         yield return new WaitForSeconds(musicTracks[currentTrackNumber].length);
 
         // go to next song
-        currentTrackNumber++;
+        IncreaseMusicIndex();
         isPlayingMusic = false;
         PlaySong();
     }

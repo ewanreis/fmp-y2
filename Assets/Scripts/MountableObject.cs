@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MountableObject : MonoBehaviour
 {
-    public GameObject player;
+    [SerializeField] private GameObject player;
+    [SerializeField] private Transform mountPoint;
+    [SerializeField] private float yOffset;
 
-    // mount point on the object where the player will be positioned.
-    public Transform mountPoint;
+    public static event Action OnMount;
+    public static event Action OnUnmount;
 
     private bool isMounted = false;
 
@@ -18,6 +21,10 @@ public class MountableObject : MonoBehaviour
 
     private void ToggleMount()
     {
+        // stop unwanted keypresses when paused
+        if(PauseMenu.paused)
+            return;
+
         if(!isMounted)
             Mount();
         else
@@ -26,26 +33,32 @@ public class MountableObject : MonoBehaviour
 
     private void Mount()
     {
-        player.transform.position = mountPoint.position;
-        player.transform.rotation = mountPoint.rotation;
-        player.transform.parent = transform;
+        isMounted = true;
 
         // disable players movement and rotation
-        player.GetComponent<Rigidbody2D>().isKinematic = true;
-        player.GetComponent<PlayerMovement>().enabled = false;
+        OnMount.Invoke();
 
-        isMounted = true;
     }
 
     private void Unmount()
     {
+        isMounted = false;
+
         player.transform.parent = null;
         player.transform.position = transform.position + Vector3.up;
+        player.transform.rotation = Quaternion.identity;
 
         // enable players movement and rotation.
-        player.GetComponent<Rigidbody2D>().isKinematic = false;
-        player.GetComponent<PlayerMovement>().enabled = true;
+        OnUnmount.Invoke();
 
-        isMounted = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if(!isMounted)
+            return;
+        
+        player.transform.position = mountPoint.position + new Vector3(0, yOffset, 0);
+        player.transform.rotation = mountPoint.rotation;
     }
 }
