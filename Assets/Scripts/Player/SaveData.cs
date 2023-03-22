@@ -8,10 +8,12 @@ public static class SaveData
     public static AudioData audio;
     public static StatisticData statistics;
     public static AchievementsData achievements;
+    public static GraphicsData graphics;
 
     private const string audioKey = "audio";
     private const string statisticsKey = "statistics";
     private const string achievementsKey = "achievements";
+    private const string graphicsKey = "graphics";
 
     // * this converts the stored structs into JSON files, which can then be saved to player prefs
     // * the JSON file can be turned back into a struct, if one is found from player prefs
@@ -25,6 +27,7 @@ public static class SaveData
         LoadAudioData();
         LoadStatisticsData();
         LoadAchievementsData();
+        LoadGraphicsData();
         Save();
     }
 
@@ -42,7 +45,11 @@ public static class SaveData
         string achievementsJson = JsonUtility.ToJson(achievements);
         PlayerPrefs.SetString(achievementsKey, achievementsJson);
 
-        //Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}");
+        // save graphics data
+        string graphicsJson = JsonUtility.ToJson(graphics);
+        PlayerPrefs.SetString(graphicsKey, graphicsJson);
+
+        Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
 
         // save changes to player prefs
         PlayerPrefs.Save();
@@ -57,6 +64,12 @@ public static class SaveData
     public static void SaveVolume(AudioChannel channel, float volume)
     {
         audio.volumes[(int)channel] = volume;
+        Save();
+    }
+
+    public static void SaveGraphics(GraphicsData data)
+    {
+        graphics = data;
         Save();
     }
 
@@ -93,8 +106,18 @@ public static class SaveData
             achievements = new AchievementsData(); // initialize default statistics data
     }
 
+    private static void LoadGraphicsData()
+    {
+        if (PlayerPrefs.HasKey(graphicsKey))
+            graphics = JsonUtility.FromJson<GraphicsData>(PlayerPrefs.GetString(graphicsKey));
+
+        else
+            graphics = new GraphicsData(); // initialize default graphics data
+    }
+
     public static float[] GetSavedAudioVolumes() => audio.volumes;
     public static Dictionary<Achievement, bool> GetAchievements() => achievements.achievementList;
+    public static GraphicsData GetGraphicsData() => graphics;
 }
 
 public struct AudioData
@@ -112,4 +135,10 @@ public struct StatisticData
 public struct AchievementsData
 {
     public Dictionary<Achievement, bool> achievementList;
+}
+
+public struct GraphicsData
+{
+    public bool isFullscreen;
+    public bool isVsync;
 }
