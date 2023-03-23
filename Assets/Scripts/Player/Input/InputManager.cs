@@ -17,6 +17,7 @@ public class InputManager : MonoBehaviour
     public static event Action OnAchievementsPressed;
     public static event Action<Vector2> OnMoveHeld;
     public static event Action OnSkipSongPressed;
+    public static event Action OnMountPressed;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.Bestiary.performed += OnBestiaryPerformed;
         playerInput.Overworld.Achievements.performed += OnAchievementsPerformed;
         playerInput.Overworld.SkipSong.performed += OnSkipSongPerformed;
+        playerInput.Overworld.Mount.performed += OnMountPerformed;
     }
 
     private void OnDisable()
@@ -56,6 +58,7 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.Bestiary.performed -= OnBestiaryPerformed;
         playerInput.Overworld.Achievements.performed -= OnAchievementsPerformed;
         playerInput.Overworld.SkipSong.performed -= OnSkipSongPerformed;
+        playerInput.Overworld.Mount.performed -= OnMountPerformed;
     }
 
     private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -120,6 +123,14 @@ public class InputManager : MonoBehaviour
         bool pressed = context.ReadValue<float>() == 1 ? true : false;
         if (pressed)
             OnSkipSongPressed?.Invoke();
+    }
+
+    private void OnMountPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // check if skip button pressed then invoke event if true
+        bool pressed = context.ReadValue<float>() == 1 ? true : false;
+        if (pressed)
+            OnMountPressed?.Invoke();
     }
 
     public static Vector2 GetMousePosition()

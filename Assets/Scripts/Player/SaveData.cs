@@ -49,7 +49,7 @@ public static class SaveData
         string graphicsJson = JsonUtility.ToJson(graphics);
         PlayerPrefs.SetString(graphicsKey, graphicsJson);
 
-        Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
+        //Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
 
         // save changes to player prefs
         PlayerPrefs.Save();

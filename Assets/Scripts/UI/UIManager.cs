@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject soldierInspectionMenu;
+    [SerializeField]
+    private TMP_Text soldierInspectText;
+
     private bool isVsyncOn;
     private bool isFullscreen;
 
@@ -16,7 +22,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         GetSavedGraphics();
-        
+        SoldierInspect.OnSoldierInspect += InspectSoldier;
     }
 
     private void GetSavedGraphics()
@@ -48,5 +54,11 @@ public class UIManager : MonoBehaviour
         data.isFullscreen = isFullscreen;
         data.isVsync = isVsyncOn;
         SaveData.SaveGraphics(data);
+    }
+
+    private void InspectSoldier(Soldier soldier)
+    {
+        soldierInspectionMenu.SetActive(true);
+        soldierInspectText.text = $"Health: {soldier.currentHealth}\nSoldier Type: {soldier.soldierType}\n\nStrength: {soldier.soldierStats.strength}\nDefence: {soldier.soldierStats.defence}\nSpeed: {soldier.soldierStats.speed}\nVision: {soldier.soldierStats.vision}\nStealth: {soldier.soldierStats.stealth}";
     }
 }

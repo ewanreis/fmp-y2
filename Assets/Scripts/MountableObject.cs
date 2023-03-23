@@ -16,7 +16,7 @@ public class MountableObject : MonoBehaviour
 
     private void Start()
     {
-        InputManager.OnPrimaryPressed += ToggleMount;
+        InputManager.OnMountPressed += ToggleMount;
     }
 
     private void ToggleMount()
@@ -61,4 +61,6 @@ public class MountableObject : MonoBehaviour
         player.transform.position = mountPoint.position + new Vector3(0, yOffset, 0);
         player.transform.rotation = mountPoint.rotation;
     }
+
+    public bool GetMountState() => isMounted;
 }

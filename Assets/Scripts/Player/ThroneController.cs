@@ -32,12 +32,15 @@ public class ThroneController : MonoBehaviour
     private void FreezeMovement()
     {
         isFrozen = true;
-
+        rb.bodyType = RigidbodyType2D.Static;
+        throneCollider.isTrigger = true;
     }
 
     private void UnfreezeMovement()
     {
         isFrozen = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        throneCollider.isTrigger = false;
     }
 
     private void HandleMoveInput(Vector2 moveInput)
