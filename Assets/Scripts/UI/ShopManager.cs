@@ -21,6 +21,20 @@ public class ShopManager : MonoBehaviour
     [SerializeField]
     private Gradient colorGradient;
 
+    [SerializeField]
+    private Color lockedButtonColour;
+    [SerializeField]
+    private Color lockedButtonColourSelected;
+    [SerializeField]
+    private Color lockedButtonColourPressed;
+
+    [SerializeField]
+    private Color buttonColour;
+    [SerializeField]
+    private Color buttonColourSelected;
+    [SerializeField]
+    private Color buttonColourPressed;
+
     private void Start()
     {
         UpdateShop();
@@ -28,10 +42,39 @@ public class ShopManager : MonoBehaviour
 
     public void UpdateShop()
     {
-        foreach(ShopItem item in items)
+        List<ShopItem> modifiedItems = new List<ShopItem>();
+
+        foreach (ShopItem item in items)
         {
-            item.shopButton.interactable = (currentPoints >= item.cost) ? true : false;
+            ShopItem modifiedItem = new ShopItem();
+            modifiedItem = item;
+            modifiedItem.locked = (currentPoints >= item.cost) ? false : true;
+            var colors = modifiedItem.shopButton.colors;
+            ShopButtonSound buttonSound = modifiedItem.shopButton.GetComponent<ShopButtonSound>();
+
+            if(modifiedItem.locked)
+            {
+                colors.normalColor = lockedButtonColour;
+                colors.highlightedColor = lockedButtonColourSelected;
+                colors.selectedColor = lockedButtonColourSelected;
+                colors.pressedColor = lockedButtonColourPressed;
+                buttonSound.isLocked = true;
+            }
+
+            else
+            {
+                colors.normalColor = buttonColour;
+                colors.highlightedColor = buttonColourSelected;
+                colors.selectedColor = buttonColourSelected;
+                colors.pressedColor = buttonColourPressed;
+                buttonSound.isLocked = false;
+            }
+
+            modifiedItem.shopButton.colors = colors;
+            modifiedItems.Add(modifiedItem);
         }
+
+        items = modifiedItems;
 
         // map value from 1 to 10000 to a normalized value between 0 and 1
         float normalizedValue = Mathf.InverseLerp(1, 10000, currentPoints);
@@ -53,4 +96,5 @@ public struct ShopItem
     public Button shopButton;
     public int cost;
     public int id;
+    public bool locked;
 }

@@ -8,6 +8,9 @@ public class InputManager : MonoBehaviour
     private bool isMovePressed = false;
     private Vector2 lastMoveInput = Vector2.zero;
 
+    private bool isPrimaryPressed = false;
+    private bool isSecondaryPressed = false;
+
     // events for different input types
     public static event Action<Vector2> OnMoveInput;
     public static event Action OnPrimaryPressed;
@@ -18,6 +21,8 @@ public class InputManager : MonoBehaviour
     public static event Action<Vector2> OnMoveHeld;
     public static event Action OnSkipSongPressed;
     public static event Action OnMountPressed;
+    public static event Action OnPrimaryHeld;
+    public static event Action OnSecondaryHeld;
 
     private void Awake()
     {
@@ -29,6 +34,10 @@ public class InputManager : MonoBehaviour
         // check if move input is held down and invoke event
         if (isMovePressed)
             OnMoveHeld?.Invoke(lastMoveInput);
+        if(isPrimaryPressed)
+            OnPrimaryHeld?.Invoke();
+        if(isSecondaryPressed)
+            OnSecondaryHeld?.Invoke();
     }
 
     private void OnEnable()
@@ -44,6 +53,8 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.Achievements.performed += OnAchievementsPerformed;
         playerInput.Overworld.SkipSong.performed += OnSkipSongPerformed;
         playerInput.Overworld.Mount.performed += OnMountPerformed;
+        playerInput.Overworld.UsePrimary.canceled += OnPrimaryCanceled;
+        playerInput.Overworld.UseSecondary.canceled += OnSecondaryCancelled;
     }
 
     private void OnDisable()
@@ -59,6 +70,8 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.Achievements.performed -= OnAchievementsPerformed;
         playerInput.Overworld.SkipSong.performed -= OnSkipSongPerformed;
         playerInput.Overworld.Mount.performed -= OnMountPerformed;
+        playerInput.Overworld.UsePrimary.canceled -= OnPrimaryCanceled;
+        playerInput.Overworld.UseSecondary.canceled -= OnSecondaryCancelled;
     }
 
     private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -82,7 +95,15 @@ public class InputManager : MonoBehaviour
         // check if primary input button pressed then invoke event if true
         bool primaryInput = context.ReadValue<float>() == 1 ? true : false;
         if (primaryInput)
+        {
             OnPrimaryPressed?.Invoke();
+            isPrimaryPressed = true;
+        }
+    }
+
+    private void OnPrimaryCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        isPrimaryPressed = false;
     }
 
     private void OnSecondaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -90,7 +111,15 @@ public class InputManager : MonoBehaviour
         // check if secondary input button pressed then invoke event if true
         bool secondaryInput = context.ReadValue<float>() == 1 ? true : false;
         if(secondaryInput)
+        {
             OnSecondaryPressed?.Invoke();
+            isSecondaryPressed = true;
+        }
+    }
+
+    private void OnSecondaryCancelled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        isSecondaryPressed = false;
     }
 
     private void OnAchievementsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)

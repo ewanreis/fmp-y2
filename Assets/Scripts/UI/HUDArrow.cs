@@ -8,6 +8,9 @@ public class HUDArrow : MonoBehaviour
     private RectTransform circleCenter;
 
     [SerializeField]
+    private GameObject centerFollow;
+
+    [SerializeField]
     private float circleRadius = 100f;
 
     [SerializeField]

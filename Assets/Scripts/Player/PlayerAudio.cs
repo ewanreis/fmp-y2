@@ -9,6 +9,9 @@ public class PlayerAudio : MonoBehaviour
 
     [SerializeField] private AudioClip[] footstepSounds;
     [SerializeField] private AudioClip[] musicTracks;
+    [SerializeField] private AudioClip buttonDenySound;
+    [SerializeField] private AudioClip[] shopBuySounds;
+    [SerializeField] private AudioClip[] shopOpenSounds;
     [SerializeField] private float footstepDelay;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private Slider[] sliders;
@@ -28,6 +31,8 @@ public class PlayerAudio : MonoBehaviour
         Invoke("SetSlidersToSavedVolume", 0.5f);
         PlaySong();
         InputManager.OnSkipSongPressed += SkipSong;
+        ShopButtonSound.OnLockedButtonClick += PlayButtonDenySound;
+        ShopButtonSound.OnShopButtonClick += PlayShopBuySound;
     }
 
     public void PlayFootstepSound()
@@ -95,6 +100,21 @@ public class PlayerAudio : MonoBehaviour
         {
             sliders[i].value = GetVolume((AudioChannel)i);
         }
+    }
+
+    private void PlayButtonDenySound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(buttonDenySound);
+    }
+
+    private void PlayShopBuySound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(shopBuySounds[Random.Range(0, shopBuySounds.Length)]);
+    }
+
+    public void PlayShopOpenSound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(shopOpenSounds[Random.Range(0, shopOpenSounds.Length)]);
     }
 
     #region Volume Methods
