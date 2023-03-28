@@ -31,8 +31,8 @@ public class PlayerAudio : MonoBehaviour
         Invoke("SetSlidersToSavedVolume", 0.5f);
         PlaySong();
         InputManager.OnSkipSongPressed += SkipSong;
-        ShopButtonSound.OnLockedButtonClick += PlayButtonDenySound;
-        ShopButtonSound.OnShopButtonClick += PlayShopBuySound;
+        ShopButton.OnLockedButtonClick += PlayButtonDenySound;
+        ShopButton.OnShopButtonClick += PlayShopBuySound;
     }
 
     public void PlayFootstepSound()

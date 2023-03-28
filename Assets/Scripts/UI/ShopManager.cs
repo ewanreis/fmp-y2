@@ -7,6 +7,9 @@ using TMPro;
 public class ShopManager : MonoBehaviour
 {
     [SerializeField]
+    private ScoreManager scoreManager;
+
+    [SerializeField]
     private List<ShopItem> items;
 
     [SerializeField]
@@ -38,10 +41,13 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         UpdateShop();
+        ShopButton.OnItemBuy += BuyItem;
+        PointsPerMinute.OnGainPoints += UpdateShop;
     }
 
     public void UpdateShop()
     {
+        currentPoints = scoreManager.GetCurrentPoints();
         List<ShopItem> modifiedItems = new List<ShopItem>();
 
         foreach (ShopItem item in items)
@@ -50,7 +56,8 @@ public class ShopManager : MonoBehaviour
             modifiedItem = item;
             modifiedItem.locked = (currentPoints >= item.cost) ? false : true;
             var colors = modifiedItem.shopButton.colors;
-            ShopButtonSound buttonSound = modifiedItem.shopButton.GetComponent<ShopButtonSound>();
+            ShopButton shopButton = modifiedItem.shopButton.GetComponent<ShopButton>();
+            shopButton.SetItemID(item.id);
 
             if(modifiedItem.locked)
             {
@@ -58,7 +65,7 @@ public class ShopManager : MonoBehaviour
                 colors.highlightedColor = lockedButtonColourSelected;
                 colors.selectedColor = lockedButtonColourSelected;
                 colors.pressedColor = lockedButtonColourPressed;
-                buttonSound.isLocked = true;
+                shopButton.isLocked = true;
             }
 
             else
@@ -67,7 +74,7 @@ public class ShopManager : MonoBehaviour
                 colors.highlightedColor = buttonColourSelected;
                 colors.selectedColor = buttonColourSelected;
                 colors.pressedColor = buttonColourPressed;
-                buttonSound.isLocked = false;
+                shopButton.isLocked = false;
             }
 
             modifiedItem.shopButton.colors = colors;
@@ -87,6 +94,12 @@ public class ShopManager : MonoBehaviour
 
         currentPointText.color = color;
         currentPointText.text = $"{currentPoints}";
+    }
+
+    private void BuyItem(int itemID)
+    {
+        scoreManager.SubtractPoints(items[itemID].cost);
+        UpdateShop();
     }
 }
 

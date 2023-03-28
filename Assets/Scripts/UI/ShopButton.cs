@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class ShopButtonSound : MonoBehaviour
+public class ShopButton : MonoBehaviour
 {
     [SerializeField] private Button button;
 
@@ -11,6 +11,10 @@ public class ShopButtonSound : MonoBehaviour
     public static event Action OnLockedButtonClick;
     public static event Action OnShopButtonClick;
 
+    public static event Action<int> OnItemBuy;
+
+    [SerializeField] private int itemID;
+
     private void Start()
     {
         if (button == null)
@@ -18,6 +22,8 @@ public class ShopButtonSound : MonoBehaviour
             button = GetComponent<Button>();
         }
     }
+
+    public void SetItemID(int id) => itemID = id;
 
     public void OnButtonClick()
     {
@@ -28,6 +34,7 @@ public class ShopButtonSound : MonoBehaviour
         else if (!isLocked)
         {
             OnShopButtonClick.Invoke();
+            OnItemBuy.Invoke(itemID);
         }
     }
 }

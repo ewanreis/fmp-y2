@@ -13,10 +13,13 @@ public class MountableObject : MonoBehaviour
     public static event Action OnUnmount;
 
     private bool isMounted = false;
+    private bool canMount = false;
 
     private void Start()
     {
         InputManager.OnMountPressed += ToggleMount;
+        TooltipThrone.OnTooltipShow += EnableMount;
+        TooltipThrone.OnTooltipHide += DisableMount;
     }
 
     private void ToggleMount()
@@ -25,9 +28,9 @@ public class MountableObject : MonoBehaviour
         if(PauseMenu.paused)
             return;
 
-        if(!isMounted)
+        if(!isMounted && canMount)
             Mount();
-        else
+        else if(isMounted)
             Unmount();
     }
 
@@ -37,7 +40,6 @@ public class MountableObject : MonoBehaviour
 
         // disable players movement and rotation
         OnMount.Invoke();
-
     }
 
     private void Unmount()
@@ -50,7 +52,16 @@ public class MountableObject : MonoBehaviour
 
         // enable players movement and rotation.
         OnUnmount.Invoke();
+    }
 
+    private void EnableMount()
+    {
+        canMount = true;
+    }
+
+    private void DisableMount()
+    {
+        canMount = false;
     }
 
     private void FixedUpdate()

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using TMPro;
+using System;
 
 public class TooltipThrone : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class TooltipThrone : MonoBehaviour
 
     [SerializeField]
     private RectTransform canvasRect;
+
+    public static event Action OnTooltipShow;
+    public static event Action OnTooltipHide;
 
     private void Start()
     {
@@ -36,6 +40,7 @@ public class TooltipThrone : MonoBehaviour
         if (other.gameObject.tag == "Self")
         {
             showTooltip = true;
+            OnTooltipShow.Invoke();
             tooltipText.gameObject.SetActive(true);
         }
     }
@@ -45,6 +50,7 @@ public class TooltipThrone : MonoBehaviour
         if (other.gameObject.tag == "Self")
         {
             showTooltip = false;
+            OnTooltipHide.Invoke();
             tooltipText.gameObject.SetActive(false);
         }
     }
