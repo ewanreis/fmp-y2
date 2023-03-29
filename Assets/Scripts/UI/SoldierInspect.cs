@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SoldierInspect : MonoBehaviour
 {
@@ -33,7 +35,7 @@ public class SoldierInspect : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (colorTransitionCoroutine != null)
+        if (colorTransitionCoroutine != null && !EventSystem.current.IsPointerOverGameObject())
         {
             StopCoroutine(colorTransitionCoroutine);
         }
@@ -51,7 +53,8 @@ public class SoldierInspect : MonoBehaviour
 
     private void OnMouseDown()
     {
-        OnSoldierInspect.Invoke(soldier);
+        if (!EventSystem.current.IsPointerOverGameObject())
+            OnSoldierInspect.Invoke(soldier);
     }
 
     private IEnumerator TransitionColor(Color newTargetColor)
