@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Linq;
 
 public static class SaveData
@@ -56,7 +54,7 @@ public static class SaveData
         PlayerPrefs.Save();
     }
 
-    public static void SaveAchievements(Dictionary<Achievement, bool> achievementData)
+    public static void SaveAchievements(List<Achievement> achievementData)
     {
         achievements.achievementList = achievementData;
         Save();
@@ -108,8 +106,12 @@ public static class SaveData
             Debug.Log("Created New Achievement Data");
             achievements = new AchievementsData(); // initialize default statistics data
             List<Achievement> achList = AchievementsMenu.achievementList; // get all known achievements
-            achievements.achievementList = achList.ToDictionary(x => x, x => false); // convert to dictionary and set all values to false
-            Debug.Log(achievements.achievementList);
+            achievements.achievementList = achList;
+            for (int i = 0; i < achievements.achievementList.Count(); i++)
+            {
+                achievements.achievementList[i].IsUnlocked = false;
+            }
+            //Debug.Log(achievements.achievementList);
         }
     }
 
@@ -123,7 +125,11 @@ public static class SaveData
     }
 
     public static float[] GetSavedAudioVolumes() => audio.volumes;
-    public static Dictionary<Achievement, bool> GetAchievements() => achievements.achievementList;
+    public static List<Achievement> GetAchievements() 
+    {
+        Debug.Log(achievements.achievementList);
+        return achievements.achievementList;
+    }
     public static GraphicsData GetGraphicsData() => graphics;
 }
 
@@ -141,7 +147,7 @@ public struct StatisticData
 
 public struct AchievementsData
 {
-    public Dictionary<Achievement, bool> achievementList;
+    public List<Achievement> achievementList;
 }
 
 public struct GraphicsData

@@ -13,7 +13,7 @@ public class AchievementsMenu : MonoBehaviour
 
     public static List<Achievement> achievementList;
 
-    private Dictionary<Achievement, bool> achievementStatuses;
+    private List<Achievement> achievementStatuses;
 
 
     public static event Action OnAchievementsMenuOpen;
@@ -33,7 +33,7 @@ public class AchievementsMenu : MonoBehaviour
 
         achievementList = _achievements;
 
-        achievementStatuses = new Dictionary<Achievement, bool>();
+        achievementStatuses = new List<Achievement>();
         Debug.Log(achievementList);
 
         yield return new WaitForSeconds(0.5f);
@@ -83,6 +83,9 @@ public class AchievementsMenu : MonoBehaviour
     public void GetSavedAchievements()
     {
         achievementStatuses = SaveData.GetAchievements();
+        Debug.Log(achievementStatuses);
+
+        _achievements = achievementStatuses;
     }
 
     public static List<Achievement> GetAchievementList()
@@ -122,14 +125,12 @@ public class AchievementsMenu : MonoBehaviour
 
     public void RegisterAchievementUnlock(Achievement achievement)
     {
-        
         if(achievement.IsUnlocked == true)
         {
             Debug.Log($"Achievement {achievement} is already unlocked");
             return;
         }
         achievement.IsUnlocked = true;
-        achievementStatuses[achievement] = true;
         SaveAchievementStatus();
         UpdateAchievementsMenuDisplay();
         Debug.Log($"Unlocked {achievement}");
