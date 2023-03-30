@@ -44,13 +44,13 @@ public class ThroneShoot : MonoBehaviour
 
     private void ShootPrimary()
     {
-        if(!isShootingPrimary && canShoot)
+        if(!isShootingPrimary && canShoot && !PauseMenu.paused)
             StartCoroutine(ShootPrimaryCoroutine());
     }
 
     private void ShootSecondary()
     {
-        if(!isShootingSecondary && canShoot)
+        if(!isShootingSecondary && canShoot && !PauseMenu.paused)
             StartCoroutine(ShootSecondaryCoroutine());
     }
 

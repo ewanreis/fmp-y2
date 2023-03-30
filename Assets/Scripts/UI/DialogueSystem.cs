@@ -27,7 +27,7 @@ public class DialogueSystem : MonoBehaviour
     public void StartDialogue()
     {
         currentDialogue = "Test Dialogue Speech.\nSecond line of dialogue.\nThird Line.";
-        if(!isShowingDialogue)
+        if(!isShowingDialogue && !PauseMenu.paused)
             StartCoroutine(TypeSentence());
     }
 

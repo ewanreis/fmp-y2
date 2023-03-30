@@ -11,6 +11,8 @@ public class AchievementsMenu : MonoBehaviour
     [SerializeField] private GameObject achievementsUI;
     [SerializeField] private TMP_Text description;
 
+    public static List<Achievement> achievementList;
+
     private Dictionary<Achievement, bool> achievementStatuses;
 
 
@@ -24,15 +26,21 @@ public class AchievementsMenu : MonoBehaviour
 
     public List<GameObject> displayedAchievements = new List<GameObject>();
 
-    private void Start()
+    private IEnumerator Start()
     {
         InputManager.OnAchievementsPressed += ToggleAchievementsMenu;
         Bestiary.OnBestiaryOpen += CloseAchievementsMenu;
 
-        achievementStatuses = new Dictionary<Achievement, bool>();
+        achievementList = _achievements;
 
+        achievementStatuses = new Dictionary<Achievement, bool>();
+        Debug.Log(achievementList);
+
+        yield return new WaitForSeconds(0.5f);
         GetSavedAchievements();
         UpdateAchievementsMenuDisplay();
+        RegisterAchievementUnlock(_achievements[0]);
+        yield return null;
     }
 
     public void UpdateAchievementsMenuDisplay()
@@ -62,7 +70,7 @@ public class AchievementsMenu : MonoBehaviour
         }
     }
 
-     public void ListButtonSelect(int index)
+    public void ListButtonSelect(int index)
     {
         description.text = $"Achievement: {_achievements[index].Name}\nDescription: {_achievements[index].Description}";
     }
@@ -76,6 +84,12 @@ public class AchievementsMenu : MonoBehaviour
     {
         achievementStatuses = SaveData.GetAchievements();
     }
+
+    public static List<Achievement> GetAchievementList()
+    {
+        return achievementList;
+    }
+
 
     public void ToggleAchievementsMenu()
     {
@@ -108,10 +122,17 @@ public class AchievementsMenu : MonoBehaviour
 
     public void RegisterAchievementUnlock(Achievement achievement)
     {
+        
+        if(achievement.IsUnlocked == true)
+        {
+            Debug.Log($"Achievement {achievement} is already unlocked");
+            return;
+        }
         achievement.IsUnlocked = true;
         achievementStatuses[achievement] = true;
         SaveAchievementStatus();
         UpdateAchievementsMenuDisplay();
+        Debug.Log($"Unlocked {achievement}");
         OnAchievementUnlock?.Invoke(achievement);
     }
 }

@@ -12,6 +12,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private AudioClip buttonDenySound;
     [SerializeField] private AudioClip[] shopBuySounds;
     [SerializeField] private AudioClip[] shopOpenSounds;
+    [SerializeField] private AudioClip[] scoreGainSounds;
     [SerializeField] private float footstepDelay;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private Slider[] sliders;
@@ -33,6 +34,7 @@ public class PlayerAudio : MonoBehaviour
         InputManager.OnSkipSongPressed += SkipSong;
         ShopButton.OnLockedButtonClick += PlayButtonDenySound;
         ShopButton.OnShopButtonClick += PlayShopBuySound;
+        ScoreManager.OnPointsGained += PlayScoreGainSound;
     }
 
     public void PlayFootstepSound()
@@ -105,6 +107,11 @@ public class PlayerAudio : MonoBehaviour
     private void PlayButtonDenySound()
     {
         audioSources[(int)AudioChannel.UI].PlayOneShot(buttonDenySound);
+    }
+
+    private void PlayScoreGainSound(int i)
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(scoreGainSounds[Random.Range(0, scoreGainSounds.Length)]);
     }
 
     private void PlayShopBuySound()

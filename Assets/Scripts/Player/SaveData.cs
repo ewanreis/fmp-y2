@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public static class SaveData
 {
@@ -49,7 +50,7 @@ public static class SaveData
         string graphicsJson = JsonUtility.ToJson(graphics);
         PlayerPrefs.SetString(graphicsKey, graphicsJson);
 
-        //Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
+        Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
 
         // save changes to player prefs
         PlayerPrefs.Save();
@@ -103,7 +104,13 @@ public static class SaveData
             achievements = JsonUtility.FromJson<AchievementsData>(PlayerPrefs.GetString(achievementsKey));
 
         else
+        {
+            Debug.Log("Created New Achievement Data");
             achievements = new AchievementsData(); // initialize default statistics data
+            List<Achievement> achList = AchievementsMenu.achievementList; // get all known achievements
+            achievements.achievementList = achList.ToDictionary(x => x, x => false); // convert to dictionary and set all values to false
+            Debug.Log(achievements.achievementList);
+        }
     }
 
     private static void LoadGraphicsData()
