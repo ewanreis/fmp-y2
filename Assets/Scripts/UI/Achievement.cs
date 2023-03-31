@@ -11,7 +11,6 @@ public class Achievement : ScriptableObject
     public string _description;
     public bool _isUnlocked;
 
-
     public Achievement(int id, string name, string description, bool isUnlocked = false)
     {
         _id = id;

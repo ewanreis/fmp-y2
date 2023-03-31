@@ -62,6 +62,7 @@ public class AchievementsMenu : MonoBehaviour
             TMP_Text displayText = displayedAchievements[i].GetComponentInChildren<TMP_Text>();
             Image creatureImage = displayedAchievements[i].GetComponent<Image>();
             Button button = displayedAchievements[i].GetComponent<Button>();
+            button.interactable = _achievements[i].IsUnlocked;
 
             button.onClick.AddListener(() => ListButtonSelect(index));
 
@@ -82,9 +83,10 @@ public class AchievementsMenu : MonoBehaviour
 
     public void GetSavedAchievements()
     {
-        achievementStatuses = SaveData.GetAchievements();
+        AchievementsData.SavableAchievement[] savableAchievementsList = SaveData.GetAchievements();
+        achievementStatuses = SaveData.ConvertSaveableToAchievement(savableAchievementsList);
         Debug.Log(achievementStatuses);
-
+        
         _achievements = achievementStatuses;
     }
 

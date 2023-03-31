@@ -16,6 +16,7 @@ public static class SaveData
 
     // * this converts the stored structs into JSON files, which can then be saved to player prefs
     // * the JSON file can be turned back into a struct, if one is found from player prefs
+    // * scriptable objects such as the achievements have to be converted to a class or a struct before being saved as a json file
 
     public static void Setup()
     {
@@ -49,14 +50,15 @@ public static class SaveData
         PlayerPrefs.SetString(graphicsKey, graphicsJson);
 
         Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
-
+        //Debug.Log($"{achievementsJson}, {achievements.saveableAchievementList.Length}");
         // save changes to player prefs
         PlayerPrefs.Save();
     }
 
     public static void SaveAchievements(List<Achievement> achievementData)
     {
-        achievements.achievementList = achievementData;
+        achievements.saveableAchievementList = ConvertAchievementToSaveable(achievementData);
+        Debug.Log("Saved");
         Save();
     }
 
@@ -99,20 +101,65 @@ public static class SaveData
     private static void LoadAchievementsData()
     {
         if (PlayerPrefs.HasKey(achievementsKey))
+        {
             achievements = JsonUtility.FromJson<AchievementsData>(PlayerPrefs.GetString(achievementsKey));
+            Debug.Log(achievements.saveableAchievementList.Count());
+        }
 
         else
         {
             Debug.Log("Created New Achievement Data");
             achievements = new AchievementsData(); // initialize default statistics data
             List<Achievement> achList = AchievementsMenu.achievementList; // get all known achievements
-            achievements.achievementList = achList;
-            for (int i = 0; i < achievements.achievementList.Count(); i++)
+            //Debug.Log($"achList {achList}");
+            achievements.saveableAchievementList = ConvertAchievementToSaveable(achList);
+            for (int i = 0; i < achievements.saveableAchievementList.Count(); i++)
             {
-                achievements.achievementList[i].IsUnlocked = false;
+                achievements.saveableAchievementList[i]._isUnlocked = false;
             }
+            
+            foreach(AchievementsData.SavableAchievement savableAchievement in achievements.saveableAchievementList)
+            {
+                Debug.Log($"Saveable Achievement {savableAchievement}");
+            }
+            Save();
             //Debug.Log(achievements.achievementList);
         }
+    }
+
+    public static AchievementsData.SavableAchievement[] ConvertAchievementToSaveable(List<Achievement> achList)
+    {
+        AchievementsData.SavableAchievement[] sAchList = new AchievementsData.SavableAchievement[achList.Count()];
+        for(int i = 0; i < achList.Count(); i++)
+        {
+            AchievementsData.SavableAchievement savableAchievement = new AchievementsData.SavableAchievement
+            (
+                achList[i]._id,
+                achList[i]._name,
+                achList[i]._description,
+                achList[i]._isUnlocked
+            );
+            sAchList[i] = savableAchievement;
+        }
+        Debug.Log(sAchList.Length);
+        return sAchList;
+    }
+
+    public static List<Achievement> ConvertSaveableToAchievement(AchievementsData.SavableAchievement[] sAchList)
+    {
+        List<Achievement> achList = new List<Achievement>();
+        
+        for(int i = 0; i < sAchList.Length; i++)
+        {
+            Achievement achievement = (Achievement)ScriptableObject.CreateInstance("Achievement");
+            achievement._id = sAchList[i]._id;
+            achievement._name = sAchList[i]._name;
+            achievement._description= sAchList[i]._description;
+            achievement._isUnlocked = sAchList[i]._isUnlocked;
+
+            achList.Add(achievement);
+        }
+        return achList;
     }
 
     private static void LoadGraphicsData()
@@ -125,10 +172,10 @@ public static class SaveData
     }
 
     public static float[] GetSavedAudioVolumes() => audio.volumes;
-    public static List<Achievement> GetAchievements() 
+    public static AchievementsData.SavableAchievement[] GetAchievements() 
     {
-        Debug.Log(achievements.achievementList);
-        return achievements.achievementList;
+        Debug.Log(achievements.saveableAchievementList);
+        return achievements.saveableAchievementList;
     }
     public static GraphicsData GetGraphicsData() => graphics;
 }
@@ -142,12 +189,28 @@ public struct StatisticData
 {
     public int totalEnemiesKilled;
     public int highestYearReached;
-    public Dictionary<Creature, bool> creatures;
+    //public Dictionary<Creature, bool> creatures;
 }
 
 public struct AchievementsData
 {
-    public List<Achievement> achievementList;
+    public SavableAchievement[] saveableAchievementList;
+
+    [System.Serializable]
+    public struct SavableAchievement
+    {
+        public int _id;
+        public string _name;
+        public string _description;
+        public bool _isUnlocked;
+        public SavableAchievement(int id, string name, string description, bool isUnlocked)
+        {
+            _id = id;
+            _name = name;
+            _description = description;
+            _isUnlocked = isUnlocked;
+        }
+    }
 }
 
 public struct GraphicsData
