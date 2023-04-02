@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 public class HeartManager : MonoBehaviour
 {
     public Sprite[] heartSprites;
     public Image[] hearts;
     public int healthPerHeart = 10;
     public int numHearts = 3;
+    public TMP_Text healthText;
 
     private int currentHealth;
 
@@ -34,6 +36,7 @@ public class HeartManager : MonoBehaviour
     // update heart sprite based on 10 points per heart
     private void UpdateHeartDisplay()
     {
+        healthText.text = $"{currentHealth}";
         for (int i = 0; i < numHearts; i++)
         {
             int healthIndexMin = i * healthPerHeart;

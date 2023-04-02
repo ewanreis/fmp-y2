@@ -34,7 +34,6 @@ public class AchievementsMenu : MonoBehaviour
         achievementList = _achievements;
 
         achievementStatuses = new List<Achievement>();
-        Debug.Log(achievementList);
 
         yield return new WaitForSeconds(0.5f);
         GetSavedAchievements();
@@ -85,8 +84,6 @@ public class AchievementsMenu : MonoBehaviour
     {
         AchievementsData.SavableAchievement[] savableAchievementsList = SaveData.GetAchievements();
         achievementStatuses = SaveData.ConvertSaveableToAchievement(savableAchievementsList);
-        Debug.Log(achievementStatuses);
-        
         _achievements = achievementStatuses;
     }
 

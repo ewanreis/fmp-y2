@@ -49,8 +49,9 @@ public static class SaveData
         string graphicsJson = JsonUtility.ToJson(graphics);
         PlayerPrefs.SetString(graphicsKey, graphicsJson);
 
-        Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
+        //Debug.Log($"Saved Data \nAudio: {audioJson}\nStatistics: {statisticsJson}\nAchievements: {achievementsJson}\nGraphics{graphicsJson}");
         //Debug.Log($"{achievementsJson}, {achievements.saveableAchievementList.Length}");
+
         // save changes to player prefs
         PlayerPrefs.Save();
     }
@@ -103,7 +104,6 @@ public static class SaveData
         if (PlayerPrefs.HasKey(achievementsKey))
         {
             achievements = JsonUtility.FromJson<AchievementsData>(PlayerPrefs.GetString(achievementsKey));
-            Debug.Log(achievements.saveableAchievementList.Count());
         }
 
         else
@@ -174,7 +174,6 @@ public static class SaveData
     public static float[] GetSavedAudioVolumes() => audio.volumes;
     public static AchievementsData.SavableAchievement[] GetAchievements() 
     {
-        Debug.Log(achievements.saveableAchievementList);
         return achievements.saveableAchievementList;
     }
     public static GraphicsData GetGraphicsData() => graphics;
