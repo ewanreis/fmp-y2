@@ -5,10 +5,11 @@ using System;
 
 public class PointsPerMinute : MonoBehaviour
 {
-    public int pointsToAdd = 10;
-    public float timeBetweenPoints = 60f; 
-    [SerializeField] private ScoreManager scoreManager;
     public static event Action OnGainPoints;
+
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private float timeBetweenPoints = 60f; 
+    [SerializeField] private int pointsToAdd = 10;
 
     void Start()
     {

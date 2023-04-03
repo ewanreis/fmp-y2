@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class ChainedObject : MonoBehaviour
 {
-    public int length; // # of segments in the chain
-    public LineRenderer lineRend;
-    public Vector3[] segmentPoses; // positions of the segments in the chain
-    public Transform targetDir; // direction the chain points towards
-    public float targetDist; // distance between each segment
-    public float smoothSpeed;
-    public float trailSpeed;
-    private Vector3 segmentV; // current velocity of the segment movement
+    [SerializeField] private int length; // # of segments in the chain
+    [SerializeField] private LineRenderer lineRend;
+    [SerializeField] private Vector3[] segmentPoses; // positions of the segments in the chain
+    [SerializeField] private Transform targetDir; // direction the chain points towards
+    [SerializeField] private float targetDist; // distance between each segment
+    [SerializeField] private float smoothSpeed;
+    [SerializeField] private float trailSpeed;
 
-    public float wiggleSpeed;
-    public float wiggleMagnitude;
-    public Transform wiggleDir;
-    public Transform[] bodyParts; // the parts of the chain
+    [SerializeField] private float wiggleSpeed;
+    [SerializeField] private float wiggleMagnitude;
+    [SerializeField] private Transform wiggleDir;
+    [SerializeField] private Transform[] bodyParts; // the parts of the chain
+
+    private Vector3 segmentV; // current velocity of the segment movement
 
     void Start()
     {

@@ -4,21 +4,20 @@ using UnityEngine;
 using System;
 public class MultilegProcedural : MonoBehaviour
 {
-    public Transform[] legTargets;
-    public float stepSize = 0.15f;
-    public int smoothness = 8;
-    public float stepHeight = 0.15f;
-    public bool bodyOrientation = true;
+    public static event Action OnThroneStep;
 
-        public static event Action OnThroneStep;
+    [SerializeField] private Transform[] legTargets;
+    [SerializeField] private float stepSize = 0.15f;
+    [SerializeField] private float stepHeight = 0.15f;
+    [SerializeField] private float raycastRange = 1.5f;
+    [SerializeField] private int smoothness = 8;
+    [SerializeField] private bool bodyOrientation = true;
 
-    public float raycastRange = 1.5f;
     private Vector2[] defaultLegPositions;
     private Vector2[] lastLegPositions;
     private Vector2 lastBodyUp;
     private bool[] legMoving;
     private int nbLegs;
-    
     private Vector2 velocity;
     private Vector2 lastVelocity;
     private Vector2 lastBodyPos;

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using TMPro;
 public class HeartManager : MonoBehaviour
 {
-    public Sprite[] heartSprites;
-    public Image[] hearts;
-    public int healthPerHeart = 10;
-    public int numHearts = 3;
-    public TMP_Text healthText;
+    [SerializeField] private Sprite[] heartSprites;
+    [SerializeField] private Image[] hearts;
+    [SerializeField] private int healthPerHeart = 10;
+    [SerializeField] private int numHearts = 3;
+    [SerializeField] private TMP_Text healthText;
 
     private int currentHealth;
 

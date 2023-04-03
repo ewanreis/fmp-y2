@@ -6,20 +6,19 @@ using TMPro;
 
 public class Bestiary : MonoBehaviour
 {
-    [SerializeField] private List<Creature> _creatures;
-    [SerializeField] private GameObject bestiaryUI;
-    [SerializeField] private TMP_Text description;
-
     public event Action<Creature> OnCreatureEncountered;
     public event Action<Creature> OnCreatureKilled;
     public static event Action OnBestiaryOpen;
 
-    private bool isBestiaryOpen;
-
-    public GameObject displayPrefab;
-    public Transform displayParent;
-
     public List<GameObject> displayedCreatures = new List<GameObject>();
+
+    [SerializeField] private List<Creature> _creatures;
+    [SerializeField] private GameObject bestiaryUI;
+    [SerializeField] private TMP_Text description;
+    [SerializeField] private GameObject displayPrefab;
+    [SerializeField] private Transform displayParent;
+
+    private bool isBestiaryOpen;
 
     private void Start()
     {

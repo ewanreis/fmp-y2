@@ -4,15 +4,13 @@ using System;
 
 public class ShopButton : MonoBehaviour
 {
-    [SerializeField] private Button button;
+    public static event Action OnLockedButtonClick;
+    public static event Action OnShopButtonClick;
+    public static event Action<int> OnItemBuy;
 
     public bool isLocked = false;
 
-    public static event Action OnLockedButtonClick;
-    public static event Action OnShopButtonClick;
-
-    public static event Action<int> OnItemBuy;
-
+    [SerializeField] private Button button;
     [SerializeField] private int itemID;
 
     private void Start()

@@ -6,21 +6,16 @@ using System;
 
 public class TooltipThrone : MonoBehaviour
 {
-    public InputActionReference keybindAction; // reference for the keybind
-    public TMP_Text tooltipText; // reference to the text box
-
-    private bool showTooltip = false;
-
-    private MountableObject throne;
-
-    [SerializeField]
-    private GameObject objectToFollow;
-
-    [SerializeField]
-    private RectTransform canvasRect;
-
     public static event Action OnTooltipShow;
     public static event Action OnTooltipHide;
+
+    [SerializeField] private InputActionReference keybindAction; // reference for the keybind
+    [SerializeField] private TMP_Text tooltipText; // reference to the text box
+    [SerializeField] private GameObject objectToFollow;
+    [SerializeField] private RectTransform canvasRect;
+
+    private bool showTooltip = false;
+    private MountableObject throne;
 
     private void Start()
     {

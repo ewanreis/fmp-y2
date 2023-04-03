@@ -7,24 +7,22 @@ using UnityEngine.UI;
 
 public class AchievementsMenu : MonoBehaviour
 {
+    public static event Action OnAchievementsMenuOpen;
+    public static event Action<Achievement> OnAchievementUnlock;
+
+    public static List<Achievement> achievementList;
+
     [SerializeField] private List<Achievement> _achievements;
     [SerializeField] private GameObject achievementsUI;
     [SerializeField] private TMP_Text description;
 
-    public static List<Achievement> achievementList;
-
     private List<Achievement> achievementStatuses;
-
-
-    public static event Action OnAchievementsMenuOpen;
-    public static event Action<Achievement> OnAchievementUnlock;
-
     private bool isAchievementsMenuOpen;
 
-    public GameObject displayPrefab;
-    public Transform displayParent;
+    [SerializeField] private GameObject displayPrefab;
+    [SerializeField] private Transform displayParent;
 
-    public List<GameObject> displayedAchievements = new List<GameObject>();
+    [SerializeField] private List<GameObject> displayedAchievements = new List<GameObject>();
 
     private IEnumerator Start()
     {

@@ -1,22 +1,21 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class PointGainText : MonoBehaviour
 {
-    public GameObject textBoxPrefab;
-    public float fadeInTime = 0.5f;
-    public float displayTime = 2.0f;
-    public float fadeOutTime = 0.5f;
-    public float maxDistance = 1.5f;
+    [SerializeField] private GameObject textBoxPrefab;
+    [SerializeField] private float fadeInTime = 0.5f;
+    [SerializeField] private float displayTime = 2.0f;
+    [SerializeField] private float fadeOutTime = 0.5f;
+    [SerializeField] private float maxDistance = 1.5f;
 
+    private ScoreManager scoreManager;
     private GameObject textBox;
-    private RectTransform canvasRect;
-    //private bool isActive;
 
     private void Start()
     {
+        scoreManager = FindObjectOfType<ScoreManager>();
         ScoreManager.OnPointsGained += SpawnText;
     }
 
@@ -27,18 +26,16 @@ public class PointGainText : MonoBehaviour
 
     private IEnumerator SpawnTextCoroutine(int pointsGained)
     {
-        //isActive = true;
-        canvasRect = FindObjectOfType<Canvas>().GetComponent<RectTransform>();
+        var canvas = FindObjectOfType<Canvas>();
+        var canvasRect = canvas.GetComponent<RectTransform>();
 
         textBox = Instantiate(textBoxPrefab, canvasRect.transform);
         textBox.SetActive(false);
         textBox.GetComponent<TMP_Text>().text = $"+{pointsGained}";
 
-        float angle = Random.Range(0f, 2f * Mathf.PI);
-        float distance = Random.Range(0f, maxDistance);
-        Vector3 offset = new Vector3(Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0f);
-        Vector3 position = transform.position + offset;
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(position);
+        Vector3 randomPos = Random.insideUnitCircle * maxDistance;
+        Vector3 position = transform.position + new Vector3(randomPos.x, randomPos.y, 0f);
+        var screenPos = Camera.main.WorldToScreenPoint(position);
 
         textBox.GetComponent<RectTransform>().position = screenPos;
         Destroy(textBox, fadeOutTime + fadeInTime + displayTime + 1f);
@@ -49,35 +46,30 @@ public class PointGainText : MonoBehaviour
 
     }
 
-    IEnumerator FadeIn()
+    private IEnumerator FadeIn()
     {
-        float timer = 0f;
-        while (timer <= fadeInTime)
+        var textComponent = textBox.GetComponent<TMP_Text>();
+        var color = textComponent.color;
+
+        for (float timer = 0f; timer <= fadeInTime; timer += Time.deltaTime)
         {
-            timer += Time.deltaTime;
-            float alpha = Mathf.Lerp(0f, 1f, timer / fadeInTime);
-            Color color = textBox.GetComponent<TMP_Text>().color;
-            color.a = alpha;
-            textBox.GetComponent<TMP_Text>().color = color;
+            color.a = Mathf.Lerp(0f, 1f, timer / fadeInTime);
+            textComponent.color = color;
             textBox.SetActive(true);
             yield return null;
         }
     }
 
-    IEnumerator FadeOut()
+    private IEnumerator FadeOut()
     {
-        float timer = 0f;
-        
-        while (timer < fadeOutTime)
+        var textComponent = textBox.GetComponent<TMP_Text>();
+        var color = textComponent.color;
+
+        for (float timer = 0f; timer < fadeOutTime; timer += Time.deltaTime)
         {
-            timer += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, timer / fadeOutTime);
-            Color color = textBox.GetComponent<TMP_Text>().color;
-            color.a = alpha;
-            textBox.GetComponent<TMP_Text>().color = color;
+            color.a = Mathf.Lerp(1f, 0f, timer / fadeOutTime);
+            textComponent.color = color;
             yield return null;
         }
-        
-        //isActive = false;
     }
 }

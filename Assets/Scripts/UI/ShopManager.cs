@@ -6,37 +6,18 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField]
-    private ScoreManager scoreManager;
-
-    [SerializeField]
-    private List<ShopItem> items;
-
-    [SerializeField]
-    private int currentPoints;
-
-    [SerializeField]
-    private TMP_Text currentPointTextShop;
-
-    [SerializeField]
-    private TMP_Text currentPointText;
-
-    [SerializeField]
-    private Gradient colorGradient;
-
-    [SerializeField]
-    private Color lockedButtonColour;
-    [SerializeField]
-    private Color lockedButtonColourSelected;
-    [SerializeField]
-    private Color lockedButtonColourPressed;
-
-    [SerializeField]
-    private Color buttonColour;
-    [SerializeField]
-    private Color buttonColourSelected;
-    [SerializeField]
-    private Color buttonColourPressed;
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private List<ShopItem> items;
+    [SerializeField] private int currentPoints;
+    [SerializeField] private TMP_Text currentPointTextShop;
+    [SerializeField] private TMP_Text currentPointText;
+    [SerializeField] private Gradient colorGradient;
+    [SerializeField] private Color lockedButtonColour;
+    [SerializeField] private Color lockedButtonColourSelected;
+    [SerializeField] private Color lockedButtonColourPressed;
+    [SerializeField] private Color buttonColour;
+    [SerializeField] private Color buttonColourSelected;
+    [SerializeField] private Color buttonColourPressed;
 
     private void Start()
     {

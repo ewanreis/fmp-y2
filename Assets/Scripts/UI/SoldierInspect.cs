@@ -7,23 +7,16 @@ using UnityEngine.EventSystems;
 
 public class SoldierInspect : MonoBehaviour
 {
+    public static event Action<Soldier> OnSoldierInspect;
+
+    [SerializeField] private Color hoverColor = Color.white;
+    [SerializeField] private float transitionDuration = 0.3f;
+    [SerializeField] private Soldier soldier;
+
     private SpriteRenderer spriteRenderer;
-
-    [SerializeField]
-    private Color hoverColor = Color.white;
-
-    [SerializeField]
-    private float transitionDuration = 0.3f;
-
-    [SerializeField]
-    private Soldier soldier;
-
     private Color originalColor;
     private Color targetColor;
-
     private Coroutine colorTransitionCoroutine;
-
-    public static event Action<Soldier> OnSoldierInspect;
 
     private void Start()
     {

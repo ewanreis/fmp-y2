@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class ThroneShoot : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject primaryBulletPrefab;
-    [SerializeField]
-    private GameObject secondaryBulletPrefab;
-
-    [SerializeField]
-    private float primaryBulletSpeed = 100f;
-
-    [SerializeField]
-    private float secondaryBulletSpeed = 50f;
-
-    [SerializeField]
-    private Transform shootPoint;
-
-    [SerializeField]
-    private float primaryShootDelay = 0.3f;
-
-    [SerializeField]
-    private float secondaryShootDelay = 1.5f;
+    [SerializeField] private GameObject primaryBulletPrefab;
+    [SerializeField] private GameObject secondaryBulletPrefab;
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private float primaryBulletSpeed = 100f;
+    [SerializeField] private float secondaryBulletSpeed = 50f;
+    [SerializeField] private float primaryShootDelay = 0.3f;
+    [SerializeField] private float secondaryShootDelay = 1.5f;
 
     private bool isShootingPrimary = false;
     private bool isShootingSecondary = false;

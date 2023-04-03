@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PartRotation : MonoBehaviour
 {
-    public float speed;
+    [SerializeField] private Transform target;
+    [SerializeField] private float speed;
+
     private Vector2 direction;
-    public Transform target;
 
     private void FixedUpdate()
     {

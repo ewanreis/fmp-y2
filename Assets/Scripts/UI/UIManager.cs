@@ -6,18 +6,13 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject soldierInspectionMenu;
-    [SerializeField]
-    private TMP_Text soldierInspectText;
+    [SerializeField] private GameObject soldierInspectionMenu;
+    [SerializeField] private TMP_Text soldierInspectText;
+    [SerializeField] private Toggle vsyncToggle;
+    [SerializeField] private Toggle fullscreenToggle;
 
     private bool isVsyncOn;
     private bool isFullscreen;
-
-    [SerializeField]
-    private Toggle vsyncToggle;
-    [SerializeField]
-    private Toggle fullscreenToggle;
 
     private void Start()
     {

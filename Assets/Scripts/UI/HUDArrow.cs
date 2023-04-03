@@ -4,24 +4,14 @@ using UnityEngine.InputSystem;
 
 public class HUDArrow : MonoBehaviour
 {
-    [SerializeField]
-    private RectTransform circleCenter;
-
-    [SerializeField]
-    private GameObject centerFollow;
-
-    [SerializeField]
-    private float circleRadius = 100f;
-
-    [SerializeField]
-    private float rotateSpeed = 5f;
-
-    [SerializeField]
-    private Image arrowImage;
+    [SerializeField] private RectTransform circleCenter;
+    [SerializeField] private GameObject centerFollow;
+    [SerializeField] private float circleRadius = 100f;
+    [SerializeField] private float rotateSpeed = 5f;
+    [SerializeField] private Image arrowImage;
 
     private Vector3 targetPosition;
     private Vector3 directionVector;
-
     private bool showingArrow;
 
     private void Start()

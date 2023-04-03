@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class CaptureZone : MonoBehaviour
 {
-    public string enemyTag = "Enemy";
-
-    [SerializeField] private int damagePerTick = 5; // damage to deal per tick
+    [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private float tickSpeed = 1f; // speed of each tick
+    [SerializeField] private int damagePerTick = 5; // damage to deal per tick
 
     private float damageTimer = 0f;
 
