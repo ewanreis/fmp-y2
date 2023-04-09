@@ -15,13 +15,18 @@ public class EnemySpawner : MonoBehaviour
     public static event Action OnWaveEnd; // called when all spawned enemies are killed
 
     [SerializeField] private EnemySpawnData[] enemiesToSpawn;
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Collider2D castleCaptureZone;
+    [SerializeField] private Transform enemySpawnCheck;
+    [SerializeField] private Transform enemyParent;
     [SerializeField] private float spawnInterval = 2f; // delay between each enemy spawn
     [SerializeField] private float waveInterval = 5f; // how long to wait between waves
     [SerializeField] private int enemiesPerWave = 10; // how many enemies to spawn
+    [SerializeField] private double enemyWaveIncrement = 0.1; // the increment of enemies to add next wave
+
+    //* The formula for enemies per wave is as follows:
+    //* NextSpawnCount = CurrentSpawnCount += (CurrentSpawnCount * EnemyWaveIncrement)
 
     private Camera mainCamera;
-    private Collider2D castleCaptureZone;
     private float nextSpawnTime;
     private int enemiesSpawned;
     private int currentEnemies;
@@ -31,21 +36,26 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        castleCaptureZone = GameObject.FindWithTag("CastleCaptureZone").GetComponent<Collider2D>();
+        //castleCaptureZone = GameObject.FindWithTag("CastleCaptureZone").GetComponent<Collider2D>();
         OnWaveEnd += StartWave;
+        StartWave();
     }
 
     private void Update()
     {
-        if (!isSpawning || Time.time < nextSpawnTime || enemiesSpawned >= enemiesPerWave ||
-            IsInView() || IsInCastleCaptureZone() || !IsGrounded())
-            return;
+        if(isSpawning)
+            enemySpawnCheck.transform.position = GenerateRandomPoint(-100, 100, -7.8f, -2.3f);
 
-        SpawnEnemy();
-        enemiesSpawned++;
-        nextSpawnTime = Time.time + spawnInterval;
+        if (Time.time >= nextSpawnTime && !IsInView() && !IsInCastleCaptureZone() && IsGrounded() && isSpawning)
+        {
+            SpawnEnemy();
+            enemiesSpawned++;
+            nextSpawnTime = Time.time + spawnInterval;
+        }
 
-        if (enemiesSpawned >= enemiesPerWave)
+        currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (enemiesSpawned >= enemiesPerWave || currentEnemies >= enemiesPerWave)
         {
             isSpawning = false;
             OnStopSpawning?.Invoke(enemiesPerWave);
@@ -55,20 +65,24 @@ public class EnemySpawner : MonoBehaviour
             OnWaveEnd?.Invoke();
     }
 
+    private Vector2 GenerateRandomPoint(float minX, float maxX, float minY, float maxY)
+    {
+        return new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
+    }
+
     private bool IsInView()
     {
-        Vector3 screenPoint = mainCamera.WorldToViewportPoint(transform.position);
+        Vector3 screenPoint = mainCamera.WorldToViewportPoint(enemySpawnCheck.position);
         return screenPoint.x > 0f && screenPoint.x < 1f && screenPoint.y > 0f && screenPoint.y < 1f;
     }
 
-    private bool IsInCastleCaptureZone() => castleCaptureZone.bounds.Contains(transform.position);
+    private bool IsInCastleCaptureZone() => castleCaptureZone.bounds.Contains(enemySpawnCheck.position);
 
     private bool IsGrounded()
     {
         const float groundRadius = 0.2f;
         int groundLayer = LayerMask.GetMask("Ground");
-
-        return Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
+        return Physics2D.OverlapCircle(enemySpawnCheck.position, groundRadius, groundLayer);
     }
 
     private void SpawnEnemy()
@@ -90,9 +104,13 @@ public class EnemySpawner : MonoBehaviour
 
             spawnRoll -= data.spawnChance;
         }
+        Vector3 spawnPos = new Vector3(enemySpawnCheck.position.x, enemySpawnCheck.position.y + 3, enemySpawnCheck.position.z);
 
         if (enemyPrefab != null)
-            Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        {
+            var enemyGameObject = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            enemyGameObject.transform.parent = enemyParent;
+        }
     }
 
     public void StartWave()
