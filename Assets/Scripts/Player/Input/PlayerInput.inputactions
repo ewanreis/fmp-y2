@@ -201,7 +201,7 @@
                 {
                     "name": "",
                     "id": "b0e9cfa0-f1b8-4f1d-adbf-0982c2de8a94",
-                    "path": "<VirtualMouse>/position",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
