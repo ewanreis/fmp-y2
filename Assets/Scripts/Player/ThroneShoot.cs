@@ -11,6 +11,7 @@ public class ThroneShoot : MonoBehaviour
     [SerializeField] private float secondaryBulletSpeed = 50f;
     [SerializeField] private float primaryShootDelay = 0.3f;
     [SerializeField] private float secondaryShootDelay = 1.5f;
+    [SerializeField] private Transform projectileParent;
 
     private bool isShootingPrimary = false;
     private bool isShootingSecondary = false;
@@ -57,12 +58,25 @@ public class ThroneShoot : MonoBehaviour
         isShootingPrimary = true;
         // Spawn a new bullet prefab
         GameObject bullet = Instantiate(primaryBulletPrefab, shootPoint.position, Quaternion.identity);
+        bullet.transform.parent = projectileParent;
 
-        // Get the direction from the player to the mouse position
-        Vector3 mousePos = InputManager.GetMousePosition();
+        Vector3 directionPos = new Vector3();
+        Vector3 shootDirection = new Vector3();
+        if(InputManager.usingController == false)
+        {
+            // Get the direction from the player to the mouse position
+            directionPos = InputManager.GetMousePosition();
 
-        mousePos.z = cam.transform.position.z - transform.position.z;
-        Vector3 shootDirection = -(cam.ScreenToWorldPoint(mousePos) - shootPoint.position);
+            directionPos.z = cam.transform.position.z - transform.position.z;
+            shootDirection = -(cam.ScreenToWorldPoint(directionPos) - shootPoint.position);
+        }
+        else
+        {
+            directionPos = InputManager.GetRightStickDirection() * 10;
+            shootDirection = directionPos;
+            Debug.Log("using controller joystick");
+            //directionPos.z = cam.transform.position.z - transform.position.z;
+        }
 
         // Normalize the shoot direction and set the bullet velocity
         bullet.GetComponent<Rigidbody2D>().velocity = shootDirection.normalized * primaryBulletSpeed;
@@ -77,12 +91,24 @@ public class ThroneShoot : MonoBehaviour
         isShootingSecondary = true;
         // Spawn a new bullet prefab
         GameObject bullet = Instantiate(secondaryBulletPrefab, shootPoint.position, Quaternion.identity);
+        bullet.transform.parent = projectileParent;
 
-        // Get the direction from the player to the mouse position
-        Vector3 mousePos = InputManager.GetMousePosition();
+        Vector3 directionPos = new Vector3();
+        Vector3 shootDirection = new Vector3();
+        if(InputManager.usingController == false)
+        {
+            // Get the direction from the player to the mouse position
+            directionPos = InputManager.GetMousePosition();
 
-        mousePos.z = cam.transform.position.z - transform.position.z;
-        Vector3 shootDirection = -(cam.ScreenToWorldPoint(mousePos) - shootPoint.position);
+            directionPos.z = cam.transform.position.z - transform.position.z;
+            shootDirection = -(cam.ScreenToWorldPoint(directionPos) - shootPoint.position);
+        }
+        else
+        {
+            directionPos = InputManager.GetRightStickDirection() * 100;
+            shootDirection = directionPos;
+            //directionPos.z = cam.transform.position.z - transform.position.z;
+        }
 
         // Normalize the shoot direction and set the bullet velocity
         bullet.GetComponent<Rigidbody2D>().velocity = shootDirection.normalized * secondaryBulletSpeed;

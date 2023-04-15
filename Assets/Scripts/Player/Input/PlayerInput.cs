@@ -107,6 +107,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightJoystick"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""4f2848ba-1415-416c-a28b-e475416fd5ca"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -171,7 +180,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -193,7 +202,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""UsePrimary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -215,7 +224,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""UseSecondary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -226,7 +235,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & Keyboard"",
                     ""action"": ""CursorPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -237,7 +246,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""CursorPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -248,7 +257,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & Keyboard"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -259,7 +268,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -270,7 +279,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & Keyboard"",
                     ""action"": ""Bestiary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -281,7 +290,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Bestiary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -292,7 +301,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/n"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & Keyboard"",
                     ""action"": ""Achievements"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -303,7 +312,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Achievements"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -314,7 +323,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & Keyboard"",
                     ""action"": ""SkipSong"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -325,7 +334,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""SkipSong"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -336,7 +345,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & Keyboard"",
                     ""action"": ""Mount"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -347,8 +356,19 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Mount"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24d8591c-df12-405c-a1fe-d339cbfacf6c"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""RightJoystick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -609,6 +629,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Controller"",
+            ""bindingGroup"": ""Controller"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -623,6 +654,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Overworld_Achievements = m_Overworld.FindAction("Achievements", throwIfNotFound: true);
         m_Overworld_SkipSong = m_Overworld.FindAction("SkipSong", throwIfNotFound: true);
         m_Overworld_Mount = m_Overworld.FindAction("Mount", throwIfNotFound: true);
+        m_Overworld_RightJoystick = m_Overworld.FindAction("RightJoystick", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
@@ -699,6 +731,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Overworld_Achievements;
     private readonly InputAction m_Overworld_SkipSong;
     private readonly InputAction m_Overworld_Mount;
+    private readonly InputAction m_Overworld_RightJoystick;
     public struct OverworldActions
     {
         private @PlayerInput m_Wrapper;
@@ -712,6 +745,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Achievements => m_Wrapper.m_Overworld_Achievements;
         public InputAction @SkipSong => m_Wrapper.m_Overworld_SkipSong;
         public InputAction @Mount => m_Wrapper.m_Overworld_Mount;
+        public InputAction @RightJoystick => m_Wrapper.m_Overworld_RightJoystick;
         public InputActionMap Get() { return m_Wrapper.m_Overworld; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -748,6 +782,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Mount.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnMount;
                 @Mount.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnMount;
                 @Mount.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnMount;
+                @RightJoystick.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnRightJoystick;
+                @RightJoystick.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnRightJoystick;
+                @RightJoystick.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnRightJoystick;
             }
             m_Wrapper.m_OverworldActionsCallbackInterface = instance;
             if (instance != null)
@@ -779,6 +816,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Mount.started += instance.OnMount;
                 @Mount.performed += instance.OnMount;
                 @Mount.canceled += instance.OnMount;
+                @RightJoystick.started += instance.OnRightJoystick;
+                @RightJoystick.performed += instance.OnRightJoystick;
+                @RightJoystick.canceled += instance.OnRightJoystick;
             }
         }
     }
@@ -865,6 +905,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_MouseKeyboardSchemeIndex];
         }
     }
+    private int m_ControllerSchemeIndex = -1;
+    public InputControlScheme ControllerScheme
+    {
+        get
+        {
+            if (m_ControllerSchemeIndex == -1) m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
+            return asset.controlSchemes[m_ControllerSchemeIndex];
+        }
+    }
     public interface IOverworldActions
     {
         void OnWalk(InputAction.CallbackContext context);
@@ -876,6 +925,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnAchievements(InputAction.CallbackContext context);
         void OnSkipSong(InputAction.CallbackContext context);
         void OnMount(InputAction.CallbackContext context);
+        void OnRightJoystick(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

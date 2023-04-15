@@ -38,17 +38,25 @@ public class HUDArrow : MonoBehaviour
         if(!showingArrow)
             return;
 
-        // get current mouse position in screen space
-        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Vector2 pos = new Vector2();
+        if(!InputManager.usingController)
+        {
+            // get current mouse position in screen space
+            pos = Mouse.current.position.ReadValue();
 
-        targetPosition = mousePos;
+            targetPosition = pos;
 
-        // convert target position to ui coordinates
-        Vector2 viewportPoint = Camera.main.ScreenToViewportPoint(targetPosition);
-        targetPosition = new Vector2(viewportPoint.x * Screen.width, viewportPoint.y * Screen.height);
-
-        // get direction vector from arrow to target position
-        directionVector = targetPosition - circleCenter.position;
+            // convert target position to ui coordinates
+            Vector2 viewportPoint = Camera.main.ScreenToViewportPoint(targetPosition);
+            targetPosition = new Vector2(viewportPoint.x * Screen.width, viewportPoint.y * Screen.height);
+            // get direction vector from arrow to target position
+            directionVector = targetPosition - circleCenter.position;
+        }
+        else
+        {
+            pos = InputManager.GetRightStickDirection() * 10;
+            directionVector = pos;
+        }
 
         // limit magnitude to the circle radius
         if (directionVector.magnitude > circleRadius)

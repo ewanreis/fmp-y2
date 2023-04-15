@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class InputManager : MonoBehaviour
 
     private bool isPrimaryPressed = false;
     private bool isSecondaryPressed = false;
+    public static bool usingController = false;
 
     // events for different input types
     public static event Action<Vector2> OnMoveInput;
@@ -23,6 +25,9 @@ public class InputManager : MonoBehaviour
     public static event Action OnMountPressed;
     public static event Action OnPrimaryHeld;
     public static event Action OnSecondaryHeld;
+
+    // controller only
+    public static event Action<Vector2> OnRightStickMoved;
 
     private void Awake()
     {
@@ -55,6 +60,9 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.Mount.performed += OnMountPerformed;
         playerInput.Overworld.UsePrimary.canceled += OnPrimaryCanceled;
         playerInput.Overworld.UseSecondary.canceled += OnSecondaryCancelled;
+        playerInput.Overworld.RightJoystick.performed += OnRightJoystickPerformed;
+
+        InputSystem.onDeviceChange += OnDeviceChange;
     }
 
     private void OnDisable()
@@ -72,6 +80,9 @@ public class InputManager : MonoBehaviour
         playerInput.Overworld.Mount.performed -= OnMountPerformed;
         playerInput.Overworld.UsePrimary.canceled -= OnPrimaryCanceled;
         playerInput.Overworld.UseSecondary.canceled -= OnSecondaryCancelled;
+        playerInput.Overworld.RightJoystick.performed -= OnRightJoystickPerformed;
+
+        InputSystem.onDeviceChange -= OnDeviceChange;
     }
 
     private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -81,6 +92,12 @@ public class InputManager : MonoBehaviour
         OnMoveInput?.Invoke(moveInput);
         isMovePressed = true;
         lastMoveInput = moveInput;
+    }
+
+    private void OnRightJoystickPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        Vector2 direction = context.ReadValue<Vector2>();
+        OnRightStickMoved?.Invoke(direction);
     }
 
     private void OnMoveCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -166,5 +183,25 @@ public class InputManager : MonoBehaviour
     {
         // return cursor position
         return playerInput.Overworld.CursorPosition.ReadValue<Vector2>();
+    }
+
+    public static Vector2 GetRightStickDirection()
+    {
+        return playerInput.Overworld.RightJoystick.ReadValue<Vector2>();
+    }
+
+    private void OnDeviceChange(InputDevice device, InputDeviceChange change)
+    {
+        
+        if (device is Gamepad && change != InputDeviceChange.Removed)
+        {
+            usingController = true;
+            Debug.Log($"Using Controller");
+        }
+        else
+        {
+            usingController = false;
+            Debug.Log($"Using Keyboard");
+        }
     }
 }

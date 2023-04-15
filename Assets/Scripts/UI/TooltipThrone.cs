@@ -40,6 +40,17 @@ public class TooltipThrone : MonoBehaviour
         }
     }
 
+    public void OnControlsChanged()
+    {
+        UpdateHintText();
+    }
+
+    private void UpdateHintText()
+    {
+        string keybind = keybindAction.action.GetBindingDisplayString();
+        tooltipText.text = $"Press {keybind} to Mount.";
+    }
+
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Self")
