@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using System.Collections;
+using UnityEngine;
 
 public class SoldierInspect : MonoBehaviour
 {
     public static event Action<Soldier> OnSoldierInspect;
+    public static event Action<Soldier> OnSoldierHover;
+    public static event Action OnSoldierStopHovering;
 
     [SerializeField] private Color hoverColor = Color.white;
     [SerializeField] private float transitionDuration = 0.3f;
@@ -18,36 +17,64 @@ public class SoldierInspect : MonoBehaviour
     private Color targetColor;
     private Coroutine colorTransitionCoroutine;
 
+    private bool canInspect = true;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         soldier = GetComponent<Soldier>();
         originalColor = spriteRenderer.color;
         targetColor = originalColor;
+        MountableObject.OnMount += DisableInspection;
+        MountableObject.OnUnmount += EnableInspection;
+    }
+
+    private void DisableInspection()
+    {
+        canInspect = false;
+        spriteRenderer.color = originalColor;
+        OnSoldierStopHovering?.Invoke();
+    }
+
+    private void EnableInspection()
+    {
+        canInspect = true;
     }
 
     private void OnMouseEnter()
     {
-        if (colorTransitionCoroutine != null && !EventSystem.current.IsPointerOverGameObject())
+        if(!canInspect)
+            return;
+
+        if (colorTransitionCoroutine != null && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             StopCoroutine(colorTransitionCoroutine);
         }
+        Debug.Log(soldier);
+        OnSoldierHover?.Invoke(soldier);
         colorTransitionCoroutine = StartCoroutine(TransitionColor(hoverColor));
     }
 
     private void OnMouseExit()
     {
+        if(!canInspect)
+            return;
+
         if (colorTransitionCoroutine != null)
         {
             StopCoroutine(colorTransitionCoroutine);
         }
+        OnSoldierStopHovering?.Invoke();
         colorTransitionCoroutine = StartCoroutine(TransitionColor(originalColor));
     }
 
     private void OnMouseDown()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-            OnSoldierInspect.Invoke(soldier);
+        if(!canInspect)
+            return;
+
+        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            OnSoldierInspect?.Invoke(soldier);
     }
 
     private IEnumerator TransitionColor(Color newTargetColor)
