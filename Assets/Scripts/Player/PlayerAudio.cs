@@ -9,7 +9,13 @@ public class PlayerAudio : MonoBehaviour
 
     [SerializeField] private AudioClip[] footstepSounds;
     [SerializeField] private AudioClip[] musicTracks;
+    [SerializeField] private AudioClip pauseSound;
+    [SerializeField] private AudioClip resumeSound;
     [SerializeField] private AudioClip buttonDenySound;
+    [SerializeField] private AudioClip buttonClickSound;
+    [SerializeField] private AudioClip buttonHoverSound;
+    [SerializeField] private AudioClip volumeChangeSound;
+    [SerializeField] private AudioClip submenuOpenSound;
     [SerializeField] private AudioClip[] shopBuySounds;
     [SerializeField] private AudioClip[] shopOpenSounds;
     [SerializeField] private AudioClip[] scoreGainSounds;
@@ -35,6 +41,15 @@ public class PlayerAudio : MonoBehaviour
         ShopButton.OnLockedButtonClick += PlayButtonDenySound;
         ShopButton.OnShopButtonClick += PlayShopBuySound;
         ScoreManager.OnPointsGained += PlayScoreGainSound;
+        PauseMenu.OnPause += PlayPauseSound;
+        PauseMenu.OnResume += PlayResumeSound;
+        Bestiary.OnBestiaryOpen += PlaySubmenuOpenSound;
+        AchievementsMenu.OnAchievementsMenuOpen += PlaySubmenuOpenSound;
+    }
+
+    public void PlaySubmenuOpenSound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(submenuOpenSound);
     }
 
     public void PlayFootstepSound()
@@ -47,6 +62,31 @@ public class PlayerAudio : MonoBehaviour
     {
         if(!isPlayingMusic)
             StartCoroutine(MusicTrackCoroutine());
+    }
+
+    public void PlayVolumeChangeSound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(volumeChangeSound);
+    }
+
+    public void PlayButtonHoverSound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(buttonHoverSound);
+    }
+
+    public void PlayButtonClickSound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(buttonClickSound);
+    }
+
+    public void PlayPauseSound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(pauseSound);
+    }
+
+    public void PlayResumeSound()
+    {
+        audioSources[(int)AudioChannel.UI].PlayOneShot(resumeSound);
     }
 
     public void SkipSong()

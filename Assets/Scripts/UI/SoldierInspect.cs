@@ -57,8 +57,7 @@ public class SoldierInspect : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if(!canInspect)
-            return;
+        
 
         if (colorTransitionCoroutine != null)
         {

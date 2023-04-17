@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class PauseMenu : MonoBehaviour
     public UnityEvent onSettingsClicked;
     public UnityEvent onExitClicked;
     public UnityEvent onPauseClicked;
+
+    // c# events for each button
+    public static event Action OnPause;
+    public static event Action OnResume;
 
     // button references
     public Button resumeButton;
@@ -35,6 +40,7 @@ public class PauseMenu : MonoBehaviour
     {
         UnpauseGame();
         onResumeClicked.Invoke();
+        
     }
 
     void OnSettingsClicked()
@@ -45,6 +51,7 @@ public class PauseMenu : MonoBehaviour
     void OnExitClicked()
     {
         onExitClicked.Invoke();
+        
     }
 
     public void TogglePause()
@@ -62,6 +69,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0;
         PlayerAudio.PauseAllSounds(true);
         onPauseClicked.Invoke();
+        OnPause.Invoke();
         Debug.Log("Game Paused");
     }
 
@@ -72,6 +80,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         PlayerAudio.PauseAllSounds(false);
         onResumeClicked.Invoke();
+        OnResume.Invoke();
         Debug.Log("Game Resumed");
     }
 }
