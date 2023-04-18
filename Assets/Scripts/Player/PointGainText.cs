@@ -30,6 +30,7 @@ public class PointGainText : MonoBehaviour
         var canvasRect = canvas.GetComponent<RectTransform>();
 
         textBox = Instantiate(textBoxPrefab, canvasRect.transform);
+        textBox.transform.SetAsFirstSibling();
         textBox.SetActive(false);
         textBox.GetComponent<TMP_Text>().text = $"+{pointsGained}";
 
