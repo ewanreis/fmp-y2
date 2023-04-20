@@ -21,8 +21,19 @@ public class SoldierInspectTooltip : MonoBehaviour
         tooltipText.text = $"Press {keybind} to Inspect.";
         showTooltip = false;
         tooltipText.gameObject.SetActive(false);
+        
+    }
+
+    private void OnEnable() 
+    {
         SoldierInspect.OnSoldierHover += ShowTooltip;
         SoldierInspect.OnSoldierStopHovering += HideTooltip;
+    }
+
+    private void OnDisable() 
+    {
+        SoldierInspect.OnSoldierHover -= ShowTooltip;
+        SoldierInspect.OnSoldierStopHovering -= HideTooltip;
     }
 
     private void ShowTooltip(Soldier soldier)

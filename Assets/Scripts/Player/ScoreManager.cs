@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
 
     public static event Action<int> OnPointsGained;
 
-    private void Start()
+    private void OnEnable()
     {
         currentPoints = startingPoints;
     }

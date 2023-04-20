@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class AchievementsMenu : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class AchievementsMenu : MonoBehaviour
     public static event Action<Achievement> OnAchievementUnlock;
 
     public static List<Achievement> achievementList;
+    public UnityEvent OnClose;
 
     [SerializeField] private List<Achievement> _achievements;
     [SerializeField] private GameObject achievementsUI;
@@ -26,9 +28,6 @@ public class AchievementsMenu : MonoBehaviour
 
     private IEnumerator Start()
     {
-        InputManager.OnAchievementsPressed += ToggleAchievementsMenu;
-        Bestiary.OnBestiaryOpen += CloseAchievementsMenu;
-
         achievementList = _achievements;
 
         achievementStatuses = new List<Achievement>();
@@ -40,6 +39,18 @@ public class AchievementsMenu : MonoBehaviour
         yield return null;
     }
 
+    private void OnEnable() 
+    {
+        InputManager.OnAchievementsPressed += ToggleAchievementsMenu;
+        Bestiary.OnBestiaryOpen += CloseAchievementsMenu;
+    }
+
+    private void OnDisable() 
+    {
+        InputManager.OnAchievementsPressed -= ToggleAchievementsMenu;
+        Bestiary.OnBestiaryOpen -= CloseAchievementsMenu;
+    }
+
     public void UpdateAchievementsMenuDisplay()
     {
         // clear old objects
@@ -48,6 +59,7 @@ public class AchievementsMenu : MonoBehaviour
             Destroy(gameObject);
         }
         displayedAchievements.Clear();
+        ListButtonSelect(0);
 
 
         for(int i = 0; i < _achievements.Count; i++)
@@ -115,6 +127,7 @@ public class AchievementsMenu : MonoBehaviour
 
     public void CloseAchievementsMenu()
     {
+        OnClose.Invoke();
         isAchievementsMenuOpen = false;
         achievementsUI.SetActive(false);
         Debug.Log("Close Achievements Menu");

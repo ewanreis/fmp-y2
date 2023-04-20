@@ -17,7 +17,16 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         GetSavedGraphics();
+    }
+
+    private void OnEnable() 
+    {
         SoldierInspect.OnSoldierInspect += InspectSoldier;
+    }
+
+    private void OnDisable() 
+    {
+        SoldierInspect.OnSoldierInspect -= InspectSoldier;
     }
 
     private void GetSavedGraphics()

@@ -17,8 +17,18 @@ public class HUDArrow : MonoBehaviour
     private void Start()
     {
         HideArrow();
+    }
+
+    private void OnEnable() 
+    {
         MountableObject.OnMount += ShowArrow;
         MountableObject.OnUnmount += HideArrow;
+    }
+
+    private void OnDisable() 
+    {
+        MountableObject.OnMount -= ShowArrow;
+        MountableObject.OnUnmount -= HideArrow;
     }
 
     private void ShowArrow()

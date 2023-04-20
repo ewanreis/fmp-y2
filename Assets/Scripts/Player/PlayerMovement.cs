@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isFrozen = false;
 
-    private void Start()
+    private void OnEnable()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
@@ -29,6 +29,17 @@ public class PlayerMovement : MonoBehaviour
         // handle player dismounting
         MountableObject.OnUnmount += EnablePlayerPhysics;
         MountableObject.OnUnmount += UnfreezePlayerMovement;
+    }
+
+    void OnDisable()
+    {
+         InputManager.OnMoveHeld -= HandleMoveInput;
+         // handle player mounting a rideable object
+        MountableObject.OnMount -= DisablePlayerPhysics;
+        MountableObject.OnMount -= FreezePlayerMovement;
+
+        MountableObject.OnUnmount -= EnablePlayerPhysics;
+        MountableObject.OnUnmount -= UnfreezePlayerMovement;
     }
 
     private void DisablePlayerPhysics()
@@ -66,8 +77,5 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         playerRigidbody.AddForce(new Vector2(moveInput.x * moveSpeed, 0));
-
-
-
     }
 }

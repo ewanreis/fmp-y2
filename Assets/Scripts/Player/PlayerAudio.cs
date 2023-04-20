@@ -28,7 +28,7 @@ public class PlayerAudio : MonoBehaviour
 
     private int currentTrackNumber = 0;
 
-    private void Start()
+    private void OnEnable()
     {
         // make ui sound play when game paused
         audioSources[(int)AudioChannel.UI].ignoreListenerPause = true;
@@ -45,6 +45,19 @@ public class PlayerAudio : MonoBehaviour
         PauseMenu.OnResume += PlayResumeSound;
         Bestiary.OnBestiaryOpen += PlaySubmenuOpenSound;
         AchievementsMenu.OnAchievementsMenuOpen += PlaySubmenuOpenSound;
+    }
+
+    private void OnDisable()
+    {
+        MultilegProcedural.OnThroneStep -= PlayFootstepSound;
+        InputManager.OnSkipSongPressed -= SkipSong;
+        ShopButton.OnLockedButtonClick -= PlayButtonDenySound;
+        ShopButton.OnShopButtonClick -= PlayShopBuySound;
+        ScoreManager.OnPointsGained -= PlayScoreGainSound;
+        PauseMenu.OnPause -= PlayPauseSound;
+        PauseMenu.OnResume -= PlayResumeSound;
+        Bestiary.OnBestiaryOpen -= PlaySubmenuOpenSound;
+        AchievementsMenu.OnAchievementsMenuOpen -= PlaySubmenuOpenSound;
     }
 
     public void PlaySubmenuOpenSound()

@@ -27,13 +27,26 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        // add a listener for the pause button event
-        InputManager.OnPausePressed += TogglePause;
-
         // add listeners to the buttons
         resumeButton.onClick.AddListener(OnResumeClicked);
         settingsButton.onClick.AddListener(OnSettingsClicked);
         exitButton.onClick.AddListener(OnExitClicked);
+    }
+
+    private void OnEnable() 
+    {
+        InputManager.OnPausePressed += TogglePause;
+        UnpauseGame();
+    }
+
+    private void OnDisable() 
+    {
+        InputManager.OnPausePressed -= TogglePause;
+    }
+
+    private void Awake()
+    {
+        Time.timeScale = 1;
     }
 
     void OnResumeClicked()
@@ -68,6 +81,7 @@ public class PauseMenu : MonoBehaviour
         paused = true;
         Time.timeScale = 0;
         PlayerAudio.PauseAllSounds(true);
+        resumeButton.Select();
         onPauseClicked.Invoke();
         OnPause.Invoke();
         Debug.Log("Game Paused");

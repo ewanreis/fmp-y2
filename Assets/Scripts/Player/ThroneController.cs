@@ -12,7 +12,7 @@ public class ThroneController : MonoBehaviour
     private bool isFrozen = true;
 
     // Start is called before the first frame update
-    void Start()
+    private void OnEnable() 
     {
         rb = GetComponent<Rigidbody2D>();
         throneCollider = GetComponent<Collider2D>();
@@ -23,6 +23,14 @@ public class ThroneController : MonoBehaviour
 
         FreezeMovement();
     }
+
+    private void OnDisable()
+    {
+        InputManager.OnMoveHeld -= HandleMoveInput;
+        MountableObject.OnMount -= UnfreezeMovement;
+        MountableObject.OnUnmount -= FreezeMovement;
+    }
+
 
     private void OnDestroy()
     {

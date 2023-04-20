@@ -22,8 +22,19 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         UpdateShop();
+        
+    }
+
+    private void OnEnable() 
+    {
         ShopButton.OnItemBuy += BuyItem;
         PointsPerMinute.OnGainPoints += UpdateShop;
+    }
+
+    private void OnDisable() 
+    {
+        ShopButton.OnItemBuy -= BuyItem;
+        PointsPerMinute.OnGainPoints -= UpdateShop;
     }
 
     public void UpdateShop()
@@ -43,7 +54,7 @@ public class ShopManager : MonoBehaviour
             if(modifiedItem.locked)
             {
                 colors.normalColor = lockedButtonColour;
-                colors.highlightedColor = lockedButtonColourSelected;
+                colors.highlightedColor = lockedButtonColour;
                 colors.selectedColor = lockedButtonColourSelected;
                 colors.pressedColor = lockedButtonColourPressed;
                 shopButton.isLocked = true;
@@ -52,7 +63,7 @@ public class ShopManager : MonoBehaviour
             else
             {
                 colors.normalColor = buttonColour;
-                colors.highlightedColor = buttonColourSelected;
+                colors.highlightedColor = buttonColour;
                 colors.selectedColor = buttonColourSelected;
                 colors.pressedColor = buttonColourPressed;
                 shopButton.isLocked = false;

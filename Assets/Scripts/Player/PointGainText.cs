@@ -13,10 +13,15 @@ public class PointGainText : MonoBehaviour
     private ScoreManager scoreManager;
     private GameObject textBox;
 
-    private void Start()
+    private void OnEnable()
     {
         scoreManager = FindObjectOfType<ScoreManager>();
         ScoreManager.OnPointsGained += SpawnText;
+    }
+
+    private void OnDisable()
+    {
+        ScoreManager.OnPointsGained -= SpawnText;
     }
 
     private void SpawnText(int points)

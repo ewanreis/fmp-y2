@@ -7,12 +7,18 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> cameraList;
 
-    void Start()
+    void OnEnable()
     {
         MountableObject.OnMount += LookAtThrone;
         MountableObject.OnUnmount += LookAtPlayer;
 
         LookAtPlayer();
+    }
+
+    void OnDisable()
+    {
+        MountableObject.OnMount -= LookAtThrone;
+        MountableObject.OnUnmount -= LookAtPlayer;
     }
 
     private void LookAtPlayer()

@@ -18,7 +18,7 @@ public class ThroneShoot : MonoBehaviour
     private bool canShoot = false;
     private Camera cam;
 
-    private void Start()
+    private void OnEnable()
     {
         cam = Camera.main;
         InputManager.OnPrimaryPressed += ShootPrimary;
@@ -29,6 +29,18 @@ public class ThroneShoot : MonoBehaviour
 
         MountableObject.OnMount += EnableShoot;
         MountableObject.OnUnmount += DisableShoot;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.OnPrimaryPressed -= ShootPrimary;
+        InputManager.OnPrimaryHeld -= ShootPrimary;
+
+        InputManager.OnSecondaryPressed -= ShootSecondary;
+        InputManager.OnSecondaryHeld -= ShootSecondary;
+
+        MountableObject.OnMount -= EnableShoot;
+        MountableObject.OnUnmount -= DisableShoot;
     }
 
     private void ShootPrimary()

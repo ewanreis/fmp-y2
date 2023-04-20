@@ -25,8 +25,19 @@ public class SoldierInspect : MonoBehaviour
         soldier = GetComponent<Soldier>();
         originalColor = spriteRenderer.color;
         targetColor = originalColor;
+        
+    }
+
+    private void OnEnable() 
+    {
         MountableObject.OnMount += DisableInspection;
         MountableObject.OnUnmount += EnableInspection;
+    }
+
+    private void OnDisable() 
+    {
+        MountableObject.OnMount -= DisableInspection;
+        MountableObject.OnUnmount -= EnableInspection;
     }
 
     private void DisableInspection()

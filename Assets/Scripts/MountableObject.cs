@@ -15,11 +15,18 @@ public class MountableObject : MonoBehaviour
     private bool isMounted = false;
     private bool canMount = false;
 
-    private void Start()
+    private void OnEnable()
     {
         InputManager.OnMountPressed += ToggleMount;
         TooltipThrone.OnTooltipShow += EnableMount;
         TooltipThrone.OnTooltipHide += DisableMount;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.OnMountPressed -= ToggleMount;
+        TooltipThrone.OnTooltipShow -= EnableMount;
+        TooltipThrone.OnTooltipHide -= DisableMount;
     }
 
     private void ToggleMount()

@@ -11,7 +11,7 @@ public class PointsPerMinute : MonoBehaviour
     [SerializeField] private float timeBetweenPoints = 60f; 
     [SerializeField] private int pointsToAdd = 10;
 
-    void Start()
+    void OnEnable()
     {
         Invoke("IncremementPoints", timeBetweenPoints);
     }

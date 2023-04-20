@@ -21,7 +21,16 @@ public class DialogueSystem : MonoBehaviour
     void Start()
     {
         playerAudio = GetComponent<PlayerAudio>();
+    }
+
+    private void OnEnable() 
+    {
         InputManager.OnSecondaryPressed += StartDialogue;
+    }
+
+    private void OnDisable() 
+    {
+        InputManager.OnSecondaryPressed -= StartDialogue;
     }
 
     public void StartDialogue()

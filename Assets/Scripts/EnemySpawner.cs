@@ -33,12 +33,17 @@ public class EnemySpawner : MonoBehaviour
     private int wave;
     private bool isSpawning;
 
-    private void Start()
+    private void OnEnable()
     {
         mainCamera = Camera.main;
         //castleCaptureZone = GameObject.FindWithTag("CastleCaptureZone").GetComponent<Collider2D>();
         OnWaveEnd += StartWave;
         StartWave();
+    }
+
+    private void OnDisable() 
+    {
+        OnWaveEnd -= StartWave;
     }
 
     private void Update()

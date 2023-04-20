@@ -3,12 +3,15 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class Bestiary : MonoBehaviour
 {
     public event Action<Creature> OnCreatureEncountered;
     public event Action<Creature> OnCreatureKilled;
     public static event Action OnBestiaryOpen;
+
+    public UnityEvent OnClose;
 
     public List<GameObject> displayedCreatures = new List<GameObject>();
 
@@ -22,9 +25,19 @@ public class Bestiary : MonoBehaviour
 
     private void Start()
     {
-        InputManager.OnBestiaryPressed += ToggleBestiary;
-        AchievementsMenu.OnAchievementsMenuOpen += CloseBestiary;
         UpdateBestiaryDisplay();
+    }
+
+    private void OnEnable() 
+    {
+        InputManager.OnBestiaryPressed += ToggleBestiary;
+        AchievementsMenu.OnAchievementsMenuOpen += CloseBestiary;   
+    }
+
+    private void OnDisable() 
+    {
+        InputManager.OnBestiaryPressed -= ToggleBestiary;
+        AchievementsMenu.OnAchievementsMenuOpen -= CloseBestiary;
     }
 
     public void UpdateBestiaryDisplay()
@@ -85,6 +98,7 @@ public class Bestiary : MonoBehaviour
 
     public void CloseBestiary()
     {
+        OnClose.Invoke();
         isBestiaryOpen = false;
         bestiaryUI.SetActive(false);
         Debug.Log("Close Bestiary");

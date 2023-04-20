@@ -8,16 +8,25 @@ public class AchievementNotification : MonoBehaviour
     [SerializeField] private float displayTime = 2;
     private float currentTime = 0;
     private float normalizedValue;
-    RectTransform rectTransform;
+    [SerializeField] private RectTransform rectTransform;
     [SerializeField] private Vector3 startPosition;
     [SerializeField] private Vector3 endPosition;
     [SerializeField] private TMP_Text achievementText;
 
     private void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
+        //rectTransform = GetComponent<RectTransform>();
         rectTransform.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
         AchievementsMenu.OnAchievementUnlock += ShowAchievement;
+    }
+
+    private void OnDisable() 
+    {
+        AchievementsMenu.OnAchievementUnlock -= ShowAchievement;
     }
 
     public void ShowAchievement(Achievement achievement)
@@ -28,6 +37,7 @@ public class AchievementNotification : MonoBehaviour
     }
     IEnumerator LerpObject(Vector3 start, Vector3 end)
     {
+        Debug.Log("Start Lerp");
         while (currentTime <= lerpSpeed) 
         { 
             currentTime += Time.deltaTime; 
