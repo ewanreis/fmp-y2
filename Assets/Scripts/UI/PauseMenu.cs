@@ -33,10 +33,12 @@ public class PauseMenu : MonoBehaviour
         exitButton.onClick.AddListener(OnExitClicked);
     }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         InputManager.OnPausePressed += TogglePause;
-        UnpauseGame();
+        paused = false;
+        Time.timeScale = 1;
+        PlayerAudio.PauseAllSounds(false);
     }
 
     private void OnDisable() 
