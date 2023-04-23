@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ThroneController : MonoBehaviour
 {
-    public float speed = 1f;
+    [SerializeField] private float speed = 1f;
     private Rigidbody2D rb;
     private Collider2D throneCollider;
 

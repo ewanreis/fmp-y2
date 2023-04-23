@@ -16,6 +16,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private AudioClip buttonHoverSound;
     [SerializeField] private AudioClip volumeChangeSound;
     [SerializeField] private AudioClip submenuOpenSound;
+    [SerializeField] private AudioClip[] waveStartSounds;
     [SerializeField] private AudioClip[] shopBuySounds;
     [SerializeField] private AudioClip[] shopOpenSounds;
     [SerializeField] private AudioClip[] scoreGainSounds;
@@ -45,6 +46,7 @@ public class PlayerAudio : MonoBehaviour
         PauseMenu.OnResume += PlayResumeSound;
         Bestiary.OnBestiaryOpen += PlaySubmenuOpenSound;
         AchievementsMenu.OnAchievementsMenuOpen += PlaySubmenuOpenSound;
+        EnemySpawner.OnWaveStart += PlayWaveStartSound;
     }
 
     private void OnDisable()
@@ -58,6 +60,23 @@ public class PlayerAudio : MonoBehaviour
         PauseMenu.OnResume -= PlayResumeSound;
         Bestiary.OnBestiaryOpen -= PlaySubmenuOpenSound;
         AchievementsMenu.OnAchievementsMenuOpen -= PlaySubmenuOpenSound;
+        EnemySpawner.OnWaveStart -= PlayWaveStartSound;
+    }
+
+    public void PlayWaveStartSound(int wave)
+    {
+        if(wave == 10)
+        {
+            audioSources[(int)AudioChannel.Ambiance].PlayOneShot(waveStartSounds[3]);
+            return;
+        }
+        else if(wave == 15)
+        {
+            audioSources[(int)AudioChannel.Ambiance].PlayOneShot(waveStartSounds[4]);
+            return;
+        }
+        else
+            audioSources[(int)AudioChannel.Ambiance].PlayOneShot(waveStartSounds[Random.Range(0,3)]);
     }
 
     public void PlaySubmenuOpenSound()

@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
     private float nextSpawnTime;
     private int enemiesSpawned;
     private int currentEnemies;
-    private int wave;
+    private int wave = 0;
     private bool isSpawning;
 
     private void OnEnable()
@@ -124,7 +124,8 @@ public class EnemySpawner : MonoBehaviour
         {
             isSpawning = true;
             enemiesSpawned = 0;
-            OnWaveStart?.Invoke(enemiesPerWave);
+            wave++;
+            OnWaveStart?.Invoke(wave);
         }
     }
 }
