@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerAudio : MonoBehaviour
 {
     [SerializeField] private AudioSource[] audioSources = new AudioSource[6];
-
     [SerializeField] private AudioClip[] footstepSounds;
     [SerializeField] private AudioClip[] musicTracks;
     [SerializeField] private AudioClip pauseSound;
@@ -16,6 +15,11 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private AudioClip buttonHoverSound;
     [SerializeField] private AudioClip volumeChangeSound;
     [SerializeField] private AudioClip submenuOpenSound;
+    [SerializeField] private AudioClip lowHealthSound;
+    [SerializeField] private AudioClip criticalHealthSound;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private MonsterSounds monsterSounds;
+    [SerializeField] private AudioClip[] playerDamageSounds;
     [SerializeField] private AudioClip[] waveStartSounds;
     [SerializeField] private AudioClip[] shopBuySounds;
     [SerializeField] private AudioClip[] shopOpenSounds;
@@ -47,6 +51,11 @@ public class PlayerAudio : MonoBehaviour
         Bestiary.OnBestiaryOpen += PlaySubmenuOpenSound;
         AchievementsMenu.OnAchievementsMenuOpen += PlaySubmenuOpenSound;
         EnemySpawner.OnWaveStart += PlayWaveStartSound;
+        PlayerHealth.OnUpdateHealth += PlayDamageSound;
+        TaskWander.OnReachPoint += PlayMonsterAttackSound;
+        PlayerHealth.OnLowHealth += PlayLowHealthSound;
+        PlayerHealth.OnCriticalHealth += PlayCriticalHealthSound;
+        PlayerHealth.OnDeath += PlayDeathSound;
     }
 
     private void OnDisable()
@@ -61,6 +70,63 @@ public class PlayerAudio : MonoBehaviour
         Bestiary.OnBestiaryOpen -= PlaySubmenuOpenSound;
         AchievementsMenu.OnAchievementsMenuOpen -= PlaySubmenuOpenSound;
         EnemySpawner.OnWaveStart -= PlayWaveStartSound;
+        PlayerHealth.OnUpdateHealth -= PlayDamageSound;
+        TaskWander.OnReachPoint -= PlayMonsterAttackSound;
+        PlayerHealth.OnLowHealth -= PlayLowHealthSound;
+        PlayerHealth.OnCriticalHealth -= PlayCriticalHealthSound;
+        PlayerHealth.OnDeath -= PlayDeathSound;
+    }
+
+    public void PlayDeathSound()
+    {
+        audioSources[(int)AudioChannel.Environment].PlayOneShot(deathSound);
+    }
+
+    public void PlayLowHealthSound()
+    {
+        if (!audioSources[(int)AudioChannel.Environment].isPlaying)
+            audioSources[(int)AudioChannel.Environment].PlayOneShot(lowHealthSound);
+    }
+
+    public void PlayCriticalHealthSound()
+    {
+        if (!audioSources[(int)AudioChannel.Environment].isPlaying)
+            audioSources[(int)AudioChannel.Environment].PlayOneShot(criticalHealthSound);
+    }
+
+    public void PlayDamageSound(int health)
+    {
+        audioSources[(int)AudioChannel.Environment].PlayOneShot(playerDamageSounds[Random.Range(0, playerDamageSounds.Length)]);
+    }
+
+    public void PlayMonsterAttackSound(EnemyPositionType positionType)
+    {
+        bool value = audioMixer.GetFloat("EnemySFX", out float volume);
+        volume = Mathf.Pow(10f, volume / 20);
+        AudioClip clip = monsterSounds.fodderSounds.attackSounds[0];
+
+        switch(positionType.type)
+        {
+            case EnemyTypes.Fodder:
+                clip = monsterSounds.fodderSounds.attackSounds[Random.Range(0, monsterSounds.fodderSounds.attackSounds.Length)];
+                break;
+            case EnemyTypes.Footsoldier:
+                clip = monsterSounds.footsoldierSounds.attackSounds[Random.Range(0, monsterSounds.footsoldierSounds.attackSounds.Length)];
+                break;
+            case EnemyTypes.Commander:
+                clip = monsterSounds.commanderSounds.attackSounds[Random.Range(0, monsterSounds.commanderSounds.attackSounds.Length)];
+                break;
+            default:
+                clip = monsterSounds.fodderSounds.attackSounds[Random.Range(0, monsterSounds.fodderSounds.attackSounds.Length)];
+                break;
+        }
+
+        AudioSource.PlayClipAtPoint
+        (
+            clip,
+            positionType.enemyPosition.position,
+            volume
+        );
     }
 
     public void PlayWaveStartSound(int wave)
@@ -283,6 +349,40 @@ public class PlayerAudio : MonoBehaviour
     #endif
 }
 
+[System.Serializable]
+struct MonsterSounds
+{
+    public FodderSounds fodderSounds;
+    public FootsoldierSounds footsoldierSounds;
+    public CommanderSounds commanderSounds;
+}
+
+[System.Serializable]
+struct FodderSounds
+{
+    public AudioClip[] attackSounds;
+    public AudioClip[] damagedSounds;
+    public AudioClip[] footstepSounds;
+    public AudioClip deathSound;
+}
+
+[System.Serializable]
+struct FootsoldierSounds
+{
+    public AudioClip[] attackSounds;
+    public AudioClip[] damagedSounds;
+    public AudioClip[] footstepSounds;
+    public AudioClip deathSound;
+}
+[System.Serializable]
+struct CommanderSounds
+{
+    public AudioClip[] attackSounds;
+    public AudioClip[] damagedSounds;
+    public AudioClip[] footstepSounds;
+    public AudioClip deathSound;
+}
+
 public enum AudioChannel
 {
     Master,
@@ -293,4 +393,11 @@ public enum AudioChannel
     EnemySFX,
     UI,
     Dialogue
+}
+
+public enum EnemyTypes
+{
+    Fodder,
+    Footsoldier,
+    Commander
 }

@@ -15,8 +15,17 @@ public class HeartManager : MonoBehaviour
     private void Start()
     {
         currentHealth = healthPerHeart * numHearts;
-        PlayerHealth.OnUpdateHealth += UpdateHealth;
         UpdateHeartDisplay();
+    }
+
+    void OnEnable()
+    {
+        PlayerHealth.OnUpdateHealth += UpdateHealth;
+    }
+
+    void OnDisable()
+    {
+        PlayerHealth.OnUpdateHealth -= UpdateHealth;
     }
 
     // safely update health to avoid weird values

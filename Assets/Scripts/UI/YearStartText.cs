@@ -16,7 +16,16 @@ public class YearStartText : MonoBehaviour
         displayText = GetComponent<TMP_Text>();
         displayText.text = "";
         DisplayText(1);
+    }
+
+    void OnEnable()
+    {
         EnemySpawner.OnWaveStart += DisplayText;
+    }
+
+    void OnDisable()
+    {
+        EnemySpawner.OnWaveStart -= DisplayText;
     }
 
     private void DisplayText(int waveNumber)
