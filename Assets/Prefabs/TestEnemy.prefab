@@ -134,7 +134,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  enemyTag: Friendly
   targetTransform: {fileID: 3618861738217859087}
+  _enemyTarget: {fileID: 3618861738217859087}
+  spotRange: 5
+  attackRange: 2
+  wanderSpeed: 2
+  chaseSpeed: 4
 --- !u!70 &3215340985293709071
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

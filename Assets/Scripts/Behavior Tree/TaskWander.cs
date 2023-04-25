@@ -11,7 +11,7 @@ public class TaskWander : Node
     private Vector2 destination;
     private float wanderDistance = 15f;
     private float groundPadding = 1f;
-    private LayerMask _groundLayer; // Layer mask for the ground
+    private LayerMask _groundLayer; // layer mask for the ground
     private float _walkSpeed;
     private EnemyTypes _type;
 
@@ -32,12 +32,9 @@ public class TaskWander : Node
     {
         if(_waiting)
             CheckWait();
-        
+
         else
         {
-            
-            
-
             if(Vector3.Distance(_transform.position, _destinationPoint.position) < 0.01f)
             {
                 //Debug.Log($"{_transform.position},{_destinationPoint.position} Next Point");
@@ -81,21 +78,21 @@ public class TaskWander : Node
 
     private Vector2 GetRandomGroundedPoint()
     {
-        // Get a random x coordinate within the screen width
+        // get random x coordinate
         float randomX = Random.Range(-wanderDistance + _transform.position.x, wanderDistance + _transform.position.x);
 
         
 
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(randomX, _transform.position.y + 100f), Vector2.down, Mathf.Infinity, _groundLayer);
 
-        // If the raycast hits something, add the ground Y coordinate to the hit point's y coordinate to ground the point
+        // if raycast hits something, add ground Y coordinate to the hit point's y coordinate to ground the point
         float randomY = _transform.position.y;
         if (hit.collider != null)
         {
             randomY = hit.point.y + groundPadding;
         }
 
-        // Return the random grounded point as a Vector2
+        // return random grounded point as a Vector2
         return new Vector2(randomX, randomY);
     }
 
