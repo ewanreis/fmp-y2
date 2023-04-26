@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BehaviorTree;
 using System;
 
-public class FodderS1BT : Tree
+public class CommanderS1BT : Tree
 {
     [UnityEngine.SerializeField] private UnityEngine.LayerMask groundLayer;
     [UnityEngine.SerializeField] private string enemyTag;
@@ -25,7 +25,7 @@ public class FodderS1BT : Tree
                 new TaskGoToTarget(this.transform, ref _enemyTarget, chaseSpeed)
             }),
 
-            new TaskWander(this.transform, groundLayer, wanderSpeed, targetTransform, EnemyTypes.Footsoldier)
+            new TaskWanderEnemy(this.transform, groundLayer, wanderSpeed, targetTransform, EnemyTypes.Commander)
 
         });
         return root;
@@ -43,7 +43,7 @@ public class FodderS1BT : Tree
 
     private void UpdateTarget(ref UnityEngine.Transform enemyTarget)
     {
-        UnityEngine.Debug.Log($"{enemyTarget}");
+        //UnityEngine.Debug.Log($"{enemyTarget}");
         _enemyTarget = enemyTarget;
     }
 }

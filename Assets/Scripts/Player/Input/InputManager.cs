@@ -201,7 +201,7 @@ public class InputManager : MonoBehaviour
         else
         {
             usingController = false;
-            Debug.Log($"Using Keyboard");
+            //Debug.Log($"Using Keyboard");
         }
     }
 }

@@ -41,8 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8866968315447318337}
   - component: {fileID: 8866968315447318338}
-  - component: {fileID: 4610154940732355255}
   - component: {fileID: 3215340985293709071}
+  - component: {fileID: 2111269323936239132}
+  - component: {fileID: 2773353111063586100}
   m_Layer: 8
   m_Name: Body
   m_TagString: Enemy
@@ -119,28 +120,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4610154940732355255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8866968315447318336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaed40bcf1722b247bc2584f2e71703c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  enemyTag: Friendly
-  targetTransform: {fileID: 3618861738217859087}
-  _enemyTarget: {fileID: 3618861738217859087}
-  spotRange: 5
-  attackRange: 2
-  wanderSpeed: 2
-  chaseSpeed: 4
 --- !u!70 &3215340985293709071
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -155,8 +134,42 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.08}
-  m_Size: {x: 3.15, y: 4.74}
+  m_Size: {x: 3.15, y: 4.82}
   m_Direction: 0
+--- !u!114 &2111269323936239132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8866968315447318336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ecba603d0e4bb14ab429fae34bf7651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2773353111063586100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8866968315447318336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ef8f5e3bc97ba4d9fc826868e7b06b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyTag: Friendly
+  targetTransform: {fileID: 3618861738217859087}
+  _enemyTarget: {fileID: 3618861738217859087}
+  spotRange: 5
+  attackRange: 2
+  wanderSpeed: 2
+  chaseSpeed: 4
 --- !u!1 &8866968315809810440
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,9 +179,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8866968315809810441}
-  - component: {fileID: 8866968315809810443}
+  - component: {fileID: 9114711415038676501}
   m_Layer: 8
-  m_Name: TestEnemy
+  m_Name: Footsoldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -191,7 +204,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &8866968315809810443
+--- !u!50 &9114711415038676501
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviorTree;
 
-public class TaskWander : Node
+public class TaskWanderEnemy : Node
 {
-    public static event System.Action OnReachPoint;
+    public static event System.Action<EnemyPositionType> OnReachPoint;
     private Transform _transform;
     private Transform _destinationPoint;
     private Vector2 destination;
@@ -19,12 +19,13 @@ public class TaskWander : Node
     private float _waitCounter = 0f;
     private bool _waiting = false;
 
-    public TaskWander(Transform transform, LayerMask groundLayer, float walkSpeed, Transform targetTransform)
+    public TaskWanderEnemy(Transform transform, LayerMask groundLayer, float walkSpeed, Transform targetTransform, EnemyTypes enemyType)
     {
         _transform = transform;
         _groundLayer = groundLayer;
         _walkSpeed = walkSpeed;
         _destinationPoint = targetTransform;
+        _type = enemyType;
     }
 
     public override NodeState Evaluate()
@@ -34,7 +35,7 @@ public class TaskWander : Node
 
         else
         {
-            if(Vector3.Distance(_transform.position, _destinationPoint.position) < 1f)
+            if(Vector3.Distance(_transform.position, _destinationPoint.position) < 0.01f)
             {
                 //Debug.Log($"{_transform.position},{_destinationPoint.position} Next Point");
                 MoveToNextPoint();
@@ -53,10 +54,12 @@ public class TaskWander : Node
 
     private void MoveToNextPoint()
     {
-        //_transform.position = _destinationPoint.position;
+        _transform.position = _destinationPoint.position;
         _waitCounter = 0f;
-
-        OnReachPoint?.Invoke();
+        EnemyPositionType ePT = new EnemyPositionType();
+        ePT.enemyPosition = _transform;
+        ePT.type = _type;
+        OnReachPoint?.Invoke(ePT);
         _waiting = true;
         destination = GetRandomGroundedPoint();
         if(destination.x < -115)
@@ -71,7 +74,7 @@ public class TaskWander : Node
     private void MoveToTargetPoint()
     {
         _transform.position = Vector3.MoveTowards(_transform.position, _destinationPoint.position, _walkSpeed * Time.deltaTime);
-        Debug.DrawLine(_transform.position, _destinationPoint.position, Color.green);
+        Debug.DrawLine(_transform.position, _destinationPoint.position, Color.red);
     }
 
     private Vector2 GetRandomGroundedPoint()
@@ -101,4 +104,10 @@ public class TaskWander : Node
         if(_waitCounter >= _waitTime)
             _waiting = false;
     }
+}
+
+public struct EnemyPositionType
+{
+    public Transform enemyPosition;
+    public EnemyTypes type;
 }

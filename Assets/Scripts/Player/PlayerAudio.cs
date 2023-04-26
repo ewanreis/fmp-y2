@@ -52,7 +52,7 @@ public class PlayerAudio : MonoBehaviour
         AchievementsMenu.OnAchievementsMenuOpen += PlaySubmenuOpenSound;
         EnemySpawner.OnWaveStart += PlayWaveStartSound;
         PlayerHealth.OnUpdateHealth += PlayDamageSound;
-        TaskWander.OnReachPoint += PlayMonsterAttackSound;
+        TaskWanderEnemy.OnReachPoint += PlayMonsterAttackSound;
         PlayerHealth.OnLowHealth += PlayLowHealthSound;
         PlayerHealth.OnCriticalHealth += PlayCriticalHealthSound;
         PlayerHealth.OnDeath += PlayDeathSound;
@@ -71,7 +71,7 @@ public class PlayerAudio : MonoBehaviour
         AchievementsMenu.OnAchievementsMenuOpen -= PlaySubmenuOpenSound;
         EnemySpawner.OnWaveStart -= PlayWaveStartSound;
         PlayerHealth.OnUpdateHealth -= PlayDamageSound;
-        TaskWander.OnReachPoint -= PlayMonsterAttackSound;
+        TaskWanderEnemy.OnReachPoint -= PlayMonsterAttackSound;
         PlayerHealth.OnLowHealth -= PlayLowHealthSound;
         PlayerHealth.OnCriticalHealth -= PlayCriticalHealthSound;
         PlayerHealth.OnDeath -= PlayDeathSound;

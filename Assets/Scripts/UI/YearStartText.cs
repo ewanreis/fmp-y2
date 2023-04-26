@@ -30,7 +30,7 @@ public class YearStartText : MonoBehaviour
 
     private void DisplayText(int waveNumber)
     {
-        Debug.Log("Display");
+        //Debug.Log("Display");
         currentWave = waveNumber;
         StartCoroutine(FadeOutText());
     }

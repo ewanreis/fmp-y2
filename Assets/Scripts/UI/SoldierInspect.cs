@@ -54,6 +54,7 @@ public class SoldierInspect : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        //Debug.Log("mEnter");
         if(!canInspect)
             return;
 
@@ -61,7 +62,7 @@ public class SoldierInspect : MonoBehaviour
         {
             StopCoroutine(colorTransitionCoroutine);
         }
-        Debug.Log(soldier);
+        //Debug.Log(soldier);
         OnSoldierHover?.Invoke(soldier);
         colorTransitionCoroutine = StartCoroutine(TransitionColor(hoverColor));
     }
