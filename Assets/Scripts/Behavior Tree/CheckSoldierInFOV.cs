@@ -30,7 +30,7 @@ public class CheckSoldierInFOV : Node
             if(foundEnemies.Count > 0)
             {
                 parent.parent.SetData("target", colliders[0].transform);
-                //Debug.Log("Found Target");
+                Debug.Log($"Found Target {_visionRange}");
                 OnSoldierFound?.Invoke(foundEnemies[0].transform);
                 state = NodeState.Success;
                 return state;
@@ -41,17 +41,6 @@ public class CheckSoldierInFOV : Node
         state = NodeState.Success;
         return state;
     }
-
-    /*private void ScanSurroundings()
-    {
-        Debug.Log("scan");
-        colliders = Physics.OverlapSphere
-        (
-            _transform.position,
-            _visionRange,
-            _checkMask
-        );
-    }*/
 
     private void ScanSurroundings()
     {

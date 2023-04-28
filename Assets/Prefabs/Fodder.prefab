@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1028108067374327681}
   m_Layer: 8
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,9 +136,11 @@ MonoBehaviour:
   targetTransform: {fileID: 3181527550281512485}
   _enemyTarget: {fileID: 3181527550281512485}
   spotRange: 5
-  attackRange: 2
+  attackRange: 3
   wanderSpeed: 3
   chaseSpeed: 4
+  damageAmount: 2
+  _foundEnemy: {fileID: 8166357044324676452}
 --- !u!1 &4294580962360650744
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +237,7 @@ GameObject:
   - component: {fileID: 4294580962426172315}
   m_Layer: 8
   m_Name: Fodder
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

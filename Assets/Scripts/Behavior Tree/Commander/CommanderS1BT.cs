@@ -12,8 +12,11 @@ public class CommanderS1BT : Tree
     [UnityEngine.SerializeField] private UnityEngine.Transform _enemyTarget;
     [UnityEngine.SerializeField] private float spotRange;
     [UnityEngine.SerializeField] private float attackRange;
+    [UnityEngine.SerializeField] private float damageAmount;
     [UnityEngine.SerializeField] private float wanderSpeed;
     [UnityEngine.SerializeField] private float chaseSpeed;
+
+    [UnityEngine.SerializeField] private UnityEngine.GameObject _foundEnemy;
 
     protected override Node SetupTree()
     {
@@ -22,7 +25,9 @@ public class CommanderS1BT : Tree
             new Sequence(new List<Node>
             {
                 new CheckSoldierInFOV(this.transform, spotRange, enemyTag),
-                new TaskGoToTarget(this.transform, ref _enemyTarget, chaseSpeed)
+                new TaskGoToTarget(this.transform, ref _enemyTarget, chaseSpeed),
+                new CheckSoldierInFOV(this.transform, attackRange, enemyTag),
+                new TaskAttack(this.transform, _foundEnemy, damageAmount)
             }),
 
             new TaskWanderEnemy(this.transform, groundLayer, wanderSpeed, targetTransform, EnemyTypes.Commander)
@@ -31,19 +36,25 @@ public class CommanderS1BT : Tree
         return root;
     }
 
-   private void OnEnable()
+    private void OnEnable()
     {
         CheckSoldierInFOV.OnSoldierFound += (UnityEngine.Transform target) => UpdateTarget(ref target);
+        CheckSoldierInFOV.OnSoldierFound += (UnityEngine.Transform target) => UpdateFoundEnemy(target.gameObject);
     }
 
     private void OnDisable()
     {
         CheckSoldierInFOV.OnSoldierFound -= (UnityEngine.Transform target) => UpdateTarget(ref target);
+        CheckSoldierInFOV.OnSoldierFound -= (UnityEngine.Transform target) => UpdateFoundEnemy(target.gameObject);
     }
 
     private void UpdateTarget(ref UnityEngine.Transform enemyTarget)
     {
-        //UnityEngine.Debug.Log($"{enemyTarget}");
         _enemyTarget = enemyTarget;
+    }
+
+    private void UpdateFoundEnemy(UnityEngine.GameObject foundEnemyTarget)
+    {
+        _foundEnemy = foundEnemyTarget;
     }
 }

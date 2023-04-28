@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7015177321055158714}
   m_Layer: 8
   m_Name: EnemyCommander
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 1726625392600433676}
   m_Layer: 8
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -307,8 +307,10 @@ MonoBehaviour:
   _enemyTarget: {fileID: 120610470987563856}
   spotRange: 5
   attackRange: 2
+  damageAmount: 10
   wanderSpeed: 1
   chaseSpeed: 1
+  _foundEnemy: {fileID: 4702032682644447907}
 --- !u!1 &7015177322973599720
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,30 +5,29 @@ using BehaviorTree;
 
 public class TaskAttack : Node
 {
-    private Transform _target;
+    private GameObject _target;
+    private Transform _transform;
     private float _attackTime = 1f;
     private float _attackCounter = 0f;
+    private Health enemyHealth;
+    private float _damageAmount;
 
-    public TaskAttack(Transform target)
+    public TaskAttack(Transform transform, GameObject foundEnemy, float damageAmount)
     {
-        _target = target;
+        _target = foundEnemy;
+        _transform = transform;
+        _damageAmount = damageAmount;
     }
 
     public override NodeState Evaluate()
     {
-        //Transform target = (Transform)GetData("target");
-
-        /*if(target != _lastTarget)
-        {
-            // TODO Get Enemy Manager
-            _lastTarget = target;
-        }*/
-
-
         _attackCounter += Time.deltaTime;
         if(_attackCounter >= _attackTime)
         {
-            // TODO Attack
+            Debug.Log(_target.gameObject);
+            enemyHealth = _target.gameObject.GetComponent<Health>();
+            enemyHealth.Damage(_damageAmount);
+            Debug.Log($"Attack {enemyHealth}");
             _attackCounter = 0f;
         }
 
