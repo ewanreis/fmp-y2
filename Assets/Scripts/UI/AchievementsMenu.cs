@@ -35,6 +35,8 @@ public class AchievementsMenu : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GetSavedAchievements();
         UpdateAchievementsMenuDisplay();
+        if(_achievements[0].IsUnlocked)
+            RegisterAchievementUnlock(_achievements[6]);
         RegisterAchievementUnlock(_achievements[0]);
         yield return null;
     }
@@ -43,12 +45,18 @@ public class AchievementsMenu : MonoBehaviour
     {
         InputManager.OnAchievementsPressed += ToggleAchievementsMenu;
         Bestiary.OnBestiaryOpen += CloseAchievementsMenu;
+        EnemySpawner.SurviveFirstYear += SurviveFirstYearAchievement;
+        InputManager.OnSkipSongPressed += SkipSongAchievement;
+        EnemySpawner.SurviveFifthYear += SurviveFiveYearsAchievement;
     }
 
     private void OnDisable() 
     {
         InputManager.OnAchievementsPressed -= ToggleAchievementsMenu;
         Bestiary.OnBestiaryOpen -= CloseAchievementsMenu;
+        EnemySpawner.SurviveFirstYear -= SurviveFirstYearAchievement;
+        InputManager.OnSkipSongPressed -= SkipSongAchievement;
+        EnemySpawner.SurviveFifthYear -= SurviveFiveYearsAchievement;
     }
 
     public void UpdateAchievementsMenuDisplay()
@@ -146,4 +154,8 @@ public class AchievementsMenu : MonoBehaviour
         Debug.Log($"Unlocked {achievement}");
         OnAchievementUnlock?.Invoke(achievement);
     }
+
+    private void SurviveFirstYearAchievement() => RegisterAchievementUnlock(_achievements[10]);
+    private void SurviveFiveYearsAchievement() => RegisterAchievementUnlock(_achievements[14]);
+    private void SkipSongAchievement() => RegisterAchievementUnlock(_achievements[12]);
 }

@@ -13,6 +13,8 @@ public class EnemySpawner : MonoBehaviour
     public static event Action<int> OnWaveStart; // called when enemies start spawning
     public static event Action<int> OnStopSpawning; // called when enemies have stop spawning
     public static event Action OnWaveEnd; // called when all spawned enemies are killed
+    public static event Action SurviveFirstYear;
+    public static event Action SurviveFifthYear;
 
     [SerializeField] private EnemySpawnData[] enemiesToSpawn;
     [SerializeField] private Collider2D castleCaptureZone;
@@ -125,6 +127,10 @@ public class EnemySpawner : MonoBehaviour
             isSpawning = true;
             enemiesSpawned = 0;
             wave++;
+            if(wave == 2)
+                SurviveFirstYear?.Invoke();
+            if(wave == 6)
+                SurviveFifthYear?.Invoke();
             OnWaveStart?.Invoke(wave);
         }
     }

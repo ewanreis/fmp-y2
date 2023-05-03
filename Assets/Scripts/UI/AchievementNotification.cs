@@ -33,11 +33,14 @@ public class AchievementNotification : MonoBehaviour
     {
         achievementText.text = achievement.Name;
         rectTransform.gameObject.SetActive(true);
+        StopCoroutine(LerpObject(startPosition, endPosition));
         StartCoroutine(LerpObject(startPosition, endPosition));
     }
     IEnumerator LerpObject(Vector3 start, Vector3 end)
     {
         Debug.Log("Start Lerp");
+        rectTransform.anchoredPosition = start;
+        currentTime = 0;
         while (currentTime <= lerpSpeed) 
         { 
             currentTime += Time.deltaTime; 

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: New Year's Day
   m_EditorClassIdentifier: 
   _id: 10
-  _name: New Year's Day
+  _name: New Years Day
   _description: Survive your first year.
   _isUnlocked: 0
