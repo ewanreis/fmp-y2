@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
 using UnityEngine.UI;
-
 public class PlayerAudio : MonoBehaviour
 {
     [SerializeField] private AudioSource[] audioSources = new AudioSource[6];
@@ -27,6 +26,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private float footstepDelay;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private Slider[] sliders;
+    [SerializeField] private GameObject sourceParent;
 
     private bool isPlayingFootstep;
     private bool isPlayingMusic;
@@ -77,6 +77,21 @@ public class PlayerAudio : MonoBehaviour
         PlayerHealth.OnDeath -= PlayDeathSound;
     }
 
+     private AudioSource Play3DClip(AudioClip clip, Vector3 pos, float volume) 
+     {
+        GameObject sourceGameObject = new GameObject("TempAudio");
+        sourceGameObject.transform.position = pos;
+        sourceGameObject.transform.parent = sourceParent.transform;
+
+        AudioSource aSource = sourceGameObject.AddComponent<AudioSource>() as AudioSource;
+        aSource.clip = clip;
+        aSource.volume = volume;
+
+        aSource.Play();
+        Destroy(sourceGameObject, clip.length);
+        return aSource;
+    }
+
     public void PlayDeathSound()
     {
         audioSources[(int)AudioChannel.Environment].PlayOneShot(deathSound);
@@ -121,7 +136,7 @@ public class PlayerAudio : MonoBehaviour
                 break;
         }
 
-        AudioSource.PlayClipAtPoint
+        Play3DClip
         (
             clip,
             positionType.enemyPosition.position,

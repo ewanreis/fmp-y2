@@ -25,6 +25,7 @@ public class AchievementsMenu : MonoBehaviour
     [SerializeField] private Transform displayParent;
 
     [SerializeField] private List<GameObject> displayedAchievements = new List<GameObject>();
+    private bool hasPlayerMoved;
 
     private IEnumerator Start()
     {
@@ -48,6 +49,7 @@ public class AchievementsMenu : MonoBehaviour
         EnemySpawner.SurviveFirstYear += SurviveFirstYearAchievement;
         InputManager.OnSkipSongPressed += SkipSongAchievement;
         EnemySpawner.SurviveFifthYear += SurviveFiveYearsAchievement;
+        InputManager.OnMoveHeld += UpdateMoveStatus;
     }
 
     private void OnDisable() 
@@ -57,6 +59,7 @@ public class AchievementsMenu : MonoBehaviour
         EnemySpawner.SurviveFirstYear -= SurviveFirstYearAchievement;
         InputManager.OnSkipSongPressed -= SkipSongAchievement;
         EnemySpawner.SurviveFifthYear -= SurviveFiveYearsAchievement;
+        InputManager.OnMoveHeld -= UpdateMoveStatus;
     }
 
     public void UpdateAchievementsMenuDisplay()
@@ -155,7 +158,14 @@ public class AchievementsMenu : MonoBehaviour
         OnAchievementUnlock?.Invoke(achievement);
     }
 
-    private void SurviveFirstYearAchievement() => RegisterAchievementUnlock(_achievements[10]);
+    private void SurviveFirstYearAchievement() 
+    {
+        RegisterAchievementUnlock(_achievements[10]);
+        if(!hasPlayerMoved)
+            RegisterAchievementUnlock(_achievements[4]);
+    }
+        
     private void SurviveFiveYearsAchievement() => RegisterAchievementUnlock(_achievements[14]);
     private void SkipSongAchievement() => RegisterAchievementUnlock(_achievements[12]);
+    private void UpdateMoveStatus(Vector2 v) => hasPlayerMoved = true;
 }

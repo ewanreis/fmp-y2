@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 15
   _name: Supreme Horror
-  _description: Summon Him after the 5th year.
+  _description: Beat the game.
   _isUnlocked: 0
