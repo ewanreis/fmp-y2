@@ -5,6 +5,18 @@ using UnityEngine.UI;
 public class PlayerAudio : MonoBehaviour
 {
     [SerializeField] private AudioSource[] audioSources = new AudioSource[6];
+    [SerializeField] private float footstepDelay;
+    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private Slider[] sliders;
+    [SerializeField] private GameObject sourceParent;
+
+    #region AudioClips
+    [SerializeField] private MonsterSounds monsterSounds;
+    [SerializeField] private AudioClip[] playerDamageSounds;
+    [SerializeField] private AudioClip[] waveStartSounds;
+    [SerializeField] private AudioClip[] shopBuySounds;
+    [SerializeField] private AudioClip[] shopOpenSounds;
+    [SerializeField] private AudioClip[] scoreGainSounds;
     [SerializeField] private AudioClip[] footstepSounds;
     [SerializeField] private AudioClip[] musicTracks;
     [SerializeField] private AudioClip pauseSound;
@@ -17,16 +29,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private AudioClip lowHealthSound;
     [SerializeField] private AudioClip criticalHealthSound;
     [SerializeField] private AudioClip deathSound;
-    [SerializeField] private MonsterSounds monsterSounds;
-    [SerializeField] private AudioClip[] playerDamageSounds;
-    [SerializeField] private AudioClip[] waveStartSounds;
-    [SerializeField] private AudioClip[] shopBuySounds;
-    [SerializeField] private AudioClip[] shopOpenSounds;
-    [SerializeField] private AudioClip[] scoreGainSounds;
-    [SerializeField] private float footstepDelay;
-    [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private Slider[] sliders;
-    [SerializeField] private GameObject sourceParent;
+    #endregion
 
     private bool isPlayingFootstep;
     private bool isPlayingMusic;
@@ -77,7 +80,7 @@ public class PlayerAudio : MonoBehaviour
         PlayerHealth.OnDeath -= PlayDeathSound;
     }
 
-     private AudioSource Play3DClip(AudioClip clip, Vector3 pos, float volume) 
+     private AudioSource Play3DClip(AudioClip clip, Vector3 pos, float volume)
      {
         GameObject sourceGameObject = new GameObject("TempAudio");
         sourceGameObject.transform.position = pos;
@@ -86,6 +89,7 @@ public class PlayerAudio : MonoBehaviour
         AudioSource aSource = sourceGameObject.AddComponent<AudioSource>() as AudioSource;
         aSource.clip = clip;
         aSource.volume = volume;
+        aSource.spatialBlend = 1;
 
         aSource.Play();
         Destroy(sourceGameObject, clip.length);
