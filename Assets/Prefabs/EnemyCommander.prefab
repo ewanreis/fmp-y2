@@ -305,11 +305,12 @@ MonoBehaviour:
   enemyTag: Friendly
   targetTransform: {fileID: 120610470987563856}
   _enemyTarget: {fileID: 120610470987563856}
-  spotRange: 5
-  attackRange: 2
+  spotRange: 6.05
+  attackRange: 3.31
   damageAmount: 10
   wanderSpeed: 1
   chaseSpeed: 1
+  _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 4702032682644447907}
 --- !u!1 &7015177322973599720
 GameObject:

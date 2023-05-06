@@ -6,10 +6,12 @@ using TMPro;
 public class DialogueSystem : MonoBehaviour
 {
     [SerializeField] private AudioClip[] letterSounds;
+    [SerializeField] private AudioClip[] nonLetterSounds;
     [SerializeField] private TMP_Text dialogueTextBox;
     
     [SerializeField] private float letterDelay = 0.1f; // delay between each letter
     [SerializeField] private float sentenceDelay = 1f; // delay between each sentence
+    [SerializeField] private float wordDelay = 0.2f; // delay between each word
 
     [SerializeField] private PlayerAudio playerAudio;
 
@@ -36,6 +38,8 @@ public class DialogueSystem : MonoBehaviour
     public void StartDialogue()
     {
         currentDialogue = "Test Dialogue Speech.\nSecond line of dialogue.\nThird Line.";
+        //currentDialogue = "Test Test Test Test Test Speech Speech Speech Speech ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //currentDialogue = "Well hello there, I see you've defeated everyone... \nThe Queen is on her way, so you should run\n Ha Ha Ha";
         if(!isShowingDialogue && !PauseMenu.paused)
             StartCoroutine(TypeSentence());
     }
@@ -44,13 +48,30 @@ public class DialogueSystem : MonoBehaviour
     {
         isShowingDialogue = true;
         dialogueTextBox.text = "";
-        foreach (char letter in currentDialogue.ToCharArray())
+        foreach (char letter in currentDialogue)
         {
-            dialogueTextBox.text += letter;
-            playerAudio.PlaySound(AudioChannel.Dialogue, letterSounds[Random.Range(0, letterSounds.Length)]);
-            yield return new WaitForSeconds(letterDelay);
+            if (char.IsLetter(letter))
+            {
+                char upperCaseLetter = char.ToUpper(letter);
+                int soundIndex = (int)upperCaseLetter - 65;
+                playerAudio.PlaySound(AudioChannel.UI, letterSounds[soundIndex]);
+                dialogueTextBox.text += letter;
+                yield return new WaitForSeconds(letterDelay);
+            }
+            else
+            {
+                if (char.IsPunctuation(letter))
+                    playerAudio.PlaySound(AudioChannel.UI, nonLetterSounds[Random.Range(0, nonLetterSounds.Length)]);
+
+                else
+                    yield return new WaitForSeconds(wordDelay);
+
+                dialogueTextBox.text += letter;
+            }
+            if(letter == '.')
+                yield return new WaitForSeconds(sentenceDelay);
         }
-        yield return new WaitForSeconds(sentenceDelay);
+        
         EndDialogue();
         isShowingDialogue = false;
     }

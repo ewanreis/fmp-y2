@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ public class FodderS1BT : Tree
     [UnityEngine.SerializeField] private float wanderSpeed;
     [UnityEngine.SerializeField] private float chaseSpeed;
     [UnityEngine.SerializeField] private float damageAmount;
+    [UnityEngine.SerializeField] protected Health _enemyHealth;
 
     [UnityEngine.SerializeField] private UnityEngine.GameObject _foundEnemy;
     protected override Node SetupTree()
@@ -23,10 +25,14 @@ public class FodderS1BT : Tree
         {
             new Sequence(new List<Node>
             {
-                new CheckSoldierInFOV(this.transform, spotRange, enemyTag),
-                new TaskGoToTarget(this.transform, ref _enemyTarget, chaseSpeed),
                 new CheckSoldierInFOV(this.transform, attackRange, enemyTag),
-                new TaskAttack(this.transform, _foundEnemy, damageAmount)
+                new TaskAttack(this.transform, ref _enemyHealth, damageAmount)
+            }),
+
+            new Sequence(new List<Node>
+            {
+                new CheckSoldierInFOV(this.transform, spotRange, enemyTag),
+                new TaskGoToTarget(this.transform, _enemyTarget, chaseSpeed)
             }),
 
             new TaskWanderEnemy(this.transform, groundLayer, wanderSpeed, targetTransform, EnemyTypes.Fodder)
@@ -35,25 +41,35 @@ public class FodderS1BT : Tree
         return root;
     }
 
+    private void OnDrawGizmos()
+    {
+        UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
+        UnityEngine.Gizmos.DrawWireSphere(this.transform.position, spotRange);
+        UnityEngine.Gizmos.DrawLine(this.transform.position, targetTransform.position);
+        UnityEngine.Gizmos.color = UnityEngine.Color.red;
+        UnityEngine.Gizmos.DrawWireSphere(this.transform.position, attackRange);
+    }
+
    private void OnEnable()
     {
-        CheckSoldierInFOV.OnSoldierFound += (UnityEngine.Transform target) => UpdateTarget(ref target);
-        CheckSoldierInFOV.OnSoldierFound += (UnityEngine.Transform target) => UpdateFoundEnemy(target.gameObject);
+        CheckSoldierInFOV.OnSoldierFound += (UnityEngine.GameObject target, Health health) => UpdateTarget(target.transform);
+        CheckSoldierInFOV.OnSoldierFound += (UnityEngine.GameObject target, Health health) => UpdateFoundEnemy(target, health);
     }
 
     private void OnDisable()
     {
-        CheckSoldierInFOV.OnSoldierFound -= (UnityEngine.Transform target) => UpdateTarget(ref target);
-        CheckSoldierInFOV.OnSoldierFound -= (UnityEngine.Transform target) => UpdateFoundEnemy(target.gameObject);
+        CheckSoldierInFOV.OnSoldierFound -= (UnityEngine.GameObject target, Health health) => UpdateTarget(target.transform);
+        CheckSoldierInFOV.OnSoldierFound -= (UnityEngine.GameObject target, Health health) => UpdateFoundEnemy(target, health);
     }
 
-    private void UpdateTarget(ref UnityEngine.Transform enemyTarget)
+    private void UpdateTarget(UnityEngine.Transform enemyTarget)
     {
         _enemyTarget = enemyTarget;
     }
 
-    private void UpdateFoundEnemy(UnityEngine.GameObject foundEnemyTarget)
+    private void UpdateFoundEnemy(UnityEngine.GameObject foundEnemyTarget, Health enemyHealth)
     {
         _foundEnemy = foundEnemyTarget;
+        _enemyHealth = enemyHealth;
     }
 }

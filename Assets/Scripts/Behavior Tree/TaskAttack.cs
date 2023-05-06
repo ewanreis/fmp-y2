@@ -9,12 +9,12 @@ public class TaskAttack : Node
     private Transform _transform;
     private float _attackTime = 1f;
     private float _attackCounter = 0f;
-    private Health enemyHealth;
+    private Health _enemyHealth;
     private float _damageAmount;
 
-    public TaskAttack(Transform transform, GameObject foundEnemy, float damageAmount)
+    public TaskAttack(Transform transform, ref Health enemyHealth, float damageAmount)
     {
-        _target = foundEnemy;
+        _enemyHealth = enemyHealth;
         _transform = transform;
         _damageAmount = damageAmount;
     }
@@ -24,10 +24,10 @@ public class TaskAttack : Node
         _attackCounter += Time.deltaTime;
         if(_attackCounter >= _attackTime)
         {
-            Debug.Log(_target.gameObject);
-            enemyHealth = _target.gameObject.GetComponent<Health>();
-            enemyHealth.Damage(_damageAmount);
-            Debug.Log($"Attack {enemyHealth}");
+            _enemyHealth = (Health) parent.parent.GetData("targetHealth");
+            
+            if (_enemyHealth != null)
+                _enemyHealth.Damage(_damageAmount);
             _attackCounter = 0f;
         }
 

@@ -74,7 +74,7 @@ public class TaskWanderEnemy : Node
     private void MoveToTargetPoint()
     {
         _transform.position = Vector3.MoveTowards(_transform.position, _destinationPoint.position, _walkSpeed * Time.deltaTime);
-        Debug.DrawLine(_transform.position, _destinationPoint.position, Color.red);
+        //Debug.DrawLine(_transform.position, _destinationPoint.position, Color.red);
     }
 
     private Vector2 GetRandomGroundedPoint()

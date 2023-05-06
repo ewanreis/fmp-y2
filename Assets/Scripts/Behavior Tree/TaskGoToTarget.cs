@@ -9,7 +9,7 @@ public class TaskGoToTarget : Node
     private Transform _target;
     private float _walkSpeed;
 
-    public TaskGoToTarget(Transform transform, ref Transform target, float walkSpeed)
+    public TaskGoToTarget(Transform transform, Transform target, float walkSpeed)
     {
         _transform = transform;
         _target = target;

@@ -5,7 +5,7 @@ using BehaviorTree;
 
 public class CheckSoldierInFOV : Node
 {
-    public static event System.Action<Transform> OnSoldierFound;
+    public static event System.Action<GameObject, Health> OnSoldierFound;
     private Transform _transform;
     //private LayerMask _checkMask;
     private Collider2D[] colliders;
@@ -30,8 +30,9 @@ public class CheckSoldierInFOV : Node
             if(foundEnemies.Count > 0)
             {
                 parent.parent.SetData("target", colliders[0].transform);
-                Debug.Log($"Found Target {_visionRange}");
-                OnSoldierFound?.Invoke(foundEnemies[0].transform);
+                parent.parent.SetData("targetHealth", foundEnemies[0].GetComponent<Health>());
+                //Debug.Log($"Found Target {_visionRange}");
+                OnSoldierFound?.Invoke(foundEnemies[0], foundEnemies[0].GetComponent<Health>());
                 state = NodeState.Success;
                 return state;
             }
