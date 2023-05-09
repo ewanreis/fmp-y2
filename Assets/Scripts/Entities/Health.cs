@@ -17,6 +17,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Vector3 offset;
 
     private float health;
+    private DamageFlash damageFlash;
 
     private IEnumerator PassiveRegen()
     {
@@ -32,6 +33,7 @@ public class Health : MonoBehaviour
 
     void OnEnable()
     {
+        damageFlash = this.GetComponent<DamageFlash>();
         health = maxHealth;
         UpdateHealthBar();
         StartCoroutine(PassiveRegen());
@@ -54,6 +56,7 @@ public class Health : MonoBehaviour
         if(health == 0)
             Die();
 
+        damageFlash.Flash();
         UpdateHealthBar();
         StartCoroutine(PassiveRegen());
     }

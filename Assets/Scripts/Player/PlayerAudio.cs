@@ -19,6 +19,8 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private AudioClip[] scoreGainSounds;
     [SerializeField] private AudioClip[] footstepSounds;
     [SerializeField] private AudioClip[] musicTracks;
+    [SerializeField] private AudioClip[] throneShootSounds;
+    [SerializeField] private AudioClip[] throneHitSounds;
     [SerializeField] private AudioClip pauseSound;
     [SerializeField] private AudioClip resumeSound;
     [SerializeField] private AudioClip buttonDenySound;
@@ -33,7 +35,6 @@ public class PlayerAudio : MonoBehaviour
 
     private bool isPlayingFootstep;
     private bool isPlayingMusic;
-
     private int currentTrackNumber = 0;
 
     private void OnEnable()
@@ -59,6 +60,8 @@ public class PlayerAudio : MonoBehaviour
         PlayerHealth.OnLowHealth += PlayLowHealthSound;
         PlayerHealth.OnCriticalHealth += PlayCriticalHealthSound;
         PlayerHealth.OnDeath += PlayDeathSound;
+        ThroneShoot.OnShoot += PlayThroneShootSound;
+        ThroneProjectile.OnHit += PlayThroneHitSound;
     }
 
     private void OnDisable()
@@ -78,132 +81,66 @@ public class PlayerAudio : MonoBehaviour
         PlayerHealth.OnLowHealth -= PlayLowHealthSound;
         PlayerHealth.OnCriticalHealth -= PlayCriticalHealthSound;
         PlayerHealth.OnDeath -= PlayDeathSound;
+        ThroneShoot.OnShoot -= PlayThroneShootSound;
+        ThroneProjectile.OnHit -= PlayThroneHitSound;
     }
 
-     private AudioSource Play3DClip(AudioClip clip, Vector3 pos, float volume)
-     {
-        GameObject sourceGameObject = new GameObject("TempAudio");
-        sourceGameObject.transform.position = pos;
-        sourceGameObject.transform.parent = sourceParent.transform;
-
-        AudioSource aSource = sourceGameObject.AddComponent<AudioSource>() as AudioSource;
-        aSource.clip = clip;
-        aSource.volume = volume;
-        aSource.spatialBlend = 1;
-
-        aSource.Play();
-        Destroy(sourceGameObject, clip.length);
-        return aSource;
-    }
-
-    public void PlayDeathSound()
+    public void PlayThroneShootSound() => PlayRandomSoundInArray(AudioChannel.Environment, throneShootSounds);
+    public void PlayThroneHitSound(Vector3 pos)
     {
-        audioSources[(int)AudioChannel.Environment].PlayOneShot(deathSound);
+        Debug.Log("explodesound");
+        Debug.Log(pos);
+        PlayRandom3DClipInArray(pos, AudioChannel.Environment, throneHitSounds);
     }
 
     public void PlayLowHealthSound()
     {
         if (!audioSources[(int)AudioChannel.Environment].isPlaying)
-            audioSources[(int)AudioChannel.Environment].PlayOneShot(lowHealthSound);
+            PlaySound(AudioChannel.Environment, lowHealthSound);
     }
 
     public void PlayCriticalHealthSound()
     {
         if (!audioSources[(int)AudioChannel.Environment].isPlaying)
-            audioSources[(int)AudioChannel.Environment].PlayOneShot(criticalHealthSound);
+            PlaySound(AudioChannel.Environment, criticalHealthSound);
     }
 
-    public void PlayDamageSound(int health)
-    {
-        audioSources[(int)AudioChannel.Environment].PlayOneShot(playerDamageSounds[Random.Range(0, playerDamageSounds.Length)]);
-    }
+    public void PlayDamageSound(int health) => PlayRandomSoundInArray(AudioChannel.Environment, playerDamageSounds);
+    public void PlayDeathSound() => PlaySound(AudioChannel.Environment, deathSound);
 
     public void PlayMonsterAttackSound(EnemyPositionType positionType)
     {
-        bool value = audioMixer.GetFloat("EnemySFX", out float volume);
-        volume = Mathf.Pow(10f, volume / 20);
-        AudioClip clip = monsterSounds.fodderSounds.attackSounds[0];
-
-        switch(positionType.type)
+        AudioClip[] clipArray = positionType.type switch
         {
-            case EnemyTypes.Fodder:
-                clip = monsterSounds.fodderSounds.attackSounds[Random.Range(0, monsterSounds.fodderSounds.attackSounds.Length)];
-                break;
-            case EnemyTypes.Footsoldier:
-                clip = monsterSounds.footsoldierSounds.attackSounds[Random.Range(0, monsterSounds.footsoldierSounds.attackSounds.Length)];
-                break;
-            case EnemyTypes.Commander:
-                clip = monsterSounds.commanderSounds.attackSounds[Random.Range(0, monsterSounds.commanderSounds.attackSounds.Length)];
-                break;
-            default:
-                clip = monsterSounds.fodderSounds.attackSounds[Random.Range(0, monsterSounds.fodderSounds.attackSounds.Length)];
-                break;
-        }
-
-        Play3DClip
-        (
-            clip,
-            positionType.enemyPosition.position,
-            volume
-        );
+            EnemyTypes.Fodder => monsterSounds.fodderSounds.attackSounds,
+            EnemyTypes.Footsoldier => monsterSounds.footsoldierSounds.attackSounds,
+            EnemyTypes.Commander => monsterSounds.commanderSounds.attackSounds,
+            _ => monsterSounds.fodderSounds.attackSounds
+        };
+        PlayRandom3DClipInArray(positionType.enemyPosition.position, AudioChannel.EnemySFX, clipArray);
     }
 
     public void PlayWaveStartSound(int wave)
     {
         if(wave == 10)
         {
-            audioSources[(int)AudioChannel.Ambiance].PlayOneShot(waveStartSounds[3]);
+            PlaySound(AudioChannel.Ambiance, waveStartSounds[3]);
             return;
         }
         else if(wave == 15)
         {
-            audioSources[(int)AudioChannel.Ambiance].PlayOneShot(waveStartSounds[4]);
+            PlaySound(AudioChannel.Ambiance, waveStartSounds[4]);
             return;
         }
         else
-            audioSources[(int)AudioChannel.Ambiance].PlayOneShot(waveStartSounds[Random.Range(0,3)]);
+            PlayRandomSoundInArray(AudioChannel.Ambiance, waveStartSounds, 3);
     }
 
-    public void PlaySubmenuOpenSound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(submenuOpenSound);
-    }
-
-    public void PlayFootstepSound()
-    {
-        if (!isPlayingFootstep)
-            StartCoroutine(FootstepCoroutine());
-    }
-
+    #region Music
     public void PlaySong()
     {
         if(!isPlayingMusic)
             StartCoroutine(MusicTrackCoroutine());
-    }
-
-    public void PlayVolumeChangeSound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(volumeChangeSound);
-    }
-
-    public void PlayButtonHoverSound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(buttonHoverSound);
-    }
-
-    public void PlayButtonClickSound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(buttonClickSound);
-    }
-
-    public void PlayPauseSound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(pauseSound);
-    }
-
-    public void PlayResumeSound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(resumeSound);
     }
 
     public void SkipSong()
@@ -222,25 +159,13 @@ public class PlayerAudio : MonoBehaviour
             currentTrackNumber = 0;
     }
 
-    private IEnumerator FootstepCoroutine()
-    {
-        // flag to prevent multiple footstep sounds from playing at once
-        isPlayingFootstep = true;
-
-        // play random footstep sound on footstep channel
-        audioSources[(int)AudioChannel.Footsteps].PlayOneShot(footstepSounds[Random.Range(0, footstepSounds.Length)]);
-
-        yield return new WaitForSeconds(footstepDelay);
-        isPlayingFootstep = false;
-    }
-
     private IEnumerator MusicTrackCoroutine()
     {
         // flag to prevent multiple songs playing at once
         isPlayingMusic = true;
 
         // play the current track
-        audioSources[(int)AudioChannel.Music].PlayOneShot(musicTracks[currentTrackNumber]);
+        PlaySound(AudioChannel.Music, musicTracks[currentTrackNumber]);
         Debug.Log($"Song playing: {musicTracks[currentTrackNumber].ToString()}\nSong Length: {musicTracks[currentTrackNumber].length}");
 
         // wait until track is done playing
@@ -251,37 +176,49 @@ public class PlayerAudio : MonoBehaviour
         isPlayingMusic = false;
         PlaySong();
     }
+    #endregion
 
+    #region Footsteps
+    public void PlayFootstepSound()
+    {
+        if (!isPlayingFootstep)
+            StartCoroutine(FootstepCoroutine());
+    }
+
+    private IEnumerator FootstepCoroutine()
+    {
+        // flag to prevent multiple footstep sounds from playing at once
+        isPlayingFootstep = true;
+
+        // play random footstep sound on footstep channel
+        PlayRandomSoundInArray(AudioChannel.Footsteps, footstepSounds);
+
+        yield return new WaitForSeconds(footstepDelay);
+        isPlayingFootstep = false;
+    }
+    #endregion
+
+    #region UI Sounds
+    public void PlayVolumeChangeSound() => PlaySound(AudioChannel.UI, volumeChangeSound);
+    public void PlayButtonHoverSound() => PlaySound(AudioChannel.UI, buttonHoverSound);
+    public void PlayButtonClickSound() => PlaySound(AudioChannel.UI, buttonClickSound);
+    public void PlayPauseSound() => PlaySound(AudioChannel.UI, pauseSound);
+    public void PlayResumeSound() => PlaySound(AudioChannel.UI, resumeSound);
+    private void PlayButtonDenySound() => PlaySound(AudioChannel.UI, buttonDenySound);
+    private void PlayScoreGainSound(int i) => PlayRandomSoundInArray(AudioChannel.UI, scoreGainSounds);
+    private void PlayShopBuySound() => PlayRandomSoundInArray(AudioChannel.UI, shopBuySounds);
+    public void PlayShopOpenSound() => PlayRandomSoundInArray(AudioChannel.UI, shopOpenSounds);
+    public void PlaySubmenuOpenSound() => PlaySound(AudioChannel.UI, submenuOpenSound);
+    #endregion
+
+    #region Volume Methods
     // ensures the slider handle position is equal to the volume
     private void SetSlidersToSavedVolume()
     {
         for(int i = 0; i < sliders.Length; i++)
-        {
             sliders[i].value = GetVolume((AudioChannel)i);
-        }
     }
 
-    private void PlayButtonDenySound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(buttonDenySound);
-    }
-
-    private void PlayScoreGainSound(int i)
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(scoreGainSounds[Random.Range(0, scoreGainSounds.Length)]);
-    }
-
-    private void PlayShopBuySound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(shopBuySounds[Random.Range(0, shopBuySounds.Length)]);
-    }
-
-    public void PlayShopOpenSound()
-    {
-        audioSources[(int)AudioChannel.UI].PlayOneShot(shopOpenSounds[Random.Range(0, shopOpenSounds.Length)]);
-    }
-
-    #region Volume Methods
     public void SetVolume(AudioChannel audioChannel, float volume)
     {
         string groupName = audioChannel.ToString();
@@ -316,9 +253,42 @@ public class PlayerAudio : MonoBehaviour
     }
 
     public void PlaySound(AudioChannel channel, AudioClip sound)
+    => audioSources[(int)channel]?.PlayOneShot(sound);
+
+    public void PlayRandomSoundInArray(AudioChannel channel, AudioClip[] soundArray)
+    => audioSources[(int)channel]?.PlayOneShot(soundArray[Random.Range(0, soundArray.Length)]);
+
+    public void PlayRandomSoundInArray(AudioChannel channel, AudioClip[] soundArray, int maxRange)
+    => audioSources[(int)channel]?.PlayOneShot(soundArray[Random.Range(0, maxRange)]);
+
+    public void PlayRandomSoundInArray(AudioChannel channel, AudioClip[] soundArray, int minRange, int maxRange)
+    => audioSources[(int)channel]?.PlayOneShot(soundArray[Random.Range(minRange, maxRange)]);
+
+    private AudioSource Play3DClip(Vector3 pos, AudioChannel channel, AudioClip clip)
     {
-        audioSources[(int)channel].PlayOneShot(sound);
+        float volume = GetVolume(channel);
+        GameObject sourceGameObject = new GameObject("TempAudio");
+        sourceGameObject.transform.position = pos;
+        sourceGameObject.transform.parent = sourceParent.transform;
+
+        AudioSource aSource = sourceGameObject.AddComponent<AudioSource>() as AudioSource;
+        aSource.clip = clip;
+        aSource.volume = volume;
+        aSource.spatialBlend = 1;
+
+        aSource.Play();
+        Destroy(sourceGameObject, clip.length);
+        return aSource;
     }
+
+    public void PlayRandom3DClipInArray(Vector3 pos, AudioChannel channel, AudioClip[] soundArray)
+    => Play3DClip(pos, channel, soundArray[Random.Range(0, soundArray.Length)]);
+
+    public void PlayRandom3DClipInArray(Vector3 pos, AudioChannel channel, AudioClip[] soundArray, int maxRange)
+    => Play3DClip(pos, channel, soundArray[Random.Range(0, maxRange)]);
+
+    public void PlayRandom3DClipInArray(Vector3 pos, AudioChannel channel, AudioClip[] soundArray, int minRange, int maxRange)
+    => Play3DClip(pos, channel, soundArray[Random.Range(minRange, maxRange)]);
 
     public float GetVolume(AudioChannel audioChannel) => SaveData.GetSavedAudioVolumes()[(int)audioChannel];
 
@@ -339,14 +309,13 @@ public class PlayerAudio : MonoBehaviour
     public void IncrementVolumeEnemySFX(float increment) => IncrementVolume(AudioChannel.EnemySFX, increment);
     public void IncrementVolumeUI(float increment) => IncrementVolume(AudioChannel.UI, increment);
     public void IncrementVolumeDialogue(float increment) => IncrementVolume(AudioChannel.Dialogue, increment);
-    #endregion
 
     public static void PauseAllSounds(bool pause)
     {
         // pause or resume all sounds in the game (except ui)
         AudioListener.pause = pause;
     }
-
+    #endregion
 
     // editor-only function to label audio sources in inspector
     #if UNITY_EDITOR

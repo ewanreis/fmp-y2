@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 8916874949812265816}
   - component: {fileID: 4245875943916759187}
   - component: {fileID: 1726625392600433676}
+  - component: {fileID: 253009785741779307}
   m_Layer: 8
   m_Name: Body
   m_TagString: Enemy
@@ -312,6 +313,21 @@ MonoBehaviour:
   chaseSpeed: 1
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 4702032682644447907}
+--- !u!114 &253009785741779307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015177321548340977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6782ad4e727534294549a8990a7a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
 --- !u!1 &7015177322973599720
 GameObject:
   m_ObjectHideFlags: 0

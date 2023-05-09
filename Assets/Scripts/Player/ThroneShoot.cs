@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ThroneShoot : MonoBehaviour
 {
+    public static event System.Action OnShoot;
     [SerializeField] private GameObject primaryBulletPrefab;
     [SerializeField] private GameObject secondaryBulletPrefab;
     [SerializeField] private Transform shootPoint;
@@ -92,7 +93,7 @@ public class ThroneShoot : MonoBehaviour
 
         // Normalize the shoot direction and set the bullet velocity
         bullet.GetComponent<Rigidbody2D>().velocity = shootDirection.normalized * primaryBulletSpeed;
-
+        OnShoot.Invoke();
         Destroy(bullet, 5f);
         yield return new WaitForSeconds(primaryShootDelay);
         isShootingPrimary = false;
@@ -124,7 +125,7 @@ public class ThroneShoot : MonoBehaviour
 
         // Normalize the shoot direction and set the bullet velocity
         bullet.GetComponent<Rigidbody2D>().velocity = shootDirection.normalized * secondaryBulletSpeed;
-
+        OnShoot.Invoke();
         Destroy(bullet, 10f);
         yield return new WaitForSeconds(secondaryShootDelay);
         isShootingSecondary = false;
