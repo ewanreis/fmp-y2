@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6541214486296350357}
   - component: {fileID: 233845597544606920}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650542697775467813}
   - component: {fileID: 650542697775467834}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Eye2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 650542697811376283}
   - component: {fileID: 650542697811376287}
   - component: {fileID: 7561642713583327145}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 650542697871191851}
   - component: {fileID: 650542697871191855}
   - component: {fileID: 5819457029891198069}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 650542698599835432}
   - component: {fileID: 650542698599835436}
   - component: {fileID: 1480330967003072932}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 650542698600173642}
   - component: {fileID: 650542698600173646}
   - component: {fileID: 4979827891700642235}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,7 +728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650542699059824391}
   - component: {fileID: 650542699059824388}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Eye1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -815,9 +815,9 @@ GameObject:
   - component: {fileID: 650542699229986039}
   - component: {fileID: 650542699229986038}
   - component: {fileID: 650542699229985995}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Body
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -883,8 +883,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -337013361
-  m_SortingLayer: 11
+  m_SortingLayerID: 1762237847
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3c19378bd9986cd42a724bde3e2d174b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -951,6 +951,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 3109465879492312398, guid: ea401ab05e1876b438dd8ee9d15f38ac, type: 3}
   explosionParent: {fileID: 6541214486296350357}
+  explosionRange: 6
+  entityTag: Friendly
+  entityLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &650542699360201705
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +965,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 650542699360201710}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -998,7 +1003,7 @@ GameObject:
   - component: {fileID: 650542699499156514}
   - component: {fileID: 650542699499156518}
   - component: {fileID: 5929479686895996253}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1144,7 +1149,7 @@ GameObject:
   - component: {fileID: 650542699601032183}
   - component: {fileID: 650542699601032139}
   - component: {fileID: 1908478666794678751}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1290,7 +1295,7 @@ GameObject:
   - component: {fileID: 650542699631013654}
   - component: {fileID: 650542699631013866}
   - component: {fileID: 675737774262242870}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1436,7 +1441,7 @@ GameObject:
   - component: {fileID: 650542699715067068}
   - component: {fileID: 650542699715067056}
   - component: {fileID: 18568052670711137}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: bone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class OuterContact : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.transform != transform.parent)
+        {
             transform.parent.GetComponent<ExplodeOnCollision>().ChildCollision();
+        }
     }
 }

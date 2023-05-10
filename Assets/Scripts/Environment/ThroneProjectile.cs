@@ -6,6 +6,8 @@ public class ThroneProjectile : MonoBehaviour
 {
     public static event System.Action<Vector3> OnHit;
     [SerializeField] private float damage;
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private Transform explosionParent;
     private Collider2D col;
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -32,7 +34,26 @@ public class ThroneProjectile : MonoBehaviour
 
     private void Explode()
     {
-        OnHit.Invoke(this.transform.position);
+        InstantiateParticleSystem();
+        //SetSpritesHidden();
+
         Destroy(this.gameObject);
+    }
+
+    private void InstantiateParticleSystem()
+    {
+        GameObject obj = Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+        obj.name = "ThroneProjectileExplosion";
+        obj.transform.position = this.transform.position;
+    }
+
+
+    private void SetSpritesHidden()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.enabled = false;
+        SpriteRenderer[] spritesInChildren = GetComponentsInChildren<SpriteRenderer>();
+        foreach(SpriteRenderer sprite in spritesInChildren) 
+            sprite.enabled = false;
     }
 }

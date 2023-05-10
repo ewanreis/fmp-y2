@@ -86,12 +86,7 @@ public class PlayerAudio : MonoBehaviour
     }
 
     public void PlayThroneShootSound() => PlayRandomSoundInArray(AudioChannel.Environment, throneShootSounds);
-    public void PlayThroneHitSound(Vector3 pos)
-    {
-        Debug.Log("explodesound");
-        Debug.Log(pos);
-        PlayRandom3DClipInArray(pos, AudioChannel.Environment, throneHitSounds);
-    }
+    public void PlayThroneHitSound(Vector3 pos) => PlayRandom3DClipInArray(pos, AudioChannel.Environment, throneHitSounds);
 
     public void PlayLowHealthSound()
     {

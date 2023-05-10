@@ -18,6 +18,9 @@ public class TaskGoToTarget : Node
 
     public override NodeState Evaluate()
     {
+        if(_target == null)
+            return NodeState.Failure;
+
         if(Vector3.Distance(_transform.position, _target.position) > 0.01f)
         {
             _transform.position = Vector3.MoveTowards

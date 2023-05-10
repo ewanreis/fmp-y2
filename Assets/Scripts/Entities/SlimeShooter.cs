@@ -42,7 +42,7 @@ public class SlimeShooter : MonoBehaviour
         enemy.transform.rotation = shootRotation;
         Rigidbody2D rb = enemy.GetComponentInChildren<Rigidbody2D>();
         ExplodeOnCollision explodeOnCollision = enemy.GetComponentInChildren<ExplodeOnCollision>();
-        explodeOnCollision.StartExplosion(1);
+        explodeOnCollision.StartExplosion(4);
         //Destroy(enemy, 5f);
         rb.AddForce(shootDirection * shootForce, ForceMode2D.Impulse);
     }
