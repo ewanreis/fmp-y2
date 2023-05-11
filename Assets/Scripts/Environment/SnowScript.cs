@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(ParticleSystem))]
 public class SnowScript : MonoBehaviour
 {
+    //* Manages the snow and makes the amount of snow increase over time
     private ParticleSystem ps;
     [SerializeField] private float hSliderValue = 5.0f;
     [SerializeField] private float incrementRate = .01f;

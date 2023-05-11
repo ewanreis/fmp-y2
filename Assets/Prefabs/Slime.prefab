@@ -932,8 +932,8 @@ MonoBehaviour:
   - {fileID: 650542698600173641}
   - {fileID: 650542697871191850}
   m_Bounds:
-    m_Center: {x: -0.01067996, y: 0.08490515, z: 0}
-    m_Extent: {x: 1.65493, y: 1.4893053, z: 0}
+    m_Center: {x: -0.01067996, y: 0.08464503, z: 0}
+    m_Extent: {x: 1.65493, y: 1.4890451, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -956,6 +956,7 @@ MonoBehaviour:
   entityLayer:
     serializedVersion: 2
     m_Bits: 1024
+  head: {fileID: 6541214486296350357}
 --- !u!1 &650542699360201705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1456,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650542699715067070}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7042728, w: 0.70992947}
+  m_LocalRotation: {x: -0, y: -0, z: -0.69264644, w: 0.72127736}
   m_LocalPosition: {x: -0.16241044, y: 1.3272848, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1463,7 +1464,7 @@ Transform:
   - {fileID: 6541214486296350357}
   m_Father: {fileID: 650542699229986033}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -87.68}
 --- !u!50 &650542699715067071
 Rigidbody2D:
   serializedVersion: 4

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class HUDArrow : MonoBehaviour
 {
+    //* Manages the HUD arrow indicator for the throne shoot direction
     [SerializeField] private RectTransform circleCenter;
     [SerializeField] private GameObject centerFollow;
     [SerializeField] private float circleRadius = 100f;

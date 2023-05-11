@@ -5,6 +5,7 @@ using System;
 
 public class PointsPerMinute : MonoBehaviour
 {
+    //* This script handles the points given to the player every minute (or any other interval)
     public static event Action OnGainPoints;
 
     [SerializeField] private ScoreManager scoreManager;

@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class AchievementsMenu : MonoBehaviour
 {
+    //* Manages the display of achievements in the achievement menu
     public static event Action OnAchievementsMenuOpen;
     public static event Action<Achievement> OnAchievementUnlock;
 
@@ -148,7 +149,7 @@ public class AchievementsMenu : MonoBehaviour
     {
         if(achievement.IsUnlocked == true)
         {
-            Debug.Log($"Achievement {achievement} is already unlocked");
+            Debug.Log($"Achievement {achievement._name} is already unlocked");
             return;
         }
         achievement.IsUnlocked = true;

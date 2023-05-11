@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class ThroneProjectile : MonoBehaviour
 {
+    //* Manages the shot projectile from the throne to explode on impact and damage enemies
     public static event System.Action<Vector3> OnHit;
     [SerializeField] private float damage;
     [SerializeField] private GameObject explosionPrefab;
-    [SerializeField] private Transform explosionParent;
     private Collider2D col;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log($"{other.gameObject}, {other.gameObject.tag}");
         Transform body;
         body = other.gameObject.transform.Find("Body");
         if(body == null)
@@ -23,8 +22,10 @@ public class ThroneProjectile : MonoBehaviour
 
         if(body.gameObject.tag == "Enemy")
         {
-            Debug.Log("enemyHit");
+            //Debug.Log("enemyHit");
             Explode();
+            Health enemyHealth = body.gameObject.GetComponent<Health>();
+            enemyHealth.Damage(damage);
         }
         else
         {
@@ -40,11 +41,13 @@ public class ThroneProjectile : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+
     private void InstantiateParticleSystem()
     {
         GameObject obj = Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
         obj.name = "ThroneProjectileExplosion";
         obj.transform.position = this.transform.position;
+        Destroy(obj, 4f);
     }
 
 

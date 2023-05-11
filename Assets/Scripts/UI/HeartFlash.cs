@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HeartFlash : MonoBehaviour
 {
+    //* Flashes the attached sprite when the player takes damage
     private Color originalColour;
     private Image heartSprite;
     [SerializeField] private Color flashColour;

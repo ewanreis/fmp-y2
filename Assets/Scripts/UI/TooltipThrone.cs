@@ -6,6 +6,7 @@ using System;
 
 public class TooltipThrone : MonoBehaviour
 {
+    //* Manages the tooltip for when the player can mount the throne
     public static event Action OnTooltipShow;
     public static event Action OnTooltipHide;
 

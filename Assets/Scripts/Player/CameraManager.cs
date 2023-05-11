@@ -5,6 +5,7 @@ using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
+    //* Manages foreground and background cameras switching when mounting and dismounting
     [SerializeField] private List<GameObject> cameraList;
 
     void OnEnable()

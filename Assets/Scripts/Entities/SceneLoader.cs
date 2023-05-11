@@ -6,14 +6,17 @@ using TMPro;
 using System;
 public class SceneLoader : MonoBehaviour
 {
+    //* Handles switching scenes
     public static event Action OnSceneLoad;
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadSlider;
     [SerializeField] private TMP_Text loadPercentText;
+
     public void LoadScene(string sceneName)
     {
         StartCoroutine(LoadGameAsync(sceneName));
     }
+    
     private IEnumerator LoadGameAsync(string sceneName)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);

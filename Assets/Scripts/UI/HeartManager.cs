@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 public class HeartManager : MonoBehaviour
 {
+    //* Manages the sprites for each heart depending on the player's health
     [SerializeField] private Sprite[] heartSprites;
     [SerializeField] private Image[] hearts;
     [SerializeField] private int healthPerHeart = 10;

@@ -1,29 +1,41 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class EnemySpawnData
-{
-    public GameObject prefab;
-    public float spawnChance;
-}
+
 
 public class EnemySpawner : MonoBehaviour
 {
+    //* This code will spawn enemies in waves across the map outside of the camera bounds
+
     public static event Action<int> OnWaveStart; // called when enemies start spawning
     public static event Action<int> OnStopSpawning; // called when enemies have stop spawning
     public static event Action OnWaveEnd; // called when all spawned enemies are killed
     public static event Action SurviveFirstYear;
     public static event Action SurviveFifthYear;
 
-    [SerializeField] private EnemySpawnData[] enemiesToSpawn;
-    [SerializeField] private Collider2D castleCaptureZone;
-    [SerializeField] private Transform enemySpawnCheck;
-    [SerializeField] private Transform enemyParent;
-    [SerializeField] private float spawnInterval = 2f; // delay between each enemy spawn
-    [SerializeField] private float waveInterval = 5f; // how long to wait between waves
-    [SerializeField] private int enemiesPerWave = 10; // how many enemies to spawn
-    [SerializeField] private double enemyWaveIncrement = 0.1; // the increment of enemies to add next wave
+    [SerializeField] 
+    private EnemySpawnData[] enemiesToSpawn;
+
+    [SerializeField] 
+    private Collider2D castleCaptureZone;
+
+    [SerializeField] 
+    private Transform enemySpawnCheck;
+
+    [SerializeField] 
+    private Transform enemyParent;
+
+    [SerializeField] [Tooltip("Delay between each enemy spawn")] 
+    private float spawnInterval = 2f;
+
+    [SerializeField] [Tooltip("How long to wait between waves")] 
+    private float waveInterval = 5f;
+    
+    [SerializeField] [Tooltip("How many enemies to spawn each wave")] 
+    private int enemiesPerWave = 10;
+
+    [SerializeField] [Tooltip("The increment of enemies to add next wave")] 
+    private int enemyWaveIncrement = 1; 
 
     //* The formula for enemies per wave is as follows:
     //* NextSpawnCount = CurrentSpawnCount += (CurrentSpawnCount * EnemyWaveIncrement)
@@ -111,7 +123,7 @@ public class EnemySpawner : MonoBehaviour
 
             spawnRoll -= data.spawnChance;
         }
-        Vector3 spawnPos = new Vector3(enemySpawnCheck.position.x, enemySpawnCheck.position.y + 3, enemySpawnCheck.position.z);
+        Vector3 spawnPos = new Vector3(enemySpawnCheck.position.x, enemySpawnCheck.position.y + 5, enemySpawnCheck.position.z);
 
         if (enemyPrefab != null)
         {
@@ -127,6 +139,7 @@ public class EnemySpawner : MonoBehaviour
             isSpawning = true;
             enemiesSpawned = 0;
             wave++;
+            enemiesPerWave += enemyWaveIncrement;
             if(wave == 2)
                 SurviveFirstYear?.Invoke();
             if(wave == 6)
@@ -134,4 +147,11 @@ public class EnemySpawner : MonoBehaviour
             OnWaveStart?.Invoke(wave);
         }
     }
+}
+
+[Serializable]
+public class EnemySpawnData
+{
+    public GameObject prefab;
+    public float spawnChance;
 }

@@ -5,6 +5,8 @@ using System;
 
 public class MountableObject : MonoBehaviour
 {
+    //* This script manages the mounting and dismounting of the throne and any other mountable objects
+
     [SerializeField] private GameObject player;
     [SerializeField] private Transform mountPoint;
     [SerializeField] private float yOffset;
@@ -61,15 +63,8 @@ public class MountableObject : MonoBehaviour
         OnUnmount.Invoke();
     }
 
-    private void EnableMount()
-    {
-        canMount = true;
-    }
-
-    private void DisableMount()
-    {
-        canMount = false;
-    }
+    private void EnableMount() =>  canMount = true;
+    private void DisableMount() => canMount = false;
 
     private void FixedUpdate()
     {

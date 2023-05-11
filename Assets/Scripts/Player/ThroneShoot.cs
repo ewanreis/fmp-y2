@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ThroneShoot : MonoBehaviour
 {
+    //* Handles shooting for the throne
     public static event System.Action OnShoot;
     [SerializeField] private GameObject primaryBulletPrefab;
     [SerializeField] private GameObject secondaryBulletPrefab;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VisonLight : MonoBehaviour
 {
+    //* This script sets the vision light cone to the sight range of the entity
     private UnityEngine.Rendering.Universal.Light2D visionLight;
     [SerializeField] private float visionRange;
     [SerializeField] private Transform target;
@@ -13,10 +14,5 @@ public class VisonLight : MonoBehaviour
     {
         visionLight = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
         visionLight.pointLightOuterRadius = visionRange;
-    }
-
-    void FixedUpdate()
-    {
-        //lightParent.transform.right = (target.position - lightParent.transform.position);
     }
 }

@@ -6,6 +6,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    //* Manages various parts of the UI
     [SerializeField] private GameObject soldierInspectionMenu;
     [SerializeField] private TMP_Text soldierInspectText;
     [SerializeField] private Toggle vsyncToggle;

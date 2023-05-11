@@ -5,6 +5,7 @@ using System;
 
 public class PlayerHealth : MonoBehaviour
 {
+    //* Manages the player and castle's shared health
     public static event Action<int> OnUpdateHealth;
     public static event Action OnLowHealth;
     public static event Action OnCriticalHealth;

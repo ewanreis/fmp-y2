@@ -5,6 +5,7 @@ using System;
 
 public class ScoreManager : MonoBehaviour
 {
+    //* Manages the game's score
     private int currentPoints;
     [SerializeField] private int startingPoints;
 

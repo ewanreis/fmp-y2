@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class Bestiary : MonoBehaviour
 {
+    //* Used for managing displayed creatures in the bestiary
     public event Action<Creature> OnCreatureEncountered;
     public event Action<Creature> OnCreatureKilled;
     public static event Action OnBestiaryOpen;

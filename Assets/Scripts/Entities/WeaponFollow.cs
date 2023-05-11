@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class WeaponFollow : MonoBehaviour
 {
+    //* This script makes entity weapons follow the entity
     [SerializeField] private Transform target = null;
     [SerializeField] private float followRadius = 2f;
     [SerializeField] private float maxDistance = 10f;
@@ -21,8 +22,11 @@ public class WeaponFollow : MonoBehaviour
 
     private void Update()
     {
-        if(target == null)
-            Destroy(this);
+        if(target == null || transform == null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
 
         MoveTowardsTarget();
         WobbleGameObject();

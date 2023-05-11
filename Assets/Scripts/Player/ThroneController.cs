@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ThroneController : MonoBehaviour
 {
+    //* Handles input switching for the throne along with the throne movement
     [SerializeField] private float speed = 1f;
     private Rigidbody2D rb;
     private Collider2D throneCollider;

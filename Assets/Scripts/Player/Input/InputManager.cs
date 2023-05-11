@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    //* Manages the user's input for keyboard and mouse or controller
     private static PlayerInput playerInput;
 
     private bool isMovePressed = false;

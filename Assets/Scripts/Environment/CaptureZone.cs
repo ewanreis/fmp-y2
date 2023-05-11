@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CaptureZone : MonoBehaviour
 {
+    //* This script detects enemies inside the castle capture zone and damages the health while any enemy is inside
     [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private float tickSpeed = 1f; // speed of each tick
     [SerializeField] private int damagePerTick = 5; // damage to deal per tick

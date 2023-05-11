@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 public class YearStartText : MonoBehaviour
 {
+    //* Manages the year counter at the start of each year
     [SerializeField] private float fadeTime = 2f;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private string textToDisplay;

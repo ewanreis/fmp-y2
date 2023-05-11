@@ -4,6 +4,7 @@ using System;
 
 public class ShopButton : MonoBehaviour
 {
+    //* Manages checking if an item can be bought for each shop item
     public static event Action OnLockedButtonClick;
     public static event Action OnShopButtonClick;
     public static event Action<int> OnItemBuy;

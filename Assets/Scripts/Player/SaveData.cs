@@ -4,6 +4,7 @@ using System.Linq;
 
 public static class SaveData
 {
+    //* Saves and loads game data
     public static AudioData audio;
     public static StatisticData statistics;
     public static AchievementsData achievements;

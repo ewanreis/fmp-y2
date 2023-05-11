@@ -7,6 +7,7 @@ using System;
 
 public class PauseMenu : MonoBehaviour
 {
+    //* Manages the pause menu and pausing of the game
     // keep track of whether the game is paused
     public static bool paused = false;
 

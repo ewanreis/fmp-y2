@@ -4,18 +4,41 @@ using UnityEngine;
 
 public class ChainedObject : MonoBehaviour
 {
-    [SerializeField] private int length; // # of segments in the chain
-    [SerializeField] private LineRenderer lineRend;
-    [SerializeField] private Vector3[] segmentPoses; // positions of the segments in the chain
-    [SerializeField] private Transform targetDir; // direction the chain points towards
-    [SerializeField] private float targetDist; // distance between each segment
-    [SerializeField] private float smoothSpeed;
-    [SerializeField] private float trailSpeed;
+    //* This code will chain objects in a line for use in things such as chains, vines or centipedes
 
-    [SerializeField] private float wiggleSpeed;
-    [SerializeField] private float wiggleMagnitude;
-    [SerializeField] private Transform wiggleDir;
-    [SerializeField] private Transform[] bodyParts; // the parts of the chain
+    #region References
+    [SerializeField] [Tooltip("Number of segments in the chain")] 
+    private int length;
+
+    [SerializeField] 
+    private LineRenderer lineRend;
+
+    [SerializeField] [Tooltip("Positions of the segments in the chain")] 
+    private Vector3[] segmentPoses;
+
+    [SerializeField] [Tooltip("Direction the chain points towards")] 
+    private Transform targetDir;
+
+    [SerializeField] [Tooltip("Distance between each segment")] 
+    private float targetDist;
+
+    [SerializeField] 
+    private float smoothSpeed;
+
+    [SerializeField] 
+    private float trailSpeed;
+
+    [SerializeField] 
+    private float wiggleSpeed;
+    [SerializeField] 
+    private float wiggleMagnitude;
+
+    [SerializeField] 
+    private Transform wiggleDir;
+
+    [SerializeField] [Tooltip("The parts of the chain")] 
+    private Transform[] bodyParts;
+    #endregion
 
     private Vector3 segmentV; // current velocity of the segment movement
 

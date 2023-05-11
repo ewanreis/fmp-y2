@@ -6,6 +6,8 @@ using BehaviorTree;
 
 public class Health : MonoBehaviour
 {
+    //* This code will manage the health and healthbar of the attached entity
+
     [SerializeField] private GameObject entity;
     [SerializeField] private float maxHealth;
     [SerializeField] private float regenRate;
@@ -17,16 +19,20 @@ public class Health : MonoBehaviour
     [SerializeField] private Vector3 offset;
 
     private float health;
+    private float regenCounter;
     private DamageFlash damageFlash;
 
     private IEnumerator PassiveRegen()
     {
-        yield return new WaitForSeconds(regenDelay);
-
         while (health < maxHealth)
         {
-            Heal(regenRate * Time.deltaTime);
-            UpdateHealthBar();
+            regenCounter += Time.deltaTime;
+            if(regenCounter >= regenDelay)
+            {
+                Heal(regenRate * Time.deltaTime);
+                UpdateHealthBar();
+            }
+            
             yield return null;
         }
     }
@@ -47,6 +53,7 @@ public class Health : MonoBehaviour
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
+        regenCounter = 0;
 
         StopCoroutine(PassiveRegen());
 

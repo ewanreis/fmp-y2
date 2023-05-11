@@ -5,6 +5,7 @@ using TMPro;
 
 public class DialogueSystem : MonoBehaviour
 {
+    //* Used for managing the sound and subtitles of dialogue
     [SerializeField] private AudioClip[] letterSounds;
     [SerializeField] private AudioClip[] nonLetterSounds;
     [SerializeField] private TMP_Text dialogueTextBox;

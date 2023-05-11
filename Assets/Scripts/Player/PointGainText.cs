@@ -4,6 +4,7 @@ using System.Collections;
 
 public class PointGainText : MonoBehaviour
 {
+    //* Manages the text for whenever the player gains score
     [SerializeField] private GameObject textBoxPrefab;
     [SerializeField] private float fadeInTime = 0.5f;
     [SerializeField] private float displayTime = 2.0f;
@@ -44,31 +45,31 @@ public class PointGainText : MonoBehaviour
         var screenPos = Camera.main.WorldToScreenPoint(position);
 
         textBox.GetComponent<RectTransform>().position = screenPos;
-        Destroy(textBox, fadeOutTime + fadeInTime + displayTime + 1f);
+        Destroy(textBox, fadeOutTime + fadeInTime + displayTime + 2f);
 
-        yield return StartCoroutine(FadeIn());
+        yield return StartCoroutine(FadeIn(textBox));
         yield return new WaitForSeconds(displayTime);
-        yield return StartCoroutine(FadeOut());
+        yield return StartCoroutine(FadeOut(textBox));
 
     }
 
-    private IEnumerator FadeIn()
+    private IEnumerator FadeIn(GameObject fadeObject)
     {
-        var textComponent = textBox.GetComponent<TMP_Text>();
+        var textComponent = fadeObject.GetComponent<TMP_Text>();
         var color = textComponent.color;
 
         for (float timer = 0f; timer <= fadeInTime; timer += Time.deltaTime)
         {
             color.a = Mathf.Lerp(0f, 1f, timer / fadeInTime);
             textComponent.color = color;
-            textBox.SetActive(true);
+            fadeObject.SetActive(true);
             yield return null;
         }
     }
 
-    private IEnumerator FadeOut()
+    private IEnumerator FadeOut(GameObject fadeObject)
     {
-        var textComponent = textBox.GetComponent<TMP_Text>();
+        var textComponent = fadeObject.GetComponent<TMP_Text>();
         var color = textComponent.color;
 
         for (float timer = 0f; timer < fadeOutTime; timer += Time.deltaTime)

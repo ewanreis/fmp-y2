@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpriteFlipper : MonoBehaviour
 {
+    //* This script makes sprites flip in the direction of their movement
     Vector3 originalScale;
     Vector3 previous;
     Vector3 velocity;

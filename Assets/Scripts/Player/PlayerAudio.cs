@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class PlayerAudio : MonoBehaviour
 {
+    //* Manages all of the audio for the game
     [SerializeField] private AudioSource[] audioSources = new AudioSource[6];
     [SerializeField] private float footstepDelay;
     [SerializeField] private AudioMixer audioMixer;

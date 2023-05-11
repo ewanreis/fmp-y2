@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DamageFlash : MonoBehaviour
 {
+    //* This code will flash the attached sprite a certain colour whenever the attached entity takes damage
+    
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Color flashColor = Color.red;
     [SerializeField] private float flashDuration = 0.1f;
@@ -16,10 +18,7 @@ public class DamageFlash : MonoBehaviour
         originalColor = spriteRenderer.color;
     }
 
-    public void Flash()
-    {
-        StartCoroutine(FlashColorCoroutine());
-    }
+    public void Flash() => StartCoroutine(FlashColorCoroutine());
 
     IEnumerator FlashColorCoroutine()
     {

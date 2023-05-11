@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class ExplodeOnCollision : MonoBehaviour
 {
+    //* This script makes the attached object explode and destroy on collision impact
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private Transform explosionParent;
     [SerializeField] private float explosionRange;
     [SerializeField] private string entityTag;
     [SerializeField] private LayerMask entityLayer;
+    [SerializeField] private Transform head;
     private Collision2D col;
-    private Collider2D[] colliders;
+    List<Collider2D> colliders;
     private float explosionTimer;
     private List<GameObject> entitiesInExplosion;
-
+    private bool exploding;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -36,10 +38,13 @@ public class ExplodeOnCollision : MonoBehaviour
 
     private void Explosion()
     {
+        if(exploding)
+            return;
+        
+        exploding = true;
         InstantiateParticleSystem();
         SetSpritesHidden();
         GetEntitiesInRadius();
-        DamageEntitiesInRange();
 
         Destroy(this.transform.parent.gameObject, 4f);
     }
@@ -54,11 +59,20 @@ public class ExplodeOnCollision : MonoBehaviour
     private void GetEntitiesInRadius()
     {
         entitiesInExplosion = new List<GameObject>();
-        colliders = Physics2D.OverlapCircleAll(this.transform.position, explosionRange, entityLayer);
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        contactFilter.layerMask = entityLayer;
+        contactFilter.useLayerMask = true;
 
+        colliders = new List<Collider2D>();
+        Physics2D.OverlapCircle(head.transform.position, explosionRange, contactFilter, colliders);
         foreach (Collider2D collider in colliders)
-            if (Vector3.Distance(this.transform.position, collider.transform.position) <= explosionRange)
+            if (Vector3.Distance(head.transform.position, collider.transform.position) <= explosionRange)
+            {
                 entitiesInExplosion.Add(collider.gameObject);
+                Health entityHealth = collider.gameObject.GetComponent<Health>();
+                entityHealth?.Damage(3);
+                //Debug.Log(collider.gameObject);
+            }
     }
 
     private void SetSpritesHidden()
@@ -70,16 +84,8 @@ public class ExplodeOnCollision : MonoBehaviour
             sprite.enabled = false;
     }
 
-    private void DamageEntitiesInRange()
+    void OnDrawGizmos()
     {
-        if(entitiesInExplosion.Count > 0)
-        {
-            List<Health> entityHealthList = new List<Health>();
-            foreach (GameObject entity in entitiesInExplosion)
-            {
-                Health entityHealth = GetComponent<Health>();
-                entityHealth?.Damage(5);
-            }
-        }
+        //Gizmos.DrawWireSphere(head.transform.position, explosionRange);
     }
 }

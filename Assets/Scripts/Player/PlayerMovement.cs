@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    //* Manages the player movement
     [SerializeField] private Rigidbody2D playerRigidbody;
     [SerializeField] private Collider2D playerCollider;
 

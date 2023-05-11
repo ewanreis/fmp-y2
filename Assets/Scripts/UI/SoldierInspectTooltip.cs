@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SoldierInspectTooltip : MonoBehaviour
 {
+    //* Manages the tooltip for hovering over soldiers to inspect them
     public static event Action OnTooltipShow;
     public static event Action OnTooltipHide;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 public class MultilegProcedural : MonoBehaviour
 {
+    //* This script handles the procedural animation of the legs of any multi-legged entity
     public static event Action OnThroneStep;
 
     [SerializeField] private Transform[] legTargets;

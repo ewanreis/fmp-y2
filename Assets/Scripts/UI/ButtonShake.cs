@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class ButtonShake : MonoBehaviour, UnityEngine.EventSystems.ISelectHandler, UnityEngine.EventSystems.IDeselectHandler
 {
+    //* Used for quit menu buttons to shake when hovered over
     [SerializeField] private Button button; 
     [SerializeField] private float shakeMagnitude = 0.7f;
     [SerializeField] private float shakeDuration = 0.5f;

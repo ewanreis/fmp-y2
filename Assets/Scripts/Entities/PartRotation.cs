@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PartRotation : MonoBehaviour
 {
+    //* This script is to be used on chained object parts in order to rotate correctly
     [SerializeField] private Transform target;
     [SerializeField] private float speed;
 

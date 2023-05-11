@@ -6,6 +6,7 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
+    //* Manages the shop menu and display of each shop item
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private List<ShopItem> items;
     [SerializeField] private int currentPoints;

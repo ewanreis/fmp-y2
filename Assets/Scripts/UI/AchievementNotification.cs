@@ -4,6 +4,7 @@ using TMPro;
 
 public class AchievementNotification : MonoBehaviour
 {
+    //* Manages the notification for gaining achievements
     [SerializeField] private float lerpSpeed = 2;
     [SerializeField] private float displayTime = 2;
     private float currentTime = 0;
@@ -12,6 +13,7 @@ public class AchievementNotification : MonoBehaviour
     [SerializeField] private Vector3 startPosition;
     [SerializeField] private Vector3 endPosition;
     [SerializeField] private TMP_Text achievementText;
+    [SerializeField] private GUIStyle testVariable;
 
     private void Start()
     {

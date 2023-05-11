@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SoldierInspect : MonoBehaviour
 {
+    //* Manages the soldier inspection menu
     public static event Action<Soldier> OnSoldierInspect;
     public static event Action<Soldier> OnSoldierHover;
     public static event Action OnSoldierStopHovering;
