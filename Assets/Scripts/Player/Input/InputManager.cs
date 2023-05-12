@@ -87,102 +87,43 @@ public class InputManager : MonoBehaviour
     }
 
     private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // read movement input and invoke event when it is changed
-        Vector2 moveInput = context.ReadValue<Vector2>();
-        OnMoveInput?.Invoke(moveInput);
-        isMovePressed = true;
-        lastMoveInput = moveInput;
-    }
-
-    private void OnRightJoystickPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        Vector2 direction = context.ReadValue<Vector2>();
-        OnRightStickMoved?.Invoke(direction);
-    }
+    => isMovePressed = GetCompositeStatus(context, OnMoveInput, out lastMoveInput);
 
     private void OnMoveCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // set move pressed flag to false when movement input is released
-        isMovePressed = false;
-        lastMoveInput = Vector2.zero;
-    }
+    => isMovePressed = GetCompositeStatus(context, OnMoveInput, out lastMoveInput);
+
+    private void OnRightJoystickPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    => GetCompositeStatus(context, OnRightStickMoved, out _);
 
     private void OnPrimaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // check if primary input button pressed then invoke event if true
-        bool primaryInput = context.ReadValue<float>() == 1 ? true : false;
-        if (primaryInput)
-        {
-            OnPrimaryPressed?.Invoke();
-            isPrimaryPressed = true;
-        }
-    }
+    => isPrimaryPressed = GetButtonStatus(context, OnPrimaryPressed);
 
     private void OnPrimaryCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        isPrimaryPressed = false;
-    }
+    => isPrimaryPressed = GetButtonStatus(context);
 
     private void OnSecondaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // check if secondary input button pressed then invoke event if true
-        bool secondaryInput = context.ReadValue<float>() == 1 ? true : false;
-        if(secondaryInput)
-        {
-            OnSecondaryPressed?.Invoke();
-            isSecondaryPressed = true;
-        }
-    }
+    => isSecondaryPressed = GetButtonStatus(context, OnSecondaryPressed);
 
     private void OnSecondaryCancelled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        isSecondaryPressed = false;
-    }
+    => isSecondaryPressed = GetButtonStatus(context);
 
     private void OnAchievementsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // check if achievements menu input button pressed then invoke event if true
-        bool pressed = context.ReadValue<float>() == 1 ? true : false;
-        if(pressed)
-            OnAchievementsPressed?.Invoke();
-    }
+    => GetButtonStatus(context, OnAchievementsPressed);
 
     private void OnPausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // check if pause input button pressed then invoke event if true
-        bool pressed = context.ReadValue<float>() == 1 ? true : false;
-        if (pressed)
-            OnPausePressed?.Invoke();
-    }
+    => GetButtonStatus(context, OnPausePressed);
 
     private void OnBestiaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // check if bestiary input button pressed then invoke event if true
-        bool pressed = context.ReadValue<float>() == 1 ? true : false;
-        if (pressed)
-            OnBestiaryPressed?.Invoke();
-    }
+    => GetButtonStatus(context, OnBestiaryPressed);
 
     private void OnSkipSongPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // check if skip button pressed then invoke event if true
-        bool pressed = context.ReadValue<float>() == 1 ? true : false;
-        if (pressed)
-            OnSkipSongPressed?.Invoke();
-    }
+    => GetButtonStatus(context, OnSkipSongPressed);
 
     private void OnMountPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // check if skip button pressed then invoke event if true
-        bool pressed = context.ReadValue<float>() == 1 ? true : false;
-        if (pressed)
-            OnMountPressed?.Invoke();
-    }
+    => GetButtonStatus(context, OnMountPressed);
 
     public static Vector2 GetMousePosition()
     {
-        // return cursor position
         return playerInput.Overworld.CursorPosition.ReadValue<Vector2>();
     }
 
@@ -191,13 +132,50 @@ public class InputManager : MonoBehaviour
         return playerInput.Overworld.RightJoystick.ReadValue<Vector2>();
     }
 
+    private bool GetButtonStatus(InputAction.CallbackContext context)
+    {
+        return context.ReadValue<float>() == 1 ? true : false;
+    }
+
+    private bool GetButtonStatus(InputAction.CallbackContext context, Action eventTrigger)
+    {
+        bool isPressed = context.ReadValue<float>() == 1 ? true : false;
+
+        if(isPressed)
+            eventTrigger?.Invoke();
+
+        return isPressed;
+    }
+
+    private bool GetCompositeStatus(InputAction.CallbackContext context)
+    {
+        return context.ReadValue<Vector2>() != Vector2.zero ? true : false;
+    }
+
+    private bool GetCompositeStatus(InputAction.CallbackContext context, out Vector2 vector)
+    {
+        bool isPressed = context.ReadValue<Vector2>() != Vector2.zero ? true : false;
+        vector = context.ReadValue<Vector2>();
+        return isPressed;
+    }
+
+    private bool GetCompositeStatus(InputAction.CallbackContext context, Action<Vector2> eventTrigger, out Vector2 vector)
+    {
+        bool isPressed = context.ReadValue<Vector2>() != Vector2.zero ? true : false;
+        vector = context.ReadValue<Vector2>();
+
+        if(isPressed)
+            eventTrigger?.Invoke(vector);
+
+        return isPressed;
+    }
+
     private void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
-        
         if (device is Gamepad && change != InputDeviceChange.Removed)
         {
             usingController = true;
-            Debug.Log($"Using Controller");
+            //Debug.Log($"Using Controller");
         }
         else
         {
