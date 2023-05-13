@@ -14,6 +14,20 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()
     {
         currentPoints = startingPoints;
+        Health.OnDeath += EnemyKillScore;
+    }
+
+    private void OnDisable()
+    {
+        Health.OnDeath -= EnemyKillScore;
+    }
+
+    private void EnemyKillScore(Creature creature, bool isEnemy)
+    {
+        if(!isEnemy)
+            return;
+
+        AddPoints(creature.ScoreOnDeath);
     }
 
     public void AddPoints(int pointsToAdd)

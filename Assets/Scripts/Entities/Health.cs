@@ -7,6 +7,9 @@ using BehaviorTree;
 public class Health : MonoBehaviour
 {
     //* This code will manage the health and healthbar of the attached entity
+    public static event System.Action<Creature, bool> OnDeath;
+
+    [SerializeField] private Creature creatureType;
 
     [SerializeField] private GameObject entity;
     [SerializeField] private float maxHealth;
@@ -17,6 +20,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Slider healthBar;
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset;
+    [SerializeField] private bool isEnemy;
 
     private float health;
     private float regenCounter;
@@ -41,6 +45,7 @@ public class Health : MonoBehaviour
     {
         damageFlash = this.GetComponent<DamageFlash>();
         health = maxHealth;
+        isEnemy = (this.gameObject.tag == "Enemy") ? true : false;
         UpdateHealthBar();
         StartCoroutine(PassiveRegen());
     }
@@ -98,6 +103,7 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
+        OnDeath?.Invoke(creatureType, isEnemy);
         Destroy(entity);
     }
 }

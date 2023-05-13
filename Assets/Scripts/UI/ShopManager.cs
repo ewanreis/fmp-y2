@@ -26,16 +26,18 @@ public class ShopManager : MonoBehaviour
         
     }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         ShopButton.OnItemBuy += BuyItem;
         PointsPerMinute.OnGainPoints += UpdateShop;
+        ScoreManager.OnPointsGained += (int i) => UpdateShop();
     }
 
-    private void OnDisable() 
+    private void OnDisable()
     {
         ShopButton.OnItemBuy -= BuyItem;
         PointsPerMinute.OnGainPoints -= UpdateShop;
+        ScoreManager.OnPointsGained -= (int i) => UpdateShop();
     }
 
     public void UpdateShop()

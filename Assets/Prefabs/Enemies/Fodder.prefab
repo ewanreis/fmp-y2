@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7a4bf9695a6bb740bd78d10249323af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  creatureType: {fileID: 11400000, guid: 078922315a25b36448ad0020cf8b5f96, type: 2}
   entity: {fileID: 4294580962426172312}
   maxHealth: 5
   regenRate: 0
@@ -342,6 +343,7 @@ MonoBehaviour:
   healthBar: {fileID: 7641792784626176663}
   target: {fileID: 4294580962249698513}
   offset: {x: 0, y: 1, z: 0}
+  isEnemy: 0
 --- !u!114 &7190387487071558062
 MonoBehaviour:
   m_ObjectHideFlags: 0

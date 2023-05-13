@@ -8,6 +8,7 @@ public class Creature : ScriptableObject
     public int _slainCount;
     public bool _isUnlocked;
     public Sprite _sprite;
+    public int _scoreOnDeath;
 
     public int _killsToUnlock;
     public int _creatureEncounters;
@@ -30,6 +31,11 @@ public class Creature : ScriptableObject
     public string Name
     {
         get { return _name; }
+    }
+
+    public int ScoreOnDeath
+    {
+        get{return _scoreOnDeath;}
     }
     
     public int SlainCount

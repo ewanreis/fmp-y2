@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-
+using UnityEngine.Events;
 public class ShopButton : MonoBehaviour
 {
     //* Manages checking if an item can be bought for each shop item
     public static event Action OnLockedButtonClick;
     public static event Action OnShopButtonClick;
     public static event Action<int> OnItemBuy;
+    public UnityEvent OnBuy;
 
     public bool isLocked = false;
 
@@ -34,6 +35,7 @@ public class ShopButton : MonoBehaviour
         {
             OnShopButtonClick.Invoke();
             OnItemBuy.Invoke(itemID);
+            OnBuy.Invoke();
         }
     }
 }

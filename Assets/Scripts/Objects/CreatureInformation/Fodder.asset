@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d457f99f6d9034e42a1dc7b5d7369b47, type: 3}
-  m_Name: Blue Slime
+  m_Name: Fodder
   m_EditorClassIdentifier: 
-  _id: 1
-  _name: Blue Slime
+  _id: 0
+  _name: Fodder
   _slainCount: 0
   _isUnlocked: 0
-  _sprite: {fileID: 0}
+  _sprite: {fileID: -854031911, guid: 25adf587d6b6c12469bed7ea0b64d446, type: 3}
+  _scoreOnDeath: 15
   _killsToUnlock: 0
   _creatureEncounters: 0
-  _creatureKills: 0
+  _creatureKills: 27

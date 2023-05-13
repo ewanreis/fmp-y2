@@ -22,6 +22,7 @@ public class Bestiary : MonoBehaviour
     [SerializeField] private TMP_Text description;
     [SerializeField] private GameObject displayPrefab;
     [SerializeField] private Transform displayParent;
+    [SerializeField] private Image displayImage;
 
     private bool isBestiaryOpen;
 
@@ -34,12 +35,22 @@ public class Bestiary : MonoBehaviour
     {
         InputManager.OnBestiaryPressed += ToggleBestiary;
         AchievementsMenu.OnAchievementsMenuOpen += CloseBestiary;
+        Health.OnDeath += ManageEnemyDeath;
     }
 
     private void OnDisable() 
     {
         InputManager.OnBestiaryPressed -= ToggleBestiary;
         AchievementsMenu.OnAchievementsMenuOpen -= CloseBestiary;
+        Health.OnDeath -= ManageEnemyDeath;
+    }
+
+    private void ManageEnemyDeath(Creature creature, bool isEnemy)
+    {
+        if(!isEnemy)
+            return;
+        
+        RegisterCreatureKill(creature);
     }
 
     public void UpdateBestiaryDisplay()
@@ -74,6 +85,7 @@ public class Bestiary : MonoBehaviour
     {
         description.text = 
             $"Creature Name: {_creatures[index].Name}\nTimes Slain: {_creatures[index].CreatureKills}\nTimes Encountered: {_creatures[index].CreatureEncounters}";
+        displayImage.sprite = _creatures[index].Sprite;
     }
 
     public void ToggleBestiary()
