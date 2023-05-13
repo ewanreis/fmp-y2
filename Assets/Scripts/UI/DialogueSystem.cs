@@ -17,6 +17,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private PlayerAudio playerAudio;
 
     private bool isShowingDialogue;
+    private bool canTalk;
 
     private string currentDialogue;
 
@@ -29,18 +30,25 @@ public class DialogueSystem : MonoBehaviour
     private void OnEnable() 
     {
         InputManager.OnSecondaryPressed += StartDialogue;
+        MountableObject.OnMount += DisableDialogue;
+        MountableObject.OnUnmount += EnableDialogue;
     }
 
     private void OnDisable() 
     {
         InputManager.OnSecondaryPressed -= StartDialogue;
+        MountableObject.OnMount -= DisableDialogue;
+        MountableObject.OnUnmount -= EnableDialogue;
     }
 
     public void StartDialogue()
     {
-        currentDialogue = "Test Dialogue Speech.\nSecond line of dialogue.\nThird Line.";
+        if(!canTalk)
+            return;
+
+        //currentDialogue = "Test Dialogue Speech.\nSecond line of dialogue.\nThird Line.";
         //currentDialogue = "Test Test Test Test Test Speech Speech Speech Speech ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        //currentDialogue = "Well hello there, I see you've defeated everyone... \nThe Queen is on her way, so you should run\n Ha Ha Ha";
+        currentDialogue = "Well hello there, I see you've defeated everyone... \nThe Queen is on her way, so you should run\n Ha Ha Ha";
         if(!isShowingDialogue && !PauseMenu.paused)
             StartCoroutine(TypeSentence());
     }
@@ -81,4 +89,7 @@ public class DialogueSystem : MonoBehaviour
     {
         dialogueTextBox.text = "";
     }
+
+    private void EnableDialogue() => canTalk = true;
+    private void DisableDialogue() => canTalk = false;
 }

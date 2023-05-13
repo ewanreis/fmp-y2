@@ -37,7 +37,7 @@ public class ThroneProjectile : MonoBehaviour
     {
         InstantiateParticleSystem();
         //SetSpritesHidden();
-
+        OnHit.Invoke(this.transform.position);
         Destroy(this.gameObject);
     }
 
