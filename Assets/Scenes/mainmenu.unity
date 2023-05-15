@@ -773,19 +773,6 @@ MonoBehaviour:
   - {fileID: 1035087859}
   - {fileID: 1726773894}
   - {fileID: 1623133342}
-  footstepSounds: []
-  musicTracks:
-  - {fileID: 8300000, guid: 989b6d9256c7c974783bee25659a7ff1, type: 3}
-  pauseSound: {fileID: 0}
-  resumeSound: {fileID: 0}
-  buttonDenySound: {fileID: 0}
-  buttonClickSound: {fileID: 8300000, guid: 42efb29e008471443978290a1193fce7, type: 3}
-  buttonHoverSound: {fileID: 8300000, guid: e4100b08f74457442a8b67e73c27cb22, type: 3}
-  volumeChangeSound: {fileID: 8300000, guid: 77d9f80ab8f4b8242bad75b854d25655, type: 3}
-  submenuOpenSound: {fileID: 8300000, guid: 6333ec01457121342a07cefbce72723d, type: 3}
-  shopBuySounds: []
-  shopOpenSounds: []
-  scoreGainSounds: []
   footstepDelay: 0
   audioMixer: {fileID: 24100000, guid: 067e257930c312f418e2125d0ac11664, type: 2}
   sliders:
@@ -797,6 +784,43 @@ MonoBehaviour:
   - {fileID: 254676972}
   - {fileID: 1241220407}
   - {fileID: 1723476425}
+  sourceParent: {fileID: 0}
+  monsterSounds:
+    fodderSounds:
+      attackSounds: []
+      damagedSounds: []
+      footstepSounds: []
+      deathSound: {fileID: 0}
+    footsoldierSounds:
+      attackSounds: []
+      damagedSounds: []
+      footstepSounds: []
+      deathSound: {fileID: 0}
+    commanderSounds:
+      attackSounds: []
+      damagedSounds: []
+      footstepSounds: []
+      deathSound: {fileID: 0}
+  playerDamageSounds: []
+  waveStartSounds: []
+  shopBuySounds: []
+  shopOpenSounds: []
+  scoreGainSounds: []
+  footstepSounds: []
+  musicTracks:
+  - {fileID: 8300000, guid: 989b6d9256c7c974783bee25659a7ff1, type: 3}
+  throneShootSounds: []
+  throneHitSounds: []
+  pauseSound: {fileID: 0}
+  resumeSound: {fileID: 0}
+  buttonDenySound: {fileID: 0}
+  buttonClickSound: {fileID: 8300000, guid: 42efb29e008471443978290a1193fce7, type: 3}
+  buttonHoverSound: {fileID: 8300000, guid: e4100b08f74457442a8b67e73c27cb22, type: 3}
+  volumeChangeSound: {fileID: 8300000, guid: 77d9f80ab8f4b8242bad75b854d25655, type: 3}
+  submenuOpenSound: {fileID: 8300000, guid: 6333ec01457121342a07cefbce72723d, type: 3}
+  lowHealthSound: {fileID: 0}
+  criticalHealthSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 75.99988}
+  m_AnchoredPosition: {x: 0, y: 30.97}
   m_SizeDelta: {x: 0, y: 162.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &649783378
@@ -965,7 +989,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1614005255}
-    m_SelectOnDown: {fileID: 974628882}
+    m_SelectOnDown: {fileID: 1614005255}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1696,7 +1720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &974628881
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2666,7 +2690,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 974628882}
+    m_SelectOnUp: {fileID: 649783378}
     m_SelectOnDown: {fileID: 649783378}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}

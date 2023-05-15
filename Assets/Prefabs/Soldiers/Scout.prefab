@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7a4bf9695a6bb740bd78d10249323af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  creatureType: {fileID: 0}
   entity: {fileID: 2844997175101499082}
   maxHealth: 20
   regenRate: 2
@@ -392,6 +393,7 @@ MonoBehaviour:
   healthBar: {fileID: 2844997173855321270}
   target: {fileID: 2844997173479088995}
   offset: {x: 0, y: 1.75, z: 0}
+  isEnemy: 0
 --- !u!61 &2844997173479088993
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1562,7 +1564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3530913957181143327
 RectTransform:
   m_ObjectHideFlags: 0

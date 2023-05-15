@@ -30,15 +30,17 @@ public class ShopManager : MonoBehaviour
     {
         ShopButton.OnItemBuy += BuyItem;
         PointsPerMinute.OnGainPoints += UpdateShop;
-        ScoreManager.OnPointsGained += (int i) => UpdateShop();
+        ScoreManager.OnPointsGained += UpdateShop;
     }
 
     private void OnDisable()
     {
         ShopButton.OnItemBuy -= BuyItem;
         PointsPerMinute.OnGainPoints -= UpdateShop;
-        ScoreManager.OnPointsGained -= (int i) => UpdateShop();
+        ScoreManager.OnPointsGained -= UpdateShop;
     }
+
+    private void UpdateShop(int _) => UpdateShop();
 
     public void UpdateShop()
     {

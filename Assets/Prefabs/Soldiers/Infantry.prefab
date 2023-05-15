@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4985958766367556907
 RectTransform:
   m_ObjectHideFlags: 0
@@ -956,6 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7a4bf9695a6bb740bd78d10249323af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  creatureType: {fileID: 0}
   entity: {fileID: 3857947415535524875}
   maxHealth: 20
   regenRate: 1
@@ -963,6 +964,7 @@ MonoBehaviour:
   healthBar: {fileID: 3857947414280655830}
   target: {fileID: 3857947414976430940}
   offset: {x: 0, y: 1.75, z: 0}
+  isEnemy: 0
 --- !u!114 &3857947414976430943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -998,8 +1000,16 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  enemyTag: Enemy
   targetTransform: {fileID: 3857947415145205323}
+  _enemyTarget: {fileID: 3857947415145205323}
+  spotRange: 4.56
+  attackRange: 3.75
   wanderSpeed: 2
+  chaseSpeed: 4
+  damageAmount: 5
+  _enemyHealth: {fileID: 0}
+  _foundEnemy: {fileID: 0}
 --- !u!114 &3857947414976430928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,7 +1242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f75ac4c0c929344a6a3dcd5338d790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 5
+  visionRange: 4.56
   target: {fileID: 3857947415145205323}
   lightParent: {fileID: 3857947415466141356}
 --- !u!114 &3857947415085360165
@@ -1303,7 +1313,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 27.13747
   m_PointLightOuterAngle: 41.420357
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 5
+  m_PointLightOuterRadius: 4.56
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
