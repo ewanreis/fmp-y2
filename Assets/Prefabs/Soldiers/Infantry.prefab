@@ -857,10 +857,12 @@ GameObject:
   - component: {fileID: 3857947414976430940}
   - component: {fileID: 3857947414976430939}
   - component: {fileID: 3857947414976430934}
+  - component: {fileID: 8815628159447870586}
   - component: {fileID: 3857947414976430943}
-  - component: {fileID: 3857947414976430933}
-  - component: {fileID: 3857947414976430928}
   - component: {fileID: 3857947414976430942}
+  - component: {fileID: 3857947414976430933}
+  - component: {fileID: 7053345209373112521}
+  - component: {fileID: 3857947414976430928}
   - component: {fileID: 3857947414976430930}
   - component: {fileID: 3857947414976430929}
   - component: {fileID: 3857947414976430932}
@@ -965,6 +967,21 @@ MonoBehaviour:
   target: {fileID: 3857947414976430940}
   offset: {x: 0, y: 1.75, z: 0}
   isEnemy: 0
+--- !u!114 &8815628159447870586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3857947414976430938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9625270f3eb10043a72bd1808a866cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentsToToggle:
+  - {fileID: 3857947414976430933}
+  - {fileID: 7053345209373112521}
 --- !u!114 &3857947414976430943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,6 +1002,21 @@ MonoBehaviour:
     speed: 0
     vision: 0
     stealth: 0
+--- !u!114 &3857947414976430942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3857947414976430938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4417fa5065ed0ed4cad6d967ae7733ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverColor: {r: 0.9366129, g: 0.3066038, b: 1, a: 1}
+  transitionDuration: 0.3
+  soldier: {fileID: 0}
 --- !u!114 &3857947414976430933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1003,10 +1035,39 @@ MonoBehaviour:
   enemyTag: Enemy
   targetTransform: {fileID: 3857947415145205323}
   _enemyTarget: {fileID: 3857947415145205323}
-  spotRange: 4.56
-  attackRange: 3.75
+  spotRange: 4.74
+  attackRange: 4.2
   wanderSpeed: 2
   chaseSpeed: 4
+  damageAmount: 5
+  _enemyHealth: {fileID: 0}
+  _foundEnemy: {fileID: 0}
+--- !u!114 &7053345209373112521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3857947414976430938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72f20c9ef9072934291c40fadf54d1ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftPatrolPoint: {fileID: 0}
+  rightPatrolPoint: {fileID: 0}
+  targetTransform: {fileID: 3857947415145205323}
+  patrolSpeed: 2.5
+  waitTime: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyTag: Enemy
+  _enemyTarget: {fileID: 3857947415145205323}
+  spotRange: 6.23
+  attackRange: 5.59
+  wanderSpeed: 2.5
+  chaseSpeed: 4.5
   damageAmount: 5
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
@@ -1026,21 +1087,6 @@ MonoBehaviour:
   tooltipText: {fileID: 4736044200810903066}
   objectToFollow: {fileID: 3857947414976430938}
   canvasRect: {fileID: 3857947414060768657}
---- !u!114 &3857947414976430942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3857947414976430938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4417fa5065ed0ed4cad6d967ae7733ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverColor: {r: 0.9366129, g: 0.3066038, b: 1, a: 1}
-  transitionDuration: 0.3
-  soldier: {fileID: 0}
 --- !u!114 &3857947414976430930
 MonoBehaviour:
   m_ObjectHideFlags: 0

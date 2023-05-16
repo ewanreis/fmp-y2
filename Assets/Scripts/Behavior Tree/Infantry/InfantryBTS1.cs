@@ -24,7 +24,7 @@ public class InfantryBTS1 : Tree
         {
             new Sequence(new List<Node>
             {
-                new CheckSoldierInFOV(this.transform, attackRange, enemyTag),
+                new CheckSoldierInFOV(this.transform, attackRange - 0.3f, enemyTag),
                 new TaskAttack(this.transform, ref _enemyHealth, damageAmount)
             }),
 
@@ -42,6 +42,9 @@ public class InfantryBTS1 : Tree
 
     private void OnDrawGizmos()
     {
+        if(!this.enabled)
+            return;
+
         UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
         UnityEngine.Gizmos.DrawWireSphere(this.transform.position, spotRange);
         UnityEngine.Gizmos.DrawLine(this.transform.position, targetTransform.position);

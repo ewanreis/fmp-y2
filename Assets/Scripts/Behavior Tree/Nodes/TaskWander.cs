@@ -10,7 +10,7 @@ public class TaskWander : Node
     private Transform _destinationPoint;
     private Vector2 destination;
     private float wanderDistance = 15f;
-    private float groundPadding = 1f;
+    private float groundPadding = 2f;
     private LayerMask _groundLayer; // layer mask for the ground
     private float _walkSpeed;
     private EnemyTypes _type;

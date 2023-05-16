@@ -29,26 +29,26 @@ public class DialogueSystem : MonoBehaviour
 
     private void OnEnable() 
     {
-        InputManager.OnSecondaryPressed += StartDialogue;
+        //InputManager.OnSecondaryPressed += StartDialogue;
         MountableObject.OnMount += DisableDialogue;
         MountableObject.OnUnmount += EnableDialogue;
     }
 
     private void OnDisable() 
     {
-        InputManager.OnSecondaryPressed -= StartDialogue;
+        //InputManager.OnSecondaryPressed -= StartDialogue;
         MountableObject.OnMount -= DisableDialogue;
         MountableObject.OnUnmount -= EnableDialogue;
     }
 
-    public void StartDialogue()
+    public void StartDialogue(string dialogueLine)
     {
         if(!canTalk)
             return;
 
         //currentDialogue = "Test Dialogue Speech.\nSecond line of dialogue.\nThird Line.";
         //currentDialogue = "Test Test Test Test Test Speech Speech Speech Speech ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        currentDialogue = "Well hello there, I see you've defeated everyone... \nThe Queen is on her way, so you should run\n Ha Ha Ha";
+        currentDialogue = dialogueLine;
         if(!isShowingDialogue && !PauseMenu.paused)
             StartCoroutine(TypeSentence());
     }

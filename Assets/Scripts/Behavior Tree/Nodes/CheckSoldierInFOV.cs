@@ -52,7 +52,7 @@ public class CheckSoldierInFOV : Node
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject.CompareTag(_checkTag) && Vector3.Distance(_transform.position, collider.transform.position) <= _visionRange)
+            if (collider.gameObject.CompareTag(_checkTag) && Vector3.Distance(_transform.position, collider.transform.position) < _visionRange -0.1f)
             {
                 foundEnemies.Add(collider.gameObject);
             }

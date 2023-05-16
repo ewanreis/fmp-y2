@@ -47,6 +47,8 @@ public class InfantryBTS2 : Tree
 
     private void OnDrawGizmos()
     {
+        if(!this.enabled)
+            return;
         UnityEngine.Gizmos.color = UnityEngine.Color.yellow;
         UnityEngine.Gizmos.DrawWireSphere(this.transform.position, spotRange);
         UnityEngine.Gizmos.DrawLine(this.transform.position, targetTransform.position);
@@ -58,6 +60,8 @@ public class InfantryBTS2 : Tree
     {
         CheckSoldierInFOV.OnSoldierFound += (UnityEngine.GameObject target, Health health) => UpdateTarget(target.transform);
         CheckSoldierInFOV.OnSoldierFound += (UnityEngine.GameObject target, Health health) => UpdateFoundEnemy(target, health);
+        leftPatrolPoint = UnityEngine.GameObject.Find("LeftCastlePointClose").transform;
+        rightPatrolPoint = UnityEngine.GameObject.Find("RightCastlePointClose").transform;
     }
 
     private void OnDisable()
