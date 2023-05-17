@@ -45,8 +45,8 @@ public class PointGainText : MonoBehaviour
         var screenPos = Camera.main.WorldToScreenPoint(position);
 
         textBox.GetComponent<RectTransform>().position = screenPos;
-        Destroy(textBox, fadeOutTime + fadeInTime + displayTime + 2f);
 
+        Destroy(textBox, fadeOutTime + fadeInTime + displayTime + 2f);
         yield return StartCoroutine(FadeIn(textBox));
         yield return new WaitForSeconds(displayTime);
         yield return StartCoroutine(FadeOut(textBox));

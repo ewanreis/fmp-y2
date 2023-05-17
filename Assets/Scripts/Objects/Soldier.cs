@@ -13,7 +13,8 @@ public enum SoldierType
 {
     Infantry,
     Scout,
-    Commander
+    Commander,
+    Tank
 }
 
 [System.Serializable]

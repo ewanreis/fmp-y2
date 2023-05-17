@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerAudio : MonoBehaviour
 {
     //* Manages all of the audio for the game
+    public static event System.Action OnMuteMusic;
     [SerializeField] private AudioSource[] audioSources = new AudioSource[6];
     [SerializeField] private float footstepDelay;
     [SerializeField] private AudioMixer audioMixer;
@@ -63,6 +64,7 @@ public class PlayerAudio : MonoBehaviour
         PlayerHealth.OnDeath += PlayDeathSound;
         ThroneShoot.OnShoot += PlayThroneShootSound;
         ThroneProjectile.OnHit += PlayThroneHitSound;
+        ExplodeOnCollision.OnExplode += PlayThroneHitSound;
     }
 
     private void OnDisable()
@@ -84,6 +86,7 @@ public class PlayerAudio : MonoBehaviour
         PlayerHealth.OnDeath -= PlayDeathSound;
         ThroneShoot.OnShoot -= PlayThroneShootSound;
         ThroneProjectile.OnHit -= PlayThroneHitSound;
+        ExplodeOnCollision.OnExplode -= PlayThroneHitSound;
     }
 
     public void PlayThroneShootSound() => PlayRandomSoundInArray(AudioChannel.Environment, throneShootSounds);
@@ -264,6 +267,7 @@ public class PlayerAudio : MonoBehaviour
     {
         float volume = GetVolume(channel);
         GameObject sourceGameObject = new GameObject("TempAudio");
+        pos.z = Camera.main.transform.position.z;
         sourceGameObject.transform.position = pos;
         sourceGameObject.transform.parent = sourceParent.transform;
 
@@ -289,7 +293,13 @@ public class PlayerAudio : MonoBehaviour
     public float GetVolume(AudioChannel audioChannel) => SaveData.GetSavedAudioVolumes()[(int)audioChannel];
 
     public void SetVolumeMaster(float volume) => SetVolume(AudioChannel.Master, volume);
-    public void SetVolumeMusic(float volume) => SetVolume(AudioChannel.Music, volume);
+    public void SetVolumeMusic(float volume) 
+    {
+        if(volume == 0)
+            OnMuteMusic?.Invoke();
+
+        SetVolume(AudioChannel.Music, volume);
+    } 
     public void SetVolumeAmbiance(float volume) => SetVolume(AudioChannel.Ambiance, volume);
     public void SetVolumeEnvironment(float volume) => SetVolume(AudioChannel.Environment, volume);
     public void SetVolumeFootsteps(float volume) => SetVolume(AudioChannel.Footsteps, volume);

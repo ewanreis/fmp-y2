@@ -51,6 +51,7 @@ public class AchievementsMenu : MonoBehaviour
         InputManager.OnSkipSongPressed += SkipSongAchievement;
         EnemySpawner.SurviveFifthYear += SurviveFiveYearsAchievement;
         InputManager.OnMoveHeld += UpdateMoveStatus;
+        PlayerAudio.OnMuteMusic += MuteMusicAchievement;
     }
 
     private void OnDisable() 
@@ -61,6 +62,7 @@ public class AchievementsMenu : MonoBehaviour
         InputManager.OnSkipSongPressed -= SkipSongAchievement;
         EnemySpawner.SurviveFifthYear -= SurviveFiveYearsAchievement;
         InputManager.OnMoveHeld -= UpdateMoveStatus;
+        PlayerAudio.OnMuteMusic -= MuteMusicAchievement;
     }
 
     public void UpdateAchievementsMenuDisplay()
@@ -169,4 +171,5 @@ public class AchievementsMenu : MonoBehaviour
     private void SurviveFiveYearsAchievement() => RegisterAchievementUnlock(_achievements[14]);
     private void SkipSongAchievement() => RegisterAchievementUnlock(_achievements[12]);
     private void UpdateMoveStatus(Vector2 v) => hasPlayerMoved = true;
+    private void MuteMusicAchievement() => RegisterAchievementUnlock(_achievements[1]);
 }

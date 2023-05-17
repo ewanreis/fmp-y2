@@ -5,6 +5,7 @@ using UnityEngine;
 public class ExplodeOnCollision : MonoBehaviour
 {
     //* This script makes the attached object explode and destroy on collision impact
+    public static event System.Action<Vector3> OnExplode;
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private Transform explosionParent;
     [SerializeField] private float explosionRange;
@@ -45,6 +46,7 @@ public class ExplodeOnCollision : MonoBehaviour
         InstantiateParticleSystem();
         SetSpritesHidden();
         GetEntitiesInRadius();
+        OnExplode.Invoke(this.transform.position);
 
         Destroy(this.transform.parent.gameObject, 4f);
     }

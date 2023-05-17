@@ -17,7 +17,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private PlayerAudio playerAudio;
 
     private bool isShowingDialogue;
-    private bool canTalk;
+    private bool canTalk = true;
 
     private string currentDialogue;
 
