@@ -209,7 +209,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2844997173479088995}
   - component: {fileID: 2844997173479088996}
-  - component: {fileID: 2844997173479089006}
+  - component: {fileID: 2879183397926267001}
+  - component: {fileID: 555568884199178071}
+  - component: {fileID: 215797947531219253}
+  - component: {fileID: 8470181769000807727}
+  - component: {fileID: 7639226897472226282}
+  - component: {fileID: 7519539121031655075}
   - component: {fileID: 2844997173479088992}
   - component: {fileID: 2844997173479089007}
   - component: {fileID: 2844997173479088994}
@@ -297,7 +302,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
---- !u!114 &2844997173479089006
+--- !u!114 &2879183397926267001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -306,7 +311,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2844997173479088997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28edc3edec92b9940b4210141faac366, type: 3}
+  m_Script: {fileID: 11500000, guid: c9625270f3eb10043a72bd1808a866cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentsToToggle:
+  - {fileID: 555568884199178071}
+  - {fileID: 215797947531219253}
+  - {fileID: 8470181769000807727}
+  - {fileID: 7639226897472226282}
+  - {fileID: 7519539121031655075}
+--- !u!114 &555568884199178071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844997173479088997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e380ca23eea065f47aa399119d73b45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   groundLayer:
@@ -315,11 +338,111 @@ MonoBehaviour:
   enemyTag: Enemy
   targetTransform: {fileID: 2844997173246318511}
   _enemyTarget: {fileID: 2844997173246318511}
-  spotRange: 9.64
-  attackRange: 6.9
+  spotRange: 11.5
+  attackRange: 5.22
+  wanderSpeed: 1.81
+  chaseSpeed: 2.15
+  damageAmount: 15
+  _enemyHealth: {fileID: 0}
+  _foundEnemy: {fileID: 0}
+--- !u!114 &215797947531219253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844997173479088997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263345c0a59c1b84884536fa08bb2033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyTag: Enemy
+  targetTransform: {fileID: 2844997173246318511}
+  _enemyTarget: {fileID: 2844997173246318511}
+  spotRange: 14.33
+  attackRange: 5.96
+  wanderSpeed: 2.1
+  chaseSpeed: 2.74
+  damageAmount: 20
+  _enemyHealth: {fileID: 0}
+  _foundEnemy: {fileID: 0}
+--- !u!114 &8470181769000807727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844997173479088997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eede2e0067d83f41bf44797fae278dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyTag: Enemy
+  targetTransform: {fileID: 2844997173246318511}
+  _enemyTarget: {fileID: 2844997173246318511}
+  spotRange: 16.72
+  attackRange: 6.69
   wanderSpeed: 3
   chaseSpeed: 4
-  damageAmount: 2
+  damageAmount: 25
+  _enemyHealth: {fileID: 0}
+  _foundEnemy: {fileID: 0}
+--- !u!114 &7639226897472226282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844997173479088997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afdda078a0583a74da65de03a3c76e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyTag: Enemy
+  targetTransform: {fileID: 2844997173246318511}
+  _enemyTarget: {fileID: 2844997173246318511}
+  spotRange: 19.48
+  attackRange: 7.37
+  wanderSpeed: 4
+  chaseSpeed: 5
+  damageAmount: 30
+  _enemyHealth: {fileID: 0}
+  _foundEnemy: {fileID: 0}
+--- !u!114 &7519539121031655075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844997173479088997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439d3c3a0b8a7014b916495b82998069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyTag: Enemy
+  targetTransform: {fileID: 2844997173246318511}
+  _enemyTarget: {fileID: 2844997173246318511}
+  spotRange: 24.56
+  attackRange: 8.58
+  wanderSpeed: 5
+  chaseSpeed: 7.5
+  damageAmount: 40
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!114 &2844997173479088992

@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] 
     private EnemySpawnData[] enemiesToSpawn;
 
+
     [SerializeField] 
     private Collider2D castleCaptureZone;
 
@@ -63,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         if(isSpawning)
-            enemySpawnCheck.transform.position = GenerateRandomPoint(-100, 100, -7.8f, -2.3f);
+            enemySpawnCheck.transform.position = GenerateRandomPoint(-75, 75, -7.8f, -2.3f);
 
         if (Time.time >= nextSpawnTime && !IsInView() && !IsInCastleCaptureZone() && IsGrounded() && isSpawning)
         {

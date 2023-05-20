@@ -52,6 +52,8 @@ public class AchievementsMenu : MonoBehaviour
         EnemySpawner.SurviveFifthYear += SurviveFiveYearsAchievement;
         InputManager.OnMoveHeld += UpdateMoveStatus;
         PlayerAudio.OnMuteMusic += MuteMusicAchievement;
+        Bestiary.OnCreatureKilled += CreatureKillAchievement;
+        PlayerHealth.OnDeath += PlayerDeathAchievement;
     }
 
     private void OnDisable() 
@@ -63,6 +65,8 @@ public class AchievementsMenu : MonoBehaviour
         EnemySpawner.SurviveFifthYear -= SurviveFiveYearsAchievement;
         InputManager.OnMoveHeld -= UpdateMoveStatus;
         PlayerAudio.OnMuteMusic -= MuteMusicAchievement;
+        Bestiary.OnCreatureKilled -= CreatureKillAchievement;
+        PlayerHealth.OnDeath -= PlayerDeathAchievement;
     }
 
     public void UpdateAchievementsMenuDisplay()
@@ -172,4 +176,6 @@ public class AchievementsMenu : MonoBehaviour
     private void SkipSongAchievement() => RegisterAchievementUnlock(_achievements[12]);
     private void UpdateMoveStatus(Vector2 v) => hasPlayerMoved = true;
     private void MuteMusicAchievement() => RegisterAchievementUnlock(_achievements[1]);
+    private void CreatureKillAchievement(Creature c) => RegisterAchievementUnlock(_achievements[3]);
+    private void PlayerDeathAchievement() => RegisterAchievementUnlock(_achievements[5]);
 }

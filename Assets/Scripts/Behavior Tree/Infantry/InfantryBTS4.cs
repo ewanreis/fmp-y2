@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BehaviorTree;
 using System;
 
-public class InfantryBTS2 : Tree
+public class InfantryBTS4 : Tree
 {
     [UnityEngine.SerializeField] private UnityEngine.Transform leftPatrolPoint;
     [UnityEngine.SerializeField] private UnityEngine.Transform rightPatrolPoint;
@@ -29,7 +29,7 @@ public class InfantryBTS2 : Tree
         {
             new Sequence(new List<Node>
             {
-                new CheckSoldierInFOV(this.transform, attackRange - 0.3f, enemyTag),
+                new CheckSoldierInFOV(this.transform, attackRange, enemyTag),
                 new TaskAttack(this.transform, ref _enemyHealth, damageAmount)
             }),
 

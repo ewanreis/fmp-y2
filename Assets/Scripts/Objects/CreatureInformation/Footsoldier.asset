@@ -17,7 +17,7 @@ MonoBehaviour:
   _slainCount: 0
   _isUnlocked: 0
   _sprite: {fileID: -1524697794, guid: 0b4c8560a05cae34f8b36eef3cb09e92, type: 3}
-  _scoreOnDeath: 25
+  _scoreOnDeath: 75
   _killsToUnlock: 0
   _creatureEncounters: 0
   _creatureKills: 1

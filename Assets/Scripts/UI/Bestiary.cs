@@ -8,8 +8,8 @@ using UnityEngine.Events;
 public class Bestiary : MonoBehaviour
 {
     //* Used for managing displayed creatures in the bestiary
-    public event Action<Creature> OnCreatureEncountered;
-    public event Action<Creature> OnCreatureKilled;
+    public static event Action<Creature> OnCreatureEncountered;
+    public static event Action<Creature> OnCreatureKilled;
     public static event Action OnBestiaryOpen;
 
     public UnityEvent OnClose;
@@ -77,14 +77,14 @@ public class Bestiary : MonoBehaviour
 
             displayText.text = _creatures[i].Name;
             description.text = 
-                $"Creature Name: {_creatures[i].Name}\nTimes Slain: {_creatures[i].CreatureKills}\nTimes Encountered: {_creatures[i].CreatureEncounters}";
+                $"Creature Name: {_creatures[i].Name}\nTimes Slain: {_creatures[i].CreatureKills}";
         }
     }
 
     public void ListButtonSelect(int index)
     {
         description.text = 
-            $"Creature Name: {_creatures[index].Name}\nTimes Slain: {_creatures[index].CreatureKills}\nTimes Encountered: {_creatures[index].CreatureEncounters}";
+            $"Creature Name: {_creatures[index].Name}\nTimes Slain: {_creatures[index].CreatureKills}";
         displayImage.sprite = _creatures[index].Sprite;
     }
 

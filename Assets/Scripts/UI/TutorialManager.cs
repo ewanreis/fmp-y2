@@ -19,8 +19,12 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialSequences.Add("Mount the throne to shoot");
         tutorialSequences.Add("Buy soldiers through the shop");
-        tutorialSequences.Add("Stop enemies from capturing the castle");
+        tutorialSequences.Add("The yellow zone around the castle is the capture zone");
+        tutorialSequences.Add("Stop enemies from entering the capture zone");
         tutorialSequences.Add("Kill the enemies to progress to the next year");
+        tutorialSequences.Add("Enemies get stronger over time");
+        tutorialSequences.Add("Upgrade your soldiers in the shop to keep up");
+        tutorialSequences.Add("Talk to the guide for tips");
 
         StartTutorial();
     }

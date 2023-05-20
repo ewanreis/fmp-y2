@@ -295,7 +295,8 @@ public class PlayerAudio : MonoBehaviour
     public void SetVolumeMaster(float volume) => SetVolume(AudioChannel.Master, volume);
     public void SetVolumeMusic(float volume) 
     {
-        if(volume == 0)
+        Debug.Log(volume);
+        if(volume <= 0)
             OnMuteMusic?.Invoke();
 
         SetVolume(AudioChannel.Music, volume);

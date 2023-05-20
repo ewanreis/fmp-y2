@@ -18,6 +18,8 @@ public class TaskGoToTarget : Node
 
     public override NodeState Evaluate()
     {
+        _target = (Transform)parent.parent.GetData("target");
+
         if(_target == null)
             return NodeState.Failure;
 
