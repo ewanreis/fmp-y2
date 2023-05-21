@@ -41,6 +41,12 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void IncreaseMaxHealth(float multiplier)
+    {
+        maxHealth *= multiplier;
+        health = maxHealth;
+    }
+
     void OnEnable()
     {
         damageFlash = this.GetComponent<DamageFlash>();

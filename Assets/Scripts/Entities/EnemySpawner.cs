@@ -38,6 +38,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] [Tooltip("The increment of enemies to add next wave")] 
     private int enemyWaveIncrement = 1; 
 
+    [SerializeField]
+    private float healthMultiplierIncrement = 0.1f;
+
     //* The formula for enemies per wave is as follows:
     //* NextSpawnCount = CurrentSpawnCount += (CurrentSpawnCount * EnemyWaveIncrement)
 
@@ -47,6 +50,8 @@ public class EnemySpawner : MonoBehaviour
     private int currentEnemies;
     private int wave = 0;
     private bool isSpawning;
+
+    private float healthMultiplier = 1;
 
     private void OnEnable()
     {
@@ -130,6 +135,8 @@ public class EnemySpawner : MonoBehaviour
         {
             var enemyGameObject = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
             enemyGameObject.transform.parent = enemyParent;
+            Health enemyHealth = enemyGameObject.GetComponentInChildren<Health>();
+            enemyHealth.IncreaseMaxHealth(healthMultiplier);
         }
     }
 
@@ -141,6 +148,7 @@ public class EnemySpawner : MonoBehaviour
             enemiesSpawned = 0;
             wave++;
             enemiesPerWave += enemyWaveIncrement;
+            healthMultiplier += healthMultiplierIncrement;
             if(wave == 2)
                 SurviveFirstYear?.Invoke();
             if(wave == 6)

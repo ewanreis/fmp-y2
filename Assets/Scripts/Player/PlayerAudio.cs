@@ -121,12 +121,12 @@ public class PlayerAudio : MonoBehaviour
 
     public void PlayWaveStartSound(int wave)
     {
-        if(wave == 10)
+        if(wave == 5)
         {
             PlaySound(AudioChannel.Ambiance, waveStartSounds[3]);
             return;
         }
-        else if(wave == 15)
+        else if(wave == 10)
         {
             PlaySound(AudioChannel.Ambiance, waveStartSounds[4]);
             return;
