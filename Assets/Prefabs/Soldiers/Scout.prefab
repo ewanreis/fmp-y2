@@ -339,7 +339,7 @@ MonoBehaviour:
   targetTransform: {fileID: 2844997173246318511}
   _enemyTarget: {fileID: 2844997173246318511}
   spotRange: 9.83
-  attackRange: 3.59
+  attackRange: 8.87
   wanderSpeed: 3
   chaseSpeed: 4
   damageAmount: 2
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6782ad4e727534294549a8990a7a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 2844997173479088996}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
 --- !u!114 &6187226519878261039
@@ -529,10 +529,10 @@ MonoBehaviour:
   targetTransform: {fileID: 2844997173246318511}
   _enemyTarget: {fileID: 2844997173246318511}
   spotRange: 12.67
-  attackRange: 4.59
+  attackRange: 11.66
   wanderSpeed: 3
   chaseSpeed: 4
-  damageAmount: 0
+  damageAmount: 3
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!114 &5197622424928572934
@@ -547,6 +547,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d01570945168b47b40887aa2564a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftPatrolPoint: {fileID: 0}
+  rightPatrolPoint: {fileID: 0}
+  waitTime: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -554,10 +557,10 @@ MonoBehaviour:
   targetTransform: {fileID: 2844997173246318511}
   _enemyTarget: {fileID: 2844997173246318511}
   spotRange: 15.2
-  attackRange: 5.4
-  wanderSpeed: 0
-  chaseSpeed: 0
-  damageAmount: 0
+  attackRange: 14.51
+  wanderSpeed: 4
+  chaseSpeed: 5
+  damageAmount: 4
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!114 &8975058019150089690
@@ -572,6 +575,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad686482433fc5c4881a003ffe03cef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftPatrolPoint: {fileID: 0}
+  rightPatrolPoint: {fileID: 0}
+  waitTime: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -579,10 +585,10 @@ MonoBehaviour:
   targetTransform: {fileID: 2844997173246318511}
   _enemyTarget: {fileID: 2844997173246318511}
   spotRange: 17.98
-  attackRange: 6.09
-  wanderSpeed: 4
-  chaseSpeed: 5
-  damageAmount: 0
+  attackRange: 16.9
+  wanderSpeed: 5
+  chaseSpeed: 6
+  damageAmount: 5
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!114 &5549079567217314828
@@ -597,6 +603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe8f591fa48a4e4ebdb25f500f08f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftPatrolPoint: {fileID: 0}
+  rightPatrolPoint: {fileID: 0}
+  waitTime: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -604,10 +613,10 @@ MonoBehaviour:
   targetTransform: {fileID: 2844997173246318511}
   _enemyTarget: {fileID: 2844997173246318511}
   spotRange: 22.83
-  attackRange: 7
+  attackRange: 21.95
   wanderSpeed: 5
   chaseSpeed: 6
-  damageAmount: 0
+  damageAmount: 15
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!1 &2844997173668032654

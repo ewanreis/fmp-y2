@@ -563,9 +563,9 @@ GameObject:
   - component: {fileID: 7015177321548340979}
   - component: {fileID: 8916874949812265816}
   - component: {fileID: 4245875943916759187}
-  - component: {fileID: 1726625392600433676}
   - component: {fileID: 253009785741779307}
   - component: {fileID: 2994826716009757726}
+  - component: {fileID: 5539973304371905625}
   m_Layer: 8
   m_Name: Body
   m_TagString: Enemy
@@ -671,31 +671,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ecba603d0e4bb14ab429fae34bf7651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1726625392600433676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015177321548340977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6377ff179bcb7d340816c1c88bb131fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  enemyTag: Friendly
-  targetTransform: {fileID: 120610470987563856}
-  _enemyTarget: {fileID: 120610470987563856}
-  spotRange: 6.05
-  attackRange: 3.31
-  damageAmount: 10
-  wanderSpeed: 1
-  chaseSpeed: 1
-  _enemyHealth: {fileID: 0}
-  _foundEnemy: {fileID: 4702032682644447907}
 --- !u!114 &253009785741779307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,6 +707,31 @@ MonoBehaviour:
   target: {fileID: 7015177321548340976}
   offset: {x: 0, y: 2.5, z: 0}
   isEnemy: 0
+--- !u!114 &5539973304371905625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015177321548340977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaed40bcf1722b247bc2584f2e71703c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyTag: Enemy
+  targetTransform: {fileID: 120610470987563856}
+  _enemyTarget: {fileID: 120610470987563856}
+  spotRange: 11.8
+  attackRange: 8.69
+  wanderSpeed: 2
+  chaseSpeed: 2
+  damageAmount: 10
+  _enemyHealth: {fileID: 0}
+  _foundEnemy: {fileID: 0}
 --- !u!1 &7015177322973599720
 GameObject:
   m_ObjectHideFlags: 0

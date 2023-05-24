@@ -1196,8 +1196,8 @@ MonoBehaviour:
   leftPatrolPoint: {fileID: 0}
   rightPatrolPoint: {fileID: 0}
   targetTransform: {fileID: 3857947415145205323}
-  patrolSpeed: 0
-  waitTime: 0
+  patrolSpeed: 2.75
+  waitTime: 0.75
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1205,9 +1205,9 @@ MonoBehaviour:
   _enemyTarget: {fileID: 3857947415145205323}
   spotRange: 9.8
   attackRange: 7.73
-  wanderSpeed: 0
-  chaseSpeed: 0
-  damageAmount: 0
+  wanderSpeed: 2.75
+  chaseSpeed: 5
+  damageAmount: 10
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!114 &6172313056276636892
@@ -1225,8 +1225,8 @@ MonoBehaviour:
   leftPatrolPoint: {fileID: 0}
   rightPatrolPoint: {fileID: 0}
   targetTransform: {fileID: 3857947415145205323}
-  patrolSpeed: 0
-  waitTime: 0
+  patrolSpeed: 3
+  waitTime: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1234,9 +1234,9 @@ MonoBehaviour:
   _enemyTarget: {fileID: 3857947415145205323}
   spotRange: 12.01
   attackRange: 9.54
-  wanderSpeed: 0
-  chaseSpeed: 0
-  damageAmount: 0
+  wanderSpeed: 3
+  chaseSpeed: 6
+  damageAmount: 15
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!114 &1648395138582505415
@@ -1254,8 +1254,8 @@ MonoBehaviour:
   leftPatrolPoint: {fileID: 0}
   rightPatrolPoint: {fileID: 0}
   targetTransform: {fileID: 3857947415145205323}
-  patrolSpeed: 0
-  waitTime: 0
+  patrolSpeed: 4
+  waitTime: 0.25
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1263,9 +1263,9 @@ MonoBehaviour:
   _enemyTarget: {fileID: 3857947415145205323}
   spotRange: 14.5
   attackRange: 11.66
-  wanderSpeed: 0
-  chaseSpeed: 0
-  damageAmount: 0
+  wanderSpeed: 4
+  chaseSpeed: 8
+  damageAmount: 25
   _enemyHealth: {fileID: 0}
   _foundEnemy: {fileID: 0}
 --- !u!114 &3857947414976430928
@@ -1345,7 +1345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6782ad4e727534294549a8990a7a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 3857947414976430939}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
 --- !u!70 &3857947414976430920
